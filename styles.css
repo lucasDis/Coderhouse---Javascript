@@ -1,0 +1,30 @@
+.main{
+  align-content: center;
+  align-items: center;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
