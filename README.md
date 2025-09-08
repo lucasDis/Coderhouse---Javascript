@@ -1,5 +1,8 @@
 # Simulador de Generador de Recetas
 
+**Desarrollado por:** [lucasDis](https://github.com/lucasDis)  
+**Demo en vivo:** [GitHub Pages URL - (https://lucasdis.github.io/Coderhouse---Javascript/)]
+
 ## Descripción
 
 El Simulador de Generador de Recetas es una aplicación web interactiva que permite a los usuarios crear recetas personalizadas de manera dinámica. El simulador combina ingredientes principales seleccionados por el usuario con métodos de cocción y sabores generados aleatoriamente para crear nombres únicos de recetas.
