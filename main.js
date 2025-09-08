@@ -1,115 +1,126 @@
-// Arrays con los ingredientes, metodos de coccion y sabores disponibles
-const ingredientesPrincipales = [
-  "Pollo",
-  "Carne de Res",
-  "Pescado",
-  "Cerdo",
-  "Camarones",
-  "Vegetales Mixtos",
-  "Pasta",
-  "Arroz",
+// DATOS BASE
+const ingredientes = [
+  "Pollo", "Carne de Res", "Pescado", "Cerdo", 
+  "Camarones", "Vegetales", "Pasta", "Arroz"
 ];
 
-const metodosCoccion = [
-  "al Horno",
-  "a la Parrilla",
-  "Salteado",
-  "Guisado",
-  "al Vapor",
-  "Frito",
+const metodos = [
+  "al Horno", "a la Parrilla", "Salteado", 
+  "Guisado", "al Vapor", "Frito"
 ];
 
 const sabores = [
-  "Mediterraneo",
-  "Asiatico",
-  "Mexicano",
-  "Italiano",
-  "Casero",
-  "Gourmet",
-  "Picante",
-  "Dulce",
+  "Mediterráneo", "Asiático", "Mexicano", "Italiano", 
+  "Casero", "Gourmet", "Picante", "Dulce"
 ];
 
-// Funcion para generar la receta basada en la seleccion del usuario
+// GENERAR RECETA SIMPLE
 function generarReceta() {
-  // Mostrar las opciones de ingredientes principales al usuario
-  let mensaje = "Elige un ingrediente principal:\n\n";
-
-  // Usar ciclo for para mostrar todas las opciones
-  for (let i = 0; i < ingredientesPrincipales.length; i++) {
-    mensaje += `${i + 1}. ${ingredientesPrincipales[i]}\n`;
+  let mensaje = "Elige un ingrediente:\n\n";
+  
+  for (let i = 0; i < ingredientes.length; i++) {
+    mensaje += `${i + 1}. ${ingredientes[i]}\n`;
   }
-
-  // Pedir al usuario que elija una opcion
-  let eleccion = prompt(mensaje + "\nEscribe el numero de tu eleccion:");
-
-  // Convertir la eleccion a numero y validar
-  let indiceEleccion = parseInt(eleccion) - 1;
-
-  // Condicional if/else para validar la eleccion y generar el nombre de la receta
-  if (indiceEleccion >= 0 && indiceEleccion < ingredientesPrincipales.length) {
-    // Generar elementos aleatorios para hacer la receta mas interesante
-    let ingredienteElegido = ingredientesPrincipales[indiceEleccion];
-    let metodoAleatorio =
-      metodosCoccion[Math.floor(Math.random() * metodosCoccion.length)];
-    let saborAleatorio = sabores[Math.floor(Math.random() * sabores.length)];
-
-    // Crear el nombre dinamico de la receta
-    let nombreReceta = `Receta de ${ingredienteElegido} ${metodoAleatorio} Estilo ${saborAleatorio}`;
-
-    // Llamar a la funcion para mostrar la receta
-    mostrarReceta(nombreReceta);
+  
+  let eleccion = prompt(mensaje + "\nEscribe el número:");
+  
+  if (eleccion === null || eleccion.trim() === "") {
+    alert("Debes seleccionar un ingrediente!");
+    generarReceta();
+    return;
+  }
+  
+  let numero = parseInt(eleccion) - 1;
+  
+  if (numero >= 0 && numero < ingredientes.length) {
+    let ingrediente = ingredientes[numero];
+    let metodo = metodos[Math.floor(Math.random() * metodos.length)];
+    let sabor = sabores[Math.floor(Math.random() * sabores.length)];
+    let receta = `${ingrediente} ${metodo} Estilo ${sabor}`;
+    
+    mostrarReceta(receta);
   } else {
-    // Mostrar mensaje de error si la opcion no es valida
-    alert("Error: Por favor, elige un numero valido de la lista.");
+    alert("Número inválido. Intenta de nuevo.");
+    generarReceta();
+  }
+}
 
-    // Preguntar si quiere intentar de nuevo
-    let intentarDeNuevo = confirm("¿Quieres intentar de nuevo?");
-    if (intentarDeNuevo) {
-      generarReceta();
+// MOSTRAR RESULTADO
+function mostrarReceta(receta) {
+  console.log("Receta generada:", receta);
+  alert("¡Tu receta!\n\n" + receta + "\n\n¡A cocinar!");
+  
+  if (confirm("¿Otra receta?")) {
+    generarReceta();
+  }
+}
+
+// SELECCIONAR VARIOS INGREDIENTES
+function seleccionarVarios() {
+  let seleccionados = [];
+  let continuar = true;
+  
+  while (continuar && seleccionados.length < 3) {
+    let mensaje = "Seleccionados: " + seleccionados.join(", ") + "\n\n";
+    
+    for (let i = 0; i < ingredientes.length; i++) {
+      mensaje += `${i + 1}. ${ingredientes[i]}\n`;
+    }
+    
+    let eleccion = prompt(mensaje + "\nNúmero (0 para terminar):");
+    
+    if (eleccion === "0") {
+      if (seleccionados.length === 0) {
+        alert("Debes agregar al menos un ingrediente!");
+        continue;
+      }
+      continuar = false;
+    } else if (eleccion === null || eleccion.trim() === "") {
+      if (seleccionados.length === 0) {
+        alert("Debes agregar al menos un ingrediente!");
+        continue;
+      }
+      continuar = false;
+    } else {
+      let numero = parseInt(eleccion) - 1;
+      if (numero >= 0 && numero < ingredientes.length) {
+        let ingrediente = ingredientes[numero];
+        if (!seleccionados.includes(ingrediente)) {
+          seleccionados.push(ingrediente);
+          alert(ingrediente + " agregado!");
+        } else {
+          alert("Ya lo seleccionaste!");
+        }
+      }
     }
   }
-}
-
-// Funcion para mostrar la receta generada
-function mostrarReceta(nombreReceta) {
-  // Crear un mensaje completo con la receta
-  let mensajeReceta =
-    `!Tu receta ha sido generada!` +
-    `=¡ ${nombreReceta}\n\n` +
-    `¡Disfruta cocinando tu nueva receta!`;
-
-  // Mostrar la receta usando alert
-  alert(mensajeReceta);
-
-  // Preguntar si quiere generar otra receta
-  let generarOtra = confirm("¿Quieres generar otra receta?");
-  if (generarOtra) {
-    iniciarSimulador();
-  } else {
-    alert("¡Gracias por usar el Simulador de Generador de Recetas!");
+  
+  if (seleccionados.length > 0) {
+    alert("Ingredientes: " + seleccionados.join(", "));
   }
 }
 
-// Funcion principal que inicia el simulador
-function iniciarSimulador() {
-  alert(
-    "¡Bienvenido al Simulador de Generador de Recetas!\n\n" +
-      "Te ayudara a crear recetas unicas basadas en tus preferencias."
-  );
-
-  generarReceta();
-}
-
-// Iniciar el programa
-let simuladorActivo = false;
+// CONTROL PRINCIPAL
+let activo = false;
 
 document.getElementById("toggleSimulador").addEventListener("click", () => {
-    if (!simuladorActivo) {
-        simuladorActivo = true;
-        iniciarSimulador();
-    } else {
-        simuladorActivo = false;
-        alert("El simulador ha sido detenido.");
+  if (!activo) {
+    activo = true;
+    let opcion = prompt("¿Qué quieres?\n1. Receta rápida\n2. Seleccionar varios");
+    
+    if (opcion === null || opcion.trim() === "") {
+      activo = false;
+      return;
     }
+    
+    if (opcion === "1") {
+      generarReceta();
+    } else if (opcion === "2") {
+      seleccionarVarios();
+    } else {
+      alert("Opción inválida");
+    }
+    
+    activo = false;
+  }
 });
