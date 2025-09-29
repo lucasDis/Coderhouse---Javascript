@@ -49,8 +49,8 @@ El proyecto ha evolucionado desde un simple simulador a una aplicación web comp
 
 ### Capturas de pantalla
 
-![Captura de pantalla principal](https://via.placeholder.com/800x400?text=Interfaz+Principal+de+Ingrediente+Cero)
-![Captura de pantalla generador](https://via.placeholder.com/800x400?text=Generador+de+Recetas)
+![Captura de pantalla principal](./src/images/CP-principal.jpg)
+![Captura de pantalla generador](./src/images/CP-generador.jpg)
 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
