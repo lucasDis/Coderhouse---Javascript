@@ -4,21 +4,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Generador de Recetas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <title>Ingrediente Cero - Recetas Deliciosas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body class="main">
-  <h1>Simulador de Generador de Recetas</h1>
-  <button id="toggleSimulador">Generar Recetas</button>
-  <p>
-    Bienvenido al simulador de generador de recetas. Esta aplicación te permite crear recetas personalizadas
-    seleccionando ingredientes principales de una lista predefinida. El simulador generará un nombre único
-    para tu receta basado en tus elecciones.
-  </p>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <h1>Ingrediente Cero</h1>
+      </div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">Inicio</a>
+        <a href="pages/generar-receta.html" class="nav-link">Generar Receta</a>
+        <a href="pages/historial.html" class="nav-link">Historial</a>
+      </nav>
+    </div>
+  </header>
 
-  <script src="main.js"></script>
+  <main class="main">
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Descubre Recetas Increíbles</h2>
+        <p>Transforma tus ingredientes en platos deliciosos con nuestro generador de recetas inteligente</p>
+        <a href="pages/generar-receta.html" class="btn-primary">Comenzar a Cocinar</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🍳</div>
+            <h3>Recetas Rápidas</h3>
+            <p>Genera recetas instantáneas con los ingredientes que tienes disponibles</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🥘</div>
+            <h3>Cocina Inteligente</h3>
+            <p>Nuestro sistema crea combinaciones únicas y deliciosas</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Paso a Paso</h3>
+            <p>Instrucciones detalladas para garantizar el éxito en tu cocina</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
 </body>
 
 </html>

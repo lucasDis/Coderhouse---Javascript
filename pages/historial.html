@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Recetas - Ingrediente Cero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <h1>Ingrediente Cero</h1>
+      </div>
+      <nav class="nav">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="generar-receta.html" class="nav-link">Generar Receta</a>
+        <a href="historial.html" class="nav-link active">Historial</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="history-section">
+      <div class="container">
+        <div class="history-header">
+          <h2>Tu Historial de Recetas</h2>
+          <p>Todas las recetas que has generado y guardado</p>
+          <div class="history-actions">
+            <button class="btn-primary" onclick="location.href='generar-receta.html'">Nueva Receta</button>
+            <button class="btn-secondary" onclick="limpiarHistorial()">Limpiar Historial</button>
+          </div>
+        </div>
+
+        <div class="history-content">
+          <div class="history-filters">
+            <div class="filter-group">
+              <label for="sortBy">Ordenar por:</label>
+              <select id="sortBy" onchange="cargarHistorial()">
+                <option value="date">Más reciente</option>
+                <option value="name">Nombre</option>
+                <option value="style">Estilo</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="filterStyle">Filtrar por estilo:</label>
+              <select id="filterStyle" onchange="cargarHistorial()">
+                <option value="">Todos</option>
+                <option value="Mediterráneo">Mediterráneo</option>
+                <option value="Asiático">Asiático</option>
+                <option value="Mexicano">Mexicano</option>
+                <option value="Italiano">Italiano</option>
+                <option value="Casero">Casero</option>
+                <option value="Gourmet">Gourmet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="recipes-grid" id="historyGrid">
+            <!-- Las recetas del historial se cargarán dinámicamente -->
+          </div>
+
+          <div class="empty-history" id="emptyHistory" style="display: none;">
+            <div class="empty-icon">📚</div>
+            <h3>No hay recetas en tu historial</h3>
+            <p>Comienza a generar y guardar tus recetas favoritas</p>
+            <a href="generar-receta.html" class="btn-primary">Generar Primera Receta</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para ver detalles de receta -->
+  <div class="modal" id="recipeModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalRecipeTitle">Detalles de la Receta</h3>
+        <span class="close" onclick="cerrarModal()">&times;</span>
+      </div>
+      <div class="modal-body" id="modalRecipeContent">
+        <!-- El contenido de la receta se cargará dinámicamente -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/history.js"></script>
+</body>
+
+</html>

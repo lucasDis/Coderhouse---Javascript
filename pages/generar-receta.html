@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generar Receta - Ingrediente Cero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <h1>Ingrediente Cero</h1>
+      </div>
+      <nav class="nav">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="generar-receta.html" class="nav-link active">Generar Receta</a>
+        <a href="historial.html" class="nav-link">Historial</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="generator-section">
+      <div class="container">
+        <div class="generator-header">
+          <h2>Genera Tu Receta Perfecta</h2>
+          <p>Elige cómo quieres crear tu receta deliciosa</p>
+        </div>
+
+        <div class="generator-options">
+          <div class="option-card" id="quickRecipeOption">
+            <div class="option-icon">⚡</div>
+            <h3>Receta Rápida</h3>
+            <p>Genera una receta instantánea con ingredientes aleatorios</p>
+            <button class="btn-secondary" onclick="generarRecetaRapida()">Generar Ahora</button>
+          </div>
+
+          <div class="option-card" id="customRecipeOption">
+            <div class="option-icon">🎯</div>
+            <h3>Receta Personalizada</h3>
+            <p>Selecciona tus ingredientes y crea una receta única</p>
+            <button class="btn-secondary" onclick="mostrarSeleccionIngredientes()">Seleccionar Ingredientes</button>
+          </div>
+        </div>
+
+        <div class="ingredients-panel" id="ingredientsPanel" style="display: none;">
+          <h3>Selecciona tus Ingredientes</h3>
+          <div class="ingredients-container">
+            <div class="ingredients-list" id="ingredientsList">
+              <!-- Los ingredientes se cargarán dinámicamente -->
+            </div>
+          </div>
+          
+          <div class="selected-ingredients">
+            <h4>Ingredientes Seleccionados:</h4>
+            <div class="selected-list" id="selectedList">
+              <p class="no-selection">No has seleccionado ningún ingrediente aún</p>
+            </div>
+          </div>
+
+          <div class="ingredients-actions">
+            <button class="btn-primary" id="finishSelection" onclick="finalizarSeleccion()" disabled>Terminar Selección</button>
+            <button class="btn-secondary" onclick="cancelarSeleccion()">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="recipe-result" id="recipeResult" style="display: none;">
+          <div class="recipe-header">
+            <h3 id="recipeTitle">Tu Receta Generada</h3>
+          </div>
+          
+          <div class="recipe-content">
+            <div class="recipe-info">
+              <p><strong>Estilo:</strong> <span id="recipeStyle"></span></p>
+              <p><strong>Método:</strong> <span id="recipeMethod"></span></p>
+            </div>
+
+            <div class="recipe-section" id="utensilsSection" style="display: none;">
+              <h4>🍽️ Utensilios Necesarios:</h4>
+              <ul id="utensilsList"></ul>
+            </div>
+
+            <div class="recipe-section" id="ingredientsSection" style="display: none;">
+              <h4>🥘 Ingredientes:</h4>
+              <ul id="ingredientsRecipeList"></ul>
+            </div>
+
+            <div class="recipe-section" id="stepsSection" style="display: none;">
+              <h4>📝 Pasos de Preparación:</h4>
+              <div class="steps-content" id="stepsContent"></div>
+            </div>
+          </div>
+
+          <div class="recipe-actions">
+            <button class="btn-primary" onclick="guardarReceta()">Guardar Receta</button>
+            <button class="btn-secondary" onclick="generarOtra()">Generar Otra</button>
+            <button class="btn-secondary" onclick="volverInicio()">Volver al Inicio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/generator.js"></script>
+</body>
+
+</html>
