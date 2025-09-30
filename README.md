@@ -146,6 +146,32 @@ Coderhouse---Javascript/
 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
+## GitHub Pages
+
+La aplicación está desplegada en GitHub Pages para que puedas probarla directamente en tu navegador sin necesidad de clonar el repositorio.
+
+### 🌐 Demo en Vivo
+
+Accede a la aplicación a través de la siguiente URL:
+
+**[https://lucasdis.github.io/Coderhouse---Javascript/](https://lucasdis.github.io/Coderhouse---Javascript/)**
+
+### Características de la Demo
+
+- **Funcionalidad Completa**: Todas las características del generador de recetas están disponibles
+- **Responsive Design**: La aplicación se adapta a dispositivos móviles y de escritorio
+- **Almacenamiento Local**: Tus recetas se guardan en el navegador (no persisten entre dispositivos)
+- **Navegación Intuitiva**: Explora entre la página principal, generador de recetas e historial
+
+### Notas sobre el Despliegue
+
+- La aplicación utiliza JavaScript puro sin dependencias de backend
+- El almacenamiento es local (localStorage) por lo que las recetas solo se guardan en tu navegador
+- No se requiere registro ni cuenta para usar la aplicación
+- Compatible con navegadores modernos (Chrome, Firefox, Safari, Edge)
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
 ## 🛠️ Stack
 
 - [![HTML5][html5-badge]][html5-url] - Lenguaje de marcado estándar para la web

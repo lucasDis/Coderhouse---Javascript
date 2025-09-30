@@ -124,6 +124,7 @@ body {
   margin-right: auto;
 }
 
+/* Buttons */
 .btn-primary {
   background-color: var(--primary-green);
   color: white;
@@ -200,11 +201,6 @@ body {
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 1rem;
-}
-
-.feature-card p {
-  color: var(--text-secondary);
-  font-size: 1rem;
 }
 
 /* Generator Section */
@@ -441,7 +437,7 @@ body {
   justify-content: center;
   padding-top: 2rem;
   border-top: 1px solid var(--border-light);
-  margin-bottom: 2rem; /* Añadido margen inferior */
+  margin-bottom: 2rem;
 }
 
 /* History Section */
@@ -507,7 +503,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-size: 1rem;
-  min-width: 180px; /* Añadido ancho mínimo para evitar superposición */
+  min-width: 180px;
 }
 
 .empty-history {
@@ -555,6 +551,11 @@ body {
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: var(--shadow-heavy);
+  text-align: center;
+}
+
+.modal-body {
+  text-align: left;
 }
 
 .modal-header {
@@ -694,70 +695,6 @@ body {
     width: 95%;
     margin: 1rem;
   }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.feature-card,
-.option-card,
-.recipe-card {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.ingredient-item {
-  animation: slideIn 0.2s ease-out;
-}
-
-/* Toast Messages */
-.toast {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 1rem 1.5rem;
-  border-radius: var(--border-radius-small);
-  color: white;
-  font-weight: 500;
-  z-index: 1001;
-  animation: slideIn 0.3s ease-out;
-}
-
-.toast-info {
-  background-color: var(--primary-green);
-}
-
-.toast-success {
-  background-color: var(--primary-green);
-}
-
-.toast-error {
-  background-color: var(--primary-red);
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
 }
 
 /* Utility Classes */
