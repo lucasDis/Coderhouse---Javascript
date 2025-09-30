@@ -186,75 +186,84 @@ class SimuladorRecetas {
 }
 
 // ==========================================
-// FUNCIONES GLOBALES PARA GENERAR RECETA
+// EVENT LISTENERS PARA GENERAR RECETA
 // ==========================================
 
-function generarRecetaRapida() {
-  SimuladorRecetas.iniciarRecetaRapida();
-}
+document.addEventListener('DOMContentLoaded', function() {
+  // Botones principales
+  const btnGenerarRapida = document.getElementById('btnGenerarRapida');
+  const btnSeleccionarIngredientes = document.getElementById('btnSeleccionarIngredientes');
+  const btnCancelarSeleccion = document.getElementById('btnCancelarSeleccion');
+  const finishSelection = document.getElementById('finishSelection');
+  const btnGuardarReceta = document.getElementById('btnGuardarReceta');
+  const btnGenerarOtra = document.getElementById('btnGenerarOtra');
+  const btnVolverInicio = document.getElementById('btnVolverInicio');
 
-function mostrarSeleccionIngredientes() {
-  SimuladorRecetas.iniciarSeleccionMultiple();
-}
-
-function finalizarSeleccion() {
-  SimuladorRecetas.finalizarSeleccion();
-}
-
-// ------------------------------------------
-// Funciones de acciones de usuario
-// ------------------------------------------
-function cancelarSeleccion() {
-  SimuladorRecetas.reiniciar();
-}
-
-function guardarReceta() {
-  SimuladorRecetas.guardarRecetaActual();
-}
-
-function generarOtra() {
-  if (estado.modoActual === 'rapida') {
-    SimuladorRecetas.iniciarRecetaRapida();
-    // Scroll automático hacia el título
-    setTimeout(() => {
-      const recipeResult = document.getElementById('recipeResult');
-      if (recipeResult) {
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const elementPosition = recipeResult.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 100);
-  } else if (estado.modoActual === 'multiple') {
-    estado.seleccionados = [];
-    UIManager.renderizarIngredientes();
-    UIManager.actualizarListaSeleccionados();
-    document.getElementById('recipeResult').style.display = 'none';
-    document.getElementById('ingredientsPanel').style.display = 'block';
-    setTimeout(() => {
-      const ingredientsPanel = document.getElementById('ingredientsPanel');
-      if (ingredientsPanel) {
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const elementPosition = ingredientsPanel.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 100);
+  if (btnGenerarRapida) {
+    btnGenerarRapida.addEventListener('click', () => SimuladorRecetas.iniciarRecetaRapida());
   }
-}
 
-// ------------------------------------------
-// Funciones de navegación
-// ------------------------------------------
-function volverInicio() {
-  SimuladorRecetas.reiniciar();
-  window.location.href = '../index.html';
-}
+  if (btnSeleccionarIngredientes) {
+    btnSeleccionarIngredientes.addEventListener('click', () => SimuladorRecetas.iniciarSeleccionMultiple());
+  }
+
+  if (btnCancelarSeleccion) {
+    btnCancelarSeleccion.addEventListener('click', () => SimuladorRecetas.reiniciar());
+  }
+
+  if (finishSelection) {
+    finishSelection.addEventListener('click', () => SimuladorRecetas.finalizarSeleccion());
+  }
+
+  if (btnGuardarReceta) {
+    btnGuardarReceta.addEventListener('click', () => SimuladorRecetas.guardarRecetaActual());
+  }
+
+  if (btnGenerarOtra) {
+    btnGenerarOtra.addEventListener('click', () => {
+      if (estado.modoActual === 'rapida') {
+        SimuladorRecetas.iniciarRecetaRapida();
+        // Scroll automático hacia el título
+        setTimeout(() => {
+          const recipeResult = document.getElementById('recipeResult');
+          if (recipeResult) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const elementPosition = recipeResult.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+      } else if (estado.modoActual === 'multiple') {
+        estado.seleccionados = [];
+        UIManager.renderizarIngredientes();
+        UIManager.actualizarListaSeleccionados();
+        document.getElementById('recipeResult').style.display = 'none';
+        document.getElementById('ingredientsPanel').style.display = 'block';
+        setTimeout(() => {
+          const ingredientsPanel = document.getElementById('ingredientsPanel');
+          if (ingredientsPanel) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const elementPosition = ingredientsPanel.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+      }
+    });
+  }
+
+  if (btnVolverInicio) {
+    btnVolverInicio.addEventListener('click', () => {
+      SimuladorRecetas.reiniciar();
+      window.location.href = '../index.html';
+    });
+  }
+});

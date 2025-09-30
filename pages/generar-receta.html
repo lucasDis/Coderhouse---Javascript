@@ -8,6 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script defer src="../js/data.js"></script>
+  <script defer src="../js/storage.js"></script>
+  <script defer src="../js/ui.js"></script>
+  <script defer src="../js/generator.js"></script>
 </head>
 
 <body>
@@ -37,14 +41,14 @@
             <div class="option-icon">⚡</div>
             <h3>Receta Rápida</h3>
             <p>Genera una receta instantánea con ingredientes aleatorios</p>
-            <button class="btn-secondary" onclick="generarRecetaRapida()">Generar Ahora</button>
+            <button class="btn-secondary" id="btnGenerarRapida">Generar Ahora</button>
           </div>
 
           <div class="option-card" id="customRecipeOption">
             <div class="option-icon">🎯</div>
             <h3>Receta Personalizada</h3>
             <p>Selecciona tus ingredientes y crea una receta única</p>
-            <button class="btn-secondary" onclick="mostrarSeleccionIngredientes()">Seleccionar Ingredientes</button>
+            <button class="btn-secondary" id="btnSeleccionarIngredientes">Seleccionar Ingredientes</button>
           </div>
         </div>
 
@@ -64,8 +68,8 @@
           </div>
 
           <div class="ingredients-actions">
-            <button class="btn-primary" id="finishSelection" onclick="finalizarSeleccion()" disabled>Terminar Selección</button>
-            <button class="btn-secondary" onclick="cancelarSeleccion()">Cancelar</button>
+            <button class="btn-primary" id="finishSelection" disabled>Terminar Selección</button>
+            <button class="btn-secondary" id="btnCancelarSeleccion">Cancelar</button>
           </div>
         </div>
 
@@ -97,9 +101,9 @@
           </div>
 
           <div class="recipe-actions">
-            <button class="btn-primary" onclick="guardarReceta()">Guardar Receta</button>
-            <button class="btn-secondary" onclick="generarOtra()">Generar Otra</button>
-            <button class="btn-secondary" onclick="volverInicio()">Volver al Inicio</button>
+            <button class="btn-primary" id="btnGuardarReceta">Guardar Receta</button>
+            <button class="btn-secondary" id="btnGenerarOtra">Generar Otra</button>
+            <button class="btn-secondary" id="btnVolverInicio">Volver al Inicio</button>
           </div>
         </div>
       </div>
@@ -107,10 +111,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
-  <script src="../js/data.js"></script>
-  <script src="../js/storage.js"></script>
-  <script src="../js/ui.js"></script>
-  <script src="../js/generator.js"></script>
 </body>
 
 </html>
