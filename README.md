@@ -25,7 +25,6 @@
   - [Requisitos previos](#requisitos-previos)
   - [Instalación](#instalación)
 - [Estructura del Proyecto](#estructura-del-proyecto)
-- [Contribuir al proyecto](#contribuir-al-proyecto)
 - [🛠️ Stack](#️-stack)
 
 </details>
@@ -92,19 +91,23 @@ El proyecto ha evolucionado desde un simple simulador a una aplicación web comp
 
 ```
 Coderhouse---Javascript/
-├── index.html                 # Página principal con landing page
-├── README.md                  # Documentación del proyecto
+├── index.html                    # Página principal con landing page
+├── README.md                     # Documentación del proyecto
 ├── css/
-│   └── styles.css            # Estilos CSS personalizados
+│   └── styles.css               # Estilos CSS personalizados
 ├── js/
-│   ├── data.js               # Base de datos de ingredientes y recetas
-│   ├── generator.js          # Lógica principal de generación de recetas
-│   ├── history.js            # Gestión de historial de recetas
-│   ├── storage.js            # Manejo de almacenamiento local
-│   └── ui.js                 # Gestión de interfaz de usuario
-└── pages/
-    ├── generar-receta.html   # Página de generación de recetas
-    └── historial.html        # Página de historial de recetas
+│   ├── data.js                  # Base de datos de ingredientes y recetas
+│   ├── generator.js             # Lógica principal de generación de recetas
+│   ├── history.js               # Gestión de historial de recetas
+│   ├── storage.js               # Manejo de almacenamiento local
+│   └── ui.js                    # Gestión de interfaz de usuario
+├── pages/
+│   ├── generar-receta.html      # Página de generación de recetas
+│   └── historial.html           # Página de historial de recetas
+└── src/
+    └── images/
+        ├── CP-principal.jpg     # Captura de pantalla principal
+        └── CP-generador.jpg     # Captura de pantalla generador de recetas
 ```
 
 ### Módulos Principales
