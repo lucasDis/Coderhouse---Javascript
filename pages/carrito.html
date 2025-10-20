@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - Librería Cero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../css/styles.css?v=2.1.0">
+  <script defer src="../js/data.js?v=2.1.0"></script>
+  <script defer src="../js/storage.js?v=2.1.0"></script>
+  <script defer src="../js/ui.js?v=2.1.0"></script>
+  <script defer src="../js/libros.js?v=2.1.0"></script>
+  <script defer src="../js/carrito.js?v=2.1.0"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <h1>Librería Cero</h1>
+      </div>
+      <nav class="nav">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="libros.html" class="nav-link">Libros</a>
+        <div class="cart-icon" id="cartIcon">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="carrito-section">
+      <div class="container">
+        <div class="carrito-header">
+          <h2>Mi Carrito</h2>
+          <p>Revisa los libros que has seleccionado</p>
+        </div>
+
+        <div class="carrito-content">
+          <div class="carrito-items" id="carritoItems">
+          </div>
+
+          <div class="carrito-resumen" id="carritoResumen">
+            <div class="resumen-card">
+              <h3>Resumen del Pedido</h3>
+
+              <div class="resumen-item">
+                <span>Subtotal:</span>
+                <span id="subtotal">€0.00</span>
+              </div>
+
+              <div class="resumen-item">
+                <span>Envío:</span>
+                <span id="envio">€3.99</span>
+              </div>
+
+              <div class="resumen-item">
+                <span>IVA (21%):</span>
+                <span id="iva">€0.00</span>
+              </div>
+
+              <div class="resumen-total">
+                <span>Total:</span>
+                <span id="total">€0.00</span>
+              </div>
+
+              <div class="resumen-codigo">
+                <input type="text" id="codigoDescuento" placeholder="Código de descuento">
+                <button class="btn-secondary" id="btnAplicarCodigo">Aplicar</button>
+              </div>
+
+              <div class="resumen-actions">
+                <a href="libros.html" class="btn-secondary">Seguir Comprando</a>
+                <button class="btn-primary" id="btnProcesarCompra">Procesar Compra</button>
+              </div>
+            </div>
+
+            <div class="metodos-pago">
+              <h4>Métodos de Pago Aceptados</h4>
+              <div class="payment-icons">
+                <span>💳</span>
+                <span>🏦</span>
+                <span>📱</span>
+                <span>💰</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-cart" id="emptyCart" style="display: none;">
+          <div class="empty-icon">🛒</div>
+          <h3>Tu carrito está vacío</h3>
+          <p>Aún no has añadido libros a tu carrito</p>
+          <a href="libros.html" class="btn-primary">Explorar Libros</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Sistema de versionamiento - PRIMERO -->
+  <script src="../js/version.js?v=2.1.0"></script>
+</body>
+
+</html>

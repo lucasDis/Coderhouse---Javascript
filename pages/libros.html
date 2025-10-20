@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Librería Cero - Libros de Cocina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../css/styles.css?v=2.1.1">
+  <script defer src="../js/data.js?v=2.1.1"></script>
+  <script defer src="../js/storage.js?v=2.1.1"></script>
+  <script defer src="../js/ui.js?v=2.1.1"></script>
+  <script defer src="../js/libros.js?v=2.1.1"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <h1>Librería Cero</h1>
+      </div>
+      <nav class="nav">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="libros.html" class="nav-link active">Libros</a>
+        <div class="cart-icon" id="cartIcon">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="libreria-section">
+      <div class="container">
+        <div class="libreria-header">
+          <h2>Libros de Cocina</h2>
+          <p>Descubre las mejores recetas de expertos chefs de todo el mundo</p>
+
+          <div class="libreria-actions">
+            <div class="filter-group">
+              <label for="filterSearch">Buscar:</label>
+              <input type="text" id="filterSearch" placeholder="Título o autor...">
+            </div>
+
+            <div class="filter-group">
+              <label for="filterCategory">Categoría:</label>
+              <select id="filterCategory">
+                <option value="">Todas</option>
+                <option value="Cocina Italiana">Cocina Italiana</option>
+                <option value="Cocina Mexicana">Cocina Mexicana</option>
+                <option value="Cocina Asiática">Cocina Asiática</option>
+                <option value="Repostería">Repostería</option>
+                <option value="Cocina Saludable">Cocina Saludable</option>
+                <option value="Cocina Vegana">Cocina Vegana</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="sortBy">Ordenar por:</label>
+              <select id="sortBy">
+                <option value="featured">Destacados</option>
+                <option value="price-low">Precio: Menor a Mayor</option>
+                <option value="price-high">Precio: Mayor a Menor</option>
+                <option value="rating">Mejor Valorados</option>
+                <option value="name">Nombre</option>
+                <option value="date-new">Más Recientes</option>
+                <option value="date-old">Más Antiguos</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="books-count-container">
+          <p id="booksCount" class="books-count">0 libros encontrados</p>
+        </div>
+
+        <div class="books-grid" id="booksGrid">
+        </div>
+
+        <div class="empty-books" id="emptyBooks" style="display: none;">
+          <div class="empty-icon">📚</div>
+          <h3>No se encontraron libros</h3>
+          <p>Intenta con otros filtros de búsqueda</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de detalles del libro -->
+  <div class="modal" id="bookModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalBookTitle">Detalles del Libro</h3>
+        <span class="close" id="btnCerrarModalLibro">&times;</span>
+      </div>
+      <div class="modal-body" id="modalBookContent">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Sistema de versionamiento - PRIMERO -->
+  <script src="../js/version.js?v=2.1.1"></script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+{
+  "Pollo": [
+    {
+      "nombre": "Pollo al Horno con Hierbas",
+      "tipo": "al Horno",
+      "sabor": "Mediterráneo",
+      "utensilios": ["Horno", "Bandeja para horno", "Cuchillo", "Tabla de cortar", "Recipiente para mezclar"],
+      "ingredientes": ["1 pollo entero", "4 dientes de ajo", "1 limón", "Romero fresco", "Tomillo", "Aceite de oliva", "Sal", "Pimienta"],
+      "pasos": [
+        "Para comenzar, precalienta el horno a una temperatura de 200°C. Mientras el horno se calienta, toma el pollo entero y asegúrate de limpiarlo muy bien por dentro y por fuera. Sécalo completamente con papel de cocina, ya que esto ayudará a que la piel quede crujiente durante la cocción.",
+        "En un recipiente aparte, prepara una mezcla de hierbas aromáticas. Pica finamente los 4 dientes de ajo y mézclalos con el romero fresco picado, el tomillo desmenuzado, el jugo de medio limón y un buen chorro de aceite de oliva virgen extra. Añade sal y pimienta al gusto y remueve bien hasta que todos los ingredientes estén integrados.",
+        "Con la ayuda de una brocha de cocina o simplemente con tus manos limpias, untar toda la mezcla de hierbas sobre el pollo. Asegúrate de cubrir tanto la parte exterior como el interior del pollo para que absorba todos los sabores durante la cocción.",
+        "Coloca el pollo en una bandeja para horno previamente engrasada con un poco de aceite de oliva. Es recomendable que coloques el pollo con el pecho hacia arriba para que se cocine de manera uniforme y la piel quede dorada y crujiente.",
+        "Introduce la bandeja en el horno ya caliente y cocina el pollo durante aproximadamente 1 hora y 30 minutos. A mitad de la cocción, puedes rociar el pollo con los jugos que se van generando en la bandeja para mantenerlo jugoso.",
+        "Para saber si el pollo está bien cocido, puedes pinchar la parte más gruesa del muslo con un cuchillo. Si los jugos que salen son transparentes, significa que está listo. Si aún salen rosados, necesita unos minutos más en el horno.",
+        "Una vez que el pollo esté perfectamente cocido, sácalo del horno y déjalo reposar durante al menos 10 minutos antes de cortarlo. Este tiempo de reposo es crucial para que los jugos se redistribuyan por toda la carne, asegurando que cada bocado sea tierno y sabroso."
+      ]
+    },
+    {
+      "nombre": "Pollo Teriyaki",
+      "tipo": "Salteado",
+      "sabor": "Asiático",
+      "utensilios": ["Wok o sartén grande", "Cuchillo", "Tabla de cortar", "Recipiente para marinar", "Espátula"],
+      "ingredientes": ["2 pechugas de pollo", "Salsa de soja", "Miel", "Jengibre", "Ajo", "Aceite de sésamo", "Cebollín", "Semillas de sésamo"],
+      "pasos": [
+        "Comienza preparando las pechugas de pollo. Lávalas bien y sécalas con papel de cocina. Luego, córtalas en cubos de aproximadamente 2 cm de lado. Es importante que todos los trozos sean de tamaño similar para que se cocinen de manera uniforme.",
+        "En un recipiente mediano, prepara la marinada teriyaki. Vierte 4 cucharadas de salsa de soja, 2 cucharadas de miel, 1 cucharadita de jengibre fresco rallado y 2 dientes de ajo picados finamente. Mezcla todos los ingredientes hasta que la miel se disuelva completamente.",
+        "Coloca los trozos de pollo en el recipiente con la marinada y asegúrate de que todos los trozos queden bien cubiertos. Tapa el recipiente y refrigera durante al menos 30 minutos. Si tienes más tiempo, puedes dejarlo marinar hasta 2 horas para un sabor más intenso.",
+        "Calienta un wok o una sartén grande a fuego alto. Añade 2 cucharadas de aceite de sésamo y espera a que esté bien caliente. Cuando el aceite comience a desprender humo, está listo para cocinar el pollo.",
+        "Con cuidado, añade el pollo marinado al wok caliente. Cocina durante 4-5 minutos, moviendo constantemente para que todos los trozos se doren por igual. El pollo debe quedar dorado por fuera pero jugoso por dentro.",
+        "Vierte el resto de la marinada sobre el pollo en el wok. Reduce el fuego a medio y continúa cocinando durante 2-3 minutos más, o hasta que la salsa espese y cubra completamente el pollo. La salsa debe quedar brillante y pegajosa.",
+        "Retira el pollo del fuego y transfiérelo a un plato de servir. Espolvorea por encima cebollín fresco picado y semillas de sésamo tostadas para dar un toque final de color y textura. Sirve inmediatamente mientras está caliente."
+      ]
+    }
+  ],
+  "Carne de Res": [
+    {
+      "nombre": "Bife de Chorizo a la Parrilla",
+      "tipo": "a la Parrilla",
+      "sabor": "Casero",
+      "utensilios": ["Parrilla", "Pinzas para carne", "Termómetro de carne", "Tabla de cortar", "Cuchillo afilado"],
+      "ingredientes": ["4 bifes de chorizo", "Sal gruesa", "Pimienta negra", "Aceite de oliva", "Ajo", "Perejil"],
+      "pasos": [
+        "La clave para unos buenos bifes a la parrilla comienza con la preparación previa. Saca los bifes de la heladera al menos 30 minutos antes de cocinarlos. Esto permite que la carne alcance la temperatura ambiente y se cocine de manera más uniforme.",
+        "Mientras los bifes se templan, prepara la parrilla. Asegúrate de que las brasas estén bien formadas y distribuidas uniformemente. La parrilla debe estar muy caliente antes de colocar la carne, idealmente con una temperatura de alrededor de 250-300°C.",
+        "Justo antes de cocinar, sazona los bifes generosamente con sal gruesa y pimienta negra recién molida. No añadas sal con demasiada anticipación, ya que esto puede sacar la humedad de la carne y hacerla más seca.",
+        "Pinta ligeramente los bifes con aceite de oliva usando una brocha de cocina. Esto ayudará a que no se peguen a la parrilla y contribuirá a formar una capa dorada y crujiente en la superficie.",
+        "Coloca los bifes en la parrilla caliente. Cocina durante 4-5 minutos por cada lado para obtener un punto medio. Si prefieres la carne más cocida, deja 1-2 minutos más por lado. No muevas los bifes demasiado pronto para permitir que se forme la costra dorada.",
+        "Para verificar el punto de cocción, puedes usar un termómetro de carne. Para punto medio, la temperatura interna debe ser de alrededor de 63°C. Si no tienes termómetro, puedes presionar ligeramente la carne con los dedos: si cede un poco al presionar pero vuelve a su forma, está en punto medio.",
+        "Una vez cocidos al gusto, retira los bifes de la parrilla y déjalos reposar en una tabla de cortar durante 5 minutos. Este paso es fundamental para que los jugos se redistribuyan por la carne. Justo antes de servir, puedes añadir un poco de ajo picado y perejil fresco por encima para dar un toque extra de sabor."
+      ]
+    },
+    {
+      "nombre": "Estofado de Carne",
+      "tipo": "Estofado",
+      "sabor": "Tradicional",
+      "utensilios": ["Olla grande", "Cuchara de madera", "Tabla de cortar", "Cuchillo", "Tapa"],
+      "ingredientes": ["1kg de carne de res", "2 cebollas", "3 zanahorias", "2 tallos de apio", "Vino tinto", "Caldo de carne", "Harina", "Aceite"],
+      "pasos": [
+        "Para comenzar, prepara todos los ingredientes. Corta la carne de res en cubos de aproximadamente 3 cm. Es importante que la carne tenga algo de grasa para que el estofado quede más sabroso y jugoso. Pasa los cubos de carne por harina, sacudiendo el exceso. Esto ayudará a espesar la salsa más tarde.",
+        "Calienta un poco de aceite en una olla grande a fuego medio-alto. Cuando el aceite esté caliente, añade los cubos de carne enharinados y dóralos por todos lados. Es importante que no satures la olla para que la carne se dore en lugar de cocerse al vapor. Este proceso tomará unos 5-7 minutos.",
+        "Mientras la carne se dora, pica las cebollas en cubos medianos, las zanahorias en rodajas y el apio en trozos pequeños. Una vez que la carne esté dorada, retírala temporalmente de la olla y en el mismo aceite, añade las verduras picadas.",
+        "Cocina las verduras durante 5-7 minutos, removiendo ocasionalmente, hasta que estén blandas y ligeramente doradas. Este proceso desarrollará los sabores base de tu estofado. Si es necesario, añade un poco más de aceite.",
+        "Vuelve a poner la carne dorada en la olla con las verduras. Vierte el vino tinto, raspando el fondo de la olla con una cuchara de madera para soltar todos los sabores caramelizados que se han pegado. Deja que el vino se reduzca a la mitad, lo que tomará unos 3-4 minutos.",
+        "Añade suficiente caldo de carne para cubrir completamente la carne y las verduras. Lleva la mezcla a ebullición, luego reduce el fuego al mínimo, tapa la olla y deja cocinar a fuego lento durante al menos 2 horas. El estofado estará listo cuando la carne esté tan tierna que se deshace fácilmente con un tenedor.",
+        "Una vez que el estofado esté listo, puedes ajustar la sazón con sal y pimienta. Si prefieres una salsa más espesa, puedes cocinar sin tapa durante los últimos 15-20 minutos. Sirve caliente, acompañado de pan crujiente para mojar en la deliciosa salsa."
+      ]
+    }
+  ],
+  "Pescado": [
+    {
+      "nombre": "Salmón al Horno",
+      "tipo": "al Horno",
+      "sabor": "Gourmet",
+      "utensilios": ["Horno", "Bandeja para horno", "Papel de aluminio", "Cepillo para pescado", "Jugo de limón"],
+      "ingredientes": ["4 filetes de salmón", "1 limón", "Eneldo fresco", "Aceite de oliva", "Sal", "Pimienta", "Ajo en polvo"],
+      "pasos": [
+        "Comienza precalentando el horno a 180°C. Mientras tanto, prepara la bandeja para horno forrándola completamente con papel de aluminio. Esto no solo facilitará la limpieza posterior, sino que también ayudará a que el salmón se cocine en sus propios jugos.",
+        "Toma los filetes de salmón y asegúrate de que estén completamente descongelados y secos. Usa papel de cocina para eliminar cualquier exceso de humedad de la superficie. Esto es crucial para obtener una piel dorada y crujiente en lugar de una textura gomosa.",
+        "En un bol pequeño, prepara el aderezo. Mezcla el jugo de un limón fresco, 3 cucharadas de aceite de oliva virgen extra, 1 cucharadita de ajo en polvo, sal y pimienta al gusto. Bate bien hasta que todos los ingredientes estén bien incorporados.",
+        "Coloca los filetes de salmón en la bandeja preparada, con la piel hacia abajo. Con la ayuda de un cepillo de cocina, pinta cada filete generosamente con la mezcla de limón y aceite. Asegúrate de cubrir bien toda la superficie.",
+        "Espolvorea sobre los filetes eneldo fresco picado finamente. El eneldo complementa perfectamente el sabor del salmón y le da un toque aromático fresco. Si no tienes eneldo fresco, puedes usar eneldo seco, aunque el sabor será menos intenso.",
+        "Introduce la bandeja en el horno precalentado y cocina durante 15-18 minutos. El tiempo exacto dependerá del grosor de los filetes. El salmón estará listo cuando la carne se vuelva de un color rosa pálido opaco y se desmenuce fácilmente con un tenedor.",
+        "Una vez cocido, retira el salmón del horno y déjalo reposar durante 2-3 minutos antes de servir. Este breve reposo permite que los jugos se asienten. Decora con un poco más de eneldo fresco y, si lo deseas, unas rodajas de limón para decorar."
+      ]
+    },
+    {
+      "nombre": "Ceviche de Pescado",
+      "tipo": "Crujiente",
+      "sabor": "Fresco",
+      "utensilios": ["Bol grande", "Cuchillo", "Tabla de cortar", "Colador", "Recipiente de vidrio"],
+      "ingredientes": ["500g de pescado blanco", "8 limones", "Cebolla morada", "Ají", "Cilantro", "Sal", "Pimienta"],
+      "pasos": [
+        "La clave para un buen ceviche comienza con la selección del pescado. Elige un pescado blanco fresco de alta calidad, como corvina, mero o lenguado. Asegúrate de que esté extremadamente fresco, ya que el pescado se cocinará únicamente con el ácido de los limones.",
+        "Lava bien el pescado bajo agua fría y sécalo completamente con papel de cocina. Con un cuchillo muy afilado, córtalo en cubos pequeños y uniformes de aproximadamente 1.5 cm. Es importante que todos los trozos sean de tamaño similar para que se 'cocinen' de manera uniforme en el limón.",
+        "Exprime los 8 limones para obtener aproximadamente 1 taza de jugo fresco. Cuela el jugo para eliminar cualquier semilla o pulpa que pueda quedar. El jugo de limón debe ser fresco y de buena calidad, ya que será el principal agente de cocción.",
+        "Coloca los cubos de pescado en un recipiente de vidrio y vierte el jugo de limón fresco sobre ellos. Asegúrate de que el pescado quede completamente cubierto por el jugo. Tapa el recipiente y refrigera durante 30 minutos. Durante este tiempo, el ácido del limón 'cocinará' el pescado, que cambiará de color translúcido a opaco.",
+        "Mientras el pescado se marina en el limón, prepara los demás ingredientes. Corta la cebolla morada en juliana muy fina. Para reducir su picante, puedes dejarla en remojo en agua fría con un poco de sal durante 10 minutos, luego escúrrela bien.",
+        "Pica finamente el ají (retira las semillas si prefieres menos picante) y el cilantro fresco. Después de los 30 minutos de marinado, saca el pescado del refrigerador. Verás que ahora tiene un color blanco opaco, lo que indica que está 'cocido' por el limón.",
+        "Escurre bien el exceso de jugo de limón del pescado. En un bol grande, combina el pescado marinado con la cebolla morada, el ají picado y el cilantro fresco. Mezcla suavemente. Sazona con sal y pimienta al gusto. Sirve inmediatamente en copas o platos hondos, bien frío. Puedes acompañar con camote sancochado o canchita tostada."
+      ]
+    }
+  ],
+  "Pasta": [
+    {
+      "nombre": "Spaghetti Carbonara",
+      "tipo": "Cocido",
+      "sabor": "Italiano",
+      "utensilios": ["Olla grande", "Sartén", "Colador", "Espátula", "Tenedor", "Rallador"],
+      "ingredientes": ["400g de spaghetti", "200g de panceta", "4 yemas de huevo", "Queso parmesano", "Pimienta negra", "Sal"],
+      "pasos": [
+        "Para comenzar, pon una olla grande con abundante agua a hervir. Cuando el agua esté hirviendo vigorosamente, añade una buena cantidad de sal (debe saber como el mar). Añade los spaghetti y cocínalos según las instrucciones del paquete hasta que estén 'al dente' (firmes al morder). Reserva una taza del agua de cocción antes de escurrir la pasta.",
+        "Mientras la pasta se cocina, prepara los demás ingredientes. Corta la panceta en tiras pequeñas o cubos. En una sartén grande a fuego medio, cocina la panceta hasta que esté crujiente y dorada. Retira la panceta de la sartén y reserva, dejando aproximadamente 2 cucharadas de la grasa derretida en la sartén.",
+        "En un bol mediano, bate las 4 yemas de huevo hasta que estén ligeramente espumosas. Añade aproximadamente 1 taza de queso parmesano recién rallado y una generosa cantidad de pimienta negra recién molida. Mezcla bien hasta obtener una crema homogénea.",
+        "Cuando la pasta esté lista, escúrrala (pero no demasiado, debe conservar un poco del agua de cocción). Inmediatamente, añade la pasta caliente a la sartén donde cocinaste la panceta, a fuego medio-bajo. Remueve rápidamente para que la pasta se impregne con los sabores de la grasa de la panceta.",
+        "Retira la sartén del fuego. Este paso es crucial: vierte la mezcla de yemas y queso sobre la pasta caliente, removiendo constantemente y vigorosamente con un tenedor. El calor residual de la pasta cocinará las yemas sin que se cuajen, creando una salsa cremosa y sedosa.",
+        "Añade la panceta crujiente reservada a la pasta y mezcla suavemente. Si la salsa parece demasiado espesa, añade un poco del agua de cocción reservada, una cucharada a la vez, hasta alcanzar la consistencia deseada.",
+        "Sirve inmediatamente en platos calientes. Espolvorea por encima más queso parmesano rallado y pimienta negra recién molida. La carbonara debe servirse al momento, ya que se enfría rápidamente y la salsa puede espesar demasiado."
+      ]
+    }
+  ],
+  "Arroz": [
+    {
+      "nombre": "Paella Valenciana",
+      "tipo": "Cocido",
+      "sabor": "Español",
+      "utensilios": ["Paellera", "Cuchara de madera", "Fuente de gas", "Cuchillo", "Tabla de cortar"],
+      "ingredientes": ["400g de arroz bomba", "Pollo", "Conejo", "Gambas", "Judías verdes", "Azafrán", "Tomate", "Aceite oliva"],
+      "pasos": [
+        "La paella valenciana auténtica requiere una paellera y fuego de gas, aunque también se puede hacer en cocina eléctrica. Comienza calentando la paellera a fuego medio-alto y añade abundante aceite de oliva virgen extra, suficiente para cubrir el fondo con unos 3 mm de aceite.",
+        "Mientras el aceite se calienta, prepara las carnes. Corta el pollo y el conejo en trozos medianos, salpiméntalos ligeramente. Cuando el aceite esté caliente (pero sin que humee), añade los trozos de pollo y conejo y dóralos por todos lados hasta que estén bien dorados. Esto tomará unos 10-12 minutos.",
+        "Una vez doradas las carnes, retíralas de la paellera y reserva. En el mismo aceite, añade las judías verdes limpias y cortadas en trozos de 3-4 cm. Sofríelas durante 5 minutos hasta que estén tiernas pero aún crujientes.",
+        "Añade 2-3 tomates rallados a la paellera. Cocina el tomate durante 3-4 minutos, removiendo constantemente con una cuchara de madera, hasta que se haya evaporado el agua y el tomate esté bien concentrado y caramelizado.",
+        "Vuelve a poner las carnes doradas en la paellera. Añade el arroz bomba y remueve bien durante unos 2 minutos para que el arroz se impregne de todos los sabores. El arroz bomba es esencial porque absorbe bien los líquidos sin pasarse.",
+        "Vierte agua caliente hasta cubrir todos los ingredientes en la paellera (aproximadamente 1 litro y medio). Añade una pizca de azafrán (o 1/4 cucharadita de colorante alimenticio) y sal al gusto. Lleva a ebullición y luego reduce el fuego a medio-bajo.",
+        "Cocina sin remover durante unos 18 minutos. A los 10 minutos, coloca las gambas limpias sobre el arroz. Cuando falten 2 minutos, aumenta el fuego al máximo durante 1 minuto para crear el 'socarrat' (la capa crujiente de arroz en el fondo), luego reduce al mínimo durante el último minuto. Retira del fuego y deja reposar 5 minutos antes de servir."
+      ]
+    }
+  ]
+}

@@ -7,7 +7,8 @@
   <title>Ingrediente Cero - Recetas Deliciosas</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="./css/styles.css?v=2.1.1">
 </head>
 
 <body>
@@ -20,6 +21,11 @@
         <a href="index.html" class="nav-link active">Inicio</a>
         <a href="pages/generar-receta.html" class="nav-link">Generar Receta</a>
         <a href="pages/historial.html" class="nav-link">Historial</a>
+        <a href="pages/libros.html" class="nav-link">Libros</a>
+        <div class="cart-icon" id="cartIcon">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
       </nav>
     </div>
   </header>
@@ -57,6 +63,54 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
-</body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Sistema de versionamiento - PRIMERO -->
+  <script src="./js/version.js?v=2.1.1"></script>
+  <!-- Scripts de la aplicación -->
+  <script defer src="./js/data.js?v=2.1.1"></script>
+  <script defer src="./js/storage.js?v=2.1.1"></script>
+  <script defer src="./js/ui.js?v=2.1.1"></script>
+  <script defer src="./js/libros.js?v=2.1.1"></script>
+  <script>
+    // LIMPIEZA DE CACHÉ AGRESIVA - VERSIÓN 2.1.2
+    const CURRENT_VERSION = '2.1.2';
+    localStorage.setItem('FORCE_RELOAD', 'true');
+
+    if (localStorage.getItem('app_version') !== CURRENT_VERSION || localStorage.getItem('FORCE_RELOAD') === 'true') {
+      console.log('🔄 LIMPIEZA FORZADA - Versión:', CURRENT_VERSION);
+
+      // Limpiar TODO
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Establecer nueva versión
+      localStorage.setItem('app_version', CURRENT_VERSION);
+      localStorage.setItem('FORCE_RELOAD', 'false');
+
+      // Forzar recarga completa
+      window.location.reload(true);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('✅ Página cargada - Versión 2.1.2 - CON LIBROS');
+
+      // Actualizar contador del carrito en el index
+      const carritoCount = document.getElementById('cartCount');
+      if (carritoCount) {
+        const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+        const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
+        carritoCount.textContent = totalItems;
+      }
+
+      // Event listener para icono del carrito
+      const cartIcon = document.getElementById('cartIcon');
+      if (cartIcon) {
+        cartIcon.addEventListener('click', () => {
+          window.location.href = 'pages/carrito.html';
+        });
+      }
+    });
+  </script>
+  </body>
 
 </html>

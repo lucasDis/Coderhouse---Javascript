@@ -1,207 +1,269 @@
-<a name="readme-top"></a>
+# 🍳 Ingrediente Cero - Generador de Recetas
 
-<div align="center">
+Aplicación web interactiva para generar recetas personalizadas basadas en ingredientes disponibles.
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+## 📋 Descripción
 
-<h1>Ingrediente Cero</h1>
-<p>Generador Inteligente de Recetas Deliciosas</p>
+**Ingrediente Cero** es un simulador de generación de recetas que permite a los usuarios:
+- Generar recetas rápidas aleatorias
+- Seleccionar ingredientes específicos para crear recetas personalizadas
+- Guardar recetas favoritas
+- Calificar recetas del 1 al 5 estrellas
+- Ver estadísticas de uso
+- Exportar e importar historial de recetas
+- Funcionar en modo offline
 
-[![Demo en vivo][demo-shield]][demo-url]
-· [Reportar error][issues-url] · [Sugerir algo][issues-url]
+## 🚀 Características
 
-</div>
+### ✨ Funcionalidades Principales
+- **Generación Rápida**: Crea una receta aleatoria al instante
+- **Selección Personalizada**: Elige hasta 5 ingredientes para tu receta
+- **Sistema de Favoritos**: Marca tus recetas preferidas con ⭐
+- **Calificación**: Puntúa tus recetas del 1 al 5 estrellas
+- **Historial Completo**: Accede a todas tus recetas guardadas
+- **Filtros Avanzados**: Busca por nombre, ingrediente, estilo o favoritos
+- **Estadísticas**: Visualiza tus hábitos culinarios
+- **Export/Import**: Respalda y restaura tus recetas en formato JSON
+- **Modo Offline**: Funciona sin conexión a internet
 
-<details>
-<summary>Tabla de contenidos</summary>
+### 🎯 Circuito Completo de Negocio
 
-- [Sobre el Proyecto](#sobre-el-proyecto)
-- [Características principales](#características-principales)
-  - [Capturas de pantalla](#capturas-de-pantalla)
-- [Para empezar](#para-empezar)
-  - [Requisitos previos](#requisitos-previos)
-  - [Instalación](#instalación)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [🛠️ Stack](#️-stack)
-
-</details>
-
-## Sobre el Proyecto
-
-**Ingrediente Cero** es una aplicación web interactiva que permite a los usuarios generar recetas personalizadas de manera dinámica e inteligente. Combina ingredientes seleccionados por el usuario con métodos de cocción y sabores para crear nombres únicos de recetas completas con instrucciones detalladas.
-
-El proyecto ha evolucionado desde un simple simulador a una aplicación web completa con arquitectura modular, interfaz de usuario moderna y funcionalidades avanzadas como almacenamiento local y historial de recetas.
-
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
-
-## Características principales
-
-- **Generación de Recetas**: Crea recetas instantáneas o personalizadas con ingredientes seleccionados
-- **Base de Datos Extensa**: Acceso a múltiples ingredientes, métodos de cocción y estilos de sabor
-- **Recetas Completas**: Genera recetas con utensilios, ingredientes detallados y pasos de preparación
-- **Interfaz Moderna**: Diseño responsivo con Flowbite y CSS personalizado
-- **Almacenamiento Local**: Guarda tus recetas favoritas y accede al historial
-- **Navegación Intuitiva**: Sistema de páginas para generación e historial de recetas
+1. **Inicio**: El usuario ingresa a la aplicación
+2. **Selección de Modo**: 
+   - Modo Rápido: Genera receta automática
+   - Modo Personalizado: Selecciona ingredientes
+3. **Generación**: El sistema crea una receta con:
+   - Nombre único
+   - Lista de utensilios necesarios
+   - Ingredientes detallados
+   - Pasos de preparación completos
+4. **Visualización**: Muestra la receta completa
+5. **Interacción**:
+   - Guardar en historial
+   - Marcar como favorita
+   - Calificar con estrellas
+6. **Gestión**: 
+   - Revisar historial
+   - Filtrar y buscar recetas
+   - Ver estadísticas
+   - Exportar/Importar datos
 
 ### Capturas de pantalla
 
 ![Captura de pantalla principal](./src/images/CP-principal.jpg)
 ![Captura de pantalla generador](./src/images/CP-generador.jpg)
 
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
-
-## Para empezar
-
-### Requisitos previos
-
-- Navegador web moderno (Chrome, Firefox, Safari, Edge)
-- Servidor local opcional (para desarrollo)
-
-### Instalación
-
-1. Clona el repositorio
-
-   ```sh
-   git clone https://github.com/lucasDis/Coderhouse---Javascript.git
-   ```
-
-2. Navega al directorio del proyecto
-
-   ```sh
-   cd Coderhouse---Javascript
-   ```
-
-3. Abre el archivo `index.html` en tu navegador web
-
-   ```sh
-   # Opción 1: Doble clic en el archivo index.html
-   # Opción 2: Usa un servidor local
-   python -m http.server 8000
-   # Luego abre http://localhost:8000 en tu navegador
-   ```
-
-4. ¡Listo! Comienza a generar recetas deliciosas
-
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
-
-## Estructura del Proyecto
-
+## 📂 Estructura del Proyecto
 ```
-Coderhouse---Javascript/
-├── index.html                    # Página principal con landing page
-├── README.md                     # Documentación del proyecto
-├── css/
-│   └── styles.css               # Estilos CSS personalizados
-├── js/
-│   ├── data.js                  # Base de datos de ingredientes y recetas
-│   ├── generator.js             # Lógica principal de generación de recetas
-│   ├── history.js               # Gestión de historial de recetas
-│   ├── storage.js               # Manejo de almacenamiento local
-│   └── ui.js                    # Gestión de interfaz de usuario
+ingrediente-cero/
+│
+├── index.html                 # Página principal
+├── README.md                  # Este archivo
+├── sw.js                      # Service Worker para modo offline
+│
 ├── pages/
-│   ├── generar-receta.html      # Página de generación de recetas
-│   └── historial.html           # Página de historial de recetas
-└── src/
-    └── images/
-        ├── CP-principal.jpg     # Captura de pantalla principal
-        └── CP-generador.jpg     # Captura de pantalla generador de recetas
+│   ├── generar-receta.html   # Página de generación
+│   └── historial.html        # Página de historial
+│
+├── css/
+│   └── styles.css            # Estilos de la aplicación
+│
+├── js/
+│   ├── data.js               # Carga de datos desde JSON
+│   ├── storage.js            # Gestión de localStorage
+│   ├── ui.js                 # Manejo de interfaz
+│   ├── generator.js          # Lógica de generación
+│   ├── history.js            # Lógica de historial
+│   └── sw-register.js        # Registro del Service Worker
+│
+└── data/
+    ├── ingredientes.json      # Base de datos de ingredientes
+    ├── metodos.json          # Métodos de cocción
+    ├── sabores.json          # Estilos culinarios
+    └── recetas-completas.json # Recetas predefinidas
 ```
 
-### Módulos Principales
+## 🛠️ Tecnologías Utilizadas
 
-#### **data.js**
-- Base de datos extensa de ingredientes (carnes, mariscos, vegetales, frutas, etc.)
-- Métodos de cocción disponibles
-- Estilos de sabor internacionales
-- Recetas completas predefinidas con instrucciones detalladas
+- **HTML5**: Estructura semántica
+- **CSS3**: Estilos y animaciones
+- **JavaScript ES6+**: Lógica de aplicación
+- **Fetch API**: Carga de datos JSON
+- **LocalStorage**: Persistencia de datos
+- **Service Worker**: Funcionalidad offline
+- **JSON**: Base de datos simulada
 
-#### **generator.js**
-- Clase `SimuladorRecetas` con métodos principales
-- Generación de recetas rápidas aleatorias
-- Generación de recetas personalizadas con selección de ingredientes
-- Búsqueda de recetas completas en la base de datos
-- Control de flujo y estado de la aplicación
+## 💾 Almacenamiento de Datos
 
-#### **storage.js**
-- Sistema de almacenamiento local con localStorage
-- Guardado y recuperación de recetas favoritas
-- Gestión de historial de recetas generadas
-- Persistencia de datos entre sesiones
+La aplicación utiliza **localStorage** para:
+- Historial de recetas generadas
+- Lista de recetas favoritas
+- Calificaciones de cada receta
+- Sin límite de almacenamiento (depende del navegador)
 
-#### **ui.js**
-- Gestión completa de la interfaz de usuario
-- Renderizado dinámico de ingredientes
-- Manejo de paneles y modales
-- Sistema de mensajes y notificaciones
-- Actualización de estado de botones y elementos interactivos
+## 📱 Instalación y Uso
 
-#### **history.js**
-- Gestión del historial de recetas
-- Visualización de recetas guardadas
-- Funcionalidades de filtrado y búsqueda
-- Eliminación y gestión de recetas almacenadas
+### Requisitos
+- Navegador web moderno (Chrome, Firefox, Safari, Edge, Opera, Brave)
+- No requiere servidor web (funciona con file://)
+- Recomendado: Usar servidor local para Service Worker
 
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+### Pasos para Ejecutar
 
-## GitHub Pages
+1. **Descargar el proyecto**
+```bash
+   # Si tienes Git
+   git clone [https://github.com/lucasDis/Coderhouse---Javascript]
+   
+   # O descargar ZIP y extraer
+```
 
-La aplicación está desplegada en GitHub Pages para que puedas probarla directamente en tu navegador sin necesidad de clonar el repositorio.
+2. **Opción A: Abrir directamente**
+   - Doble clic en `index.html`
+   - Nota: Service Worker no funcionará con file://
 
-### 🌐 Demo en Vivo
+3. **Opción B: Usar servidor local (Recomendado)**
+```bash
+   # Con Python 3
+   python -m http.server 8000
+   
+   # Con Node.js (http-server)
+   npx http-server
+   
+   # Con PHP
+   php -S localhost:8000
+```
+   
+   Luego abrir: `http://localhost:8000`
 
-Accede a la aplicación a través de la siguiente URL:
+4. **Navegar**
+   - Inicio: Información y acceso rápido
+   - Generar Receta: Crear nuevas recetas
+   - Historial: Ver recetas guardadas
 
-**[https://lucasdis.github.io/Coderhouse---Javascript/](https://lucasdis.github.io/Coderhouse---Javascript/)**
+## 🎮 Guía de Uso
 
-### Características de la Demo
+### Generar Receta Rápida
+1. Click en "Generar Receta" en el menú
+2. Click en "Generar Ahora"
+3. La receta se mostrará automáticamente
+4. Click en "Guardar Receta" para añadir al historial
+5. Califica con estrellas y marca como favorita
 
-- **Funcionalidad Completa**: Todas las características del generador de recetas están disponibles
-- **Responsive Design**: La aplicación se adapta a dispositivos móviles y de escritorio
-- **Almacenamiento Local**: Tus recetas se guardan en el navegador (no persisten entre dispositivos)
-- **Navegación Intuitiva**: Explora entre la página principal, generador de recetas e historial
+### Generar Receta Personalizada
+1. Click en "Seleccionar Ingredientes"
+2. Click en hasta 5 ingredientes de la lista
+3. Click en "Terminar Selección"
+4. Revisa tu receta personalizada
+5. Guarda, califica y marca como favorita
 
-### Notas sobre el Despliegue
+### Gestionar Historial
+1. Click en "Historial" en el menú
+2. Usa los filtros para buscar:
+   - Búsqueda por texto
+   - Ordenar por fecha/nombre/calificación
+   - Filtrar por estilo culinario
+   - Mostrar solo favoritos
+3. Click en una receta para ver detalles
+4. Califica o marca/desmarca favoritos
 
-- La aplicación utiliza JavaScript puro sin dependencias de backend
-- El almacenamiento es local (localStorage) por lo que las recetas solo se guardan en tu navegador
-- No se requiere registro ni cuenta para usar la aplicación
-- Compatible con navegadores modernos (Chrome, Firefox, Safari, Edge)
+### Ver Estadísticas
+1. En Historial, click en "📊 Ver Estadísticas"
+2. Revisa:
+   - Total de recetas
+   - Ingrediente más usado
+   - Método favorito
+   - Estilo preferido
+   - Calificación promedio
+   - Total de favoritos
 
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+### Exportar/Importar
+- **Exportar**: Click en "💾 Exportar" → Se descarga JSON
+- **Importar**: Click en "📥 Importar" → Selecciona archivo JSON
 
-## 🛠️ Stack
+## 🔧 Características Técnicas
 
-- [![HTML5][html5-badge]][html5-url] - Lenguaje de marcado estándar para la web
-- [![JavaScript][javascript-badge]][javascript-url] - Lenguaje de programación para la web
-- [![CSS3][css3-badge]][css3-url] - Lenguaje de estilos para la web
-- [![Flowbite][flowbite-badge]][flowbite-url] - Biblioteca de componentes UI basada en Tailwind CSS
-- [![Google Fonts][fonts-badge]][fonts-url] - Tipografías web de Google
+### Manejo de Errores
+- Try-catch en todas las operaciones críticas
+- Mensajes toast UX-friendly
+- Validación de datos JSON importados
+- Fallback para conexión offline
 
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+### Performance
+- Carga asíncrona de datos JSON
+- Event delegation para elementos dinámicos
+- CSS optimizado con variables
+- Animaciones con CSS en lugar de JS
 
-<!-- Badges and URLs -->
-[contributors-shield]: https://img.shields.io/github/contributors/lucasDis/Coderhouse---Javascript.svg?style=for-the-badge
-[contributors-url]: https://github.com/lucasDis/Coderhouse---Javascript/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lucasDis/Coderhouse---Javascript.svg?style=for-the-badge
-[forks-url]: https://github.com/lucasDis/Coderhouse---Javascript/network/members
-[stars-shield]: https://img.shields.io/github/stars/lucasDis/Coderhouse---Javascript.svg?style=for-the-badge
-[stars-url]: https://github.com/lucasDis/Coderhouse---Javascript/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lucasDis/Coderhouse---Javascript.svg?style=for-the-badge
-[issues-url]: https://github.com/lucasDis/Coderhouse---Javascript/issues
-[demo-shield]: https://img.shields.io/badge/Demo-en%20vivo-brightgreen?style=for-the-badge
-[demo-url]: https://lucasdis.github.io/Coderhouse---Javascript/
+### Accesibilidad
+- Semantic HTML
+- Labels en todos los inputs
+- Contraste de colores adecuado
+- Responsive design
 
-<!-- Stack Badges -->
-[html5-badge]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
-[html5-url]: https://developer.mozilla.org/en-US/docs/Glossary/HTML5
-[javascript-badge]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
-[javascript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
-[css3-badge]: https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white
-[css3-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
-[flowbite-badge]: https://img.shields.io/badge/Flowbite-38BDF8?style=for-the-badge&logo=flowbite&logoColor=white
-[flowbite-url]: https://flowbite.com/
-[fonts-badge]: https://img.shields.io/badge/Google%20Fonts-4285F4?style=for-the-badge&logo=google&logoColor=white
-[fonts-url]: https://fonts.google.com/
+## 📊 Datos Disponibles
+
+- **97 Ingredientes**: Carnes, verduras, frutas, lácteos, granos, especias
+- **14 Métodos de Cocción**: Horno, parrilla, salteado, etc.
+- **15 Estilos Culinarios**: Mediterráneo, asiático, italiano, etc.
+- **7 Recetas Completas Predefinidas**: Con pasos detallados
+
+## 🌐 Modo Offline
+
+La aplicación funciona completamente sin conexión:
+1. Al cargar por primera vez, se cachean todos los recursos
+2. Service Worker intercepta peticiones
+3. Indicador visual cuando no hay conexión
+4. LocalStorage mantiene todos los datos
+
+## ⚠️ Limitaciones Conocidas
+
+- No hay backend real (simulado con JSON)
+- No hay autenticación de usuarios
+- Límite de 5 ingredientes en modo personalizado
+- Service Worker requiere HTTPS o localhost
+- LocalStorage limitado por el navegador (~5-10MB)
+
+## 🐛 Troubleshooting
+
+**Problema**: Los datos no cargan
+- **Solución**: Verifica que los archivos JSON estén en `/data/`
+- Revisa la consola del navegador (F12)
+- Asegúrate de usar servidor local si usas fetch
+
+**Problema**: Service Worker no funciona
+- **Solución**: Usa HTTPS o localhost (no file://)
+- Limpia cache del navegador
+- Verifica que sw.js esté en la raíz
+
+**Problema**: No se guardan las recetas
+- **Solución**: Verifica que localStorage esté habilitado
+- Revisa modo privado/incognito del navegador
+- Limpia localStorage y recarga
+
+## 👨‍💻 Desarrollo
+
+### Extender la Aplicación
+
+**Agregar nuevos ingredientes**:
+- Edita `data/ingredientes.json`
+- Agrega strings al array
+
+**Agregar recetas completas**:
+- Edita `data/recetas-completas.json`
+- Sigue la estructura existente
+
+**Personalizar estilos**:
+- Edita variables CSS en `:root` en `styles.css`
+
+## 📄 Licencia
+
+Proyecto educativo - Uso libre para fines de aprendizaje
+
+## 🙏 Créditos
+
+Desarrollado como proyecto para el curso de JavaScript de Coderhouse
+
+---
+
+**¿Preguntas o problemas?** Abre un issue en el repositorio o contacta al desarrollador.
