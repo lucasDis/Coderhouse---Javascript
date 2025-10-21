@@ -130,20 +130,8 @@
   
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Sistema de versionamiento - PRIMERO -->
-  <script src="../js/version.js?v=2.1.1"></script>
-  <script>
-    // FORZAR LIMPIEZA DE CACHÉ - VERSIÓN 2.1.1
-    if (localStorage.getItem('app_version') !== '2.1.1') {
-      console.log('Forzando limpieza de caché...');
-      localStorage.clear();
-      sessionStorage.clear();
-      localStorage.setItem('app_version', '2.1.1');
-      window.location.reload(true);
-    }
-
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
-      console.log('Generador de recetas cargado - Versión 2.1.1');
 
       // Actualizar contador del carrito
       const carritoCount = document.getElementById('cartCount');

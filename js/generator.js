@@ -207,17 +207,13 @@ class SimuladorRecetas {
 
   static guardarRecetaActual() {
     if (estado.recetaActual) {
-      console.log('Guardando receta:', estado.recetaActual);
       StorageManager.guardarReceta(estado.recetaActual);
-      console.log('Receta guardada. Verificando StorageManager...');
 
       // Verificar que se guardó correctamente
       const recetas = StorageManager.obtenerRecetas();
-      console.log('Total recetas guardadas:', recetas.length);
 
       this.mostrarModalExito(estado.recetaActual);
     } else {
-      console.error('No hay receta actual para guardar');
       UIManager.mostrarMensaje('No hay receta para guardar', 'error');
     }
   }
@@ -286,13 +282,18 @@ class SimuladorRecetas {
       icon: 'success',
       iconColor: '#10b981',
       confirmButtonText: 'Ver en Historial',
-      confirmButtonColor: '#10b981',
+      confirmButtonColor: '#4CAF50',
       showCancelButton: true,
       cancelButtonText: 'Crear Otra Receta',
-      cancelButtonColor: '#6b7280',
+      cancelButtonColor: '#FF9800',
       showDenyButton: true,
       denyButtonText: 'Cerrar',
-      denyButtonColor: '#9ca3af',
+      denyButtonColor: '#F44336',
+      customClass: {
+        confirmButton: 'swal2-confirm-button',
+        cancelButton: 'swal2-cancel-button',
+        denyButton: 'swal2-deny-button'
+      },
       background: '#ffffff',
       width: '600px'
     }).then((result) => {

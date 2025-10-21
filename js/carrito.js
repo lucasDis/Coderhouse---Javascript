@@ -13,7 +13,7 @@ class CarritoPageManager {
   static cargarCarrito() {
     const container = document.getElementById('carritoItems');
     const emptyCart = document.getElementById('emptyCart');
-    const carrito = CarritoManager.obtenerCarrito();
+    const carrito = LibreriaManager.obtenerCarrito();
 
     if (carrito.length === 0) {
       container.style.display = 'none';
@@ -37,12 +37,12 @@ class CarritoPageManager {
 
     itemDiv.innerHTML = `
       <div class="item-imagen">
-        <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/100x140/cccccc/666666?text=Libro'">
+        <img src="${item.imagen}" alt="${item.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\\'width:100px;height:140px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:12px;text-align:center;\\'>📚</div>';">
       </div>
       <div class="item-info">
         <h4>${item.titulo}</h4>
         <p class="item-autor">por ${item.autor}</p>
-        <p class="item-precio">€${item.precio.toFixed(2)}</p>
+        <p class="item-precio">$${item.precio.toFixed(2)}</p>
       </div>
       <div class="item-cantidad">
         <div class="cantidad-controls">
@@ -52,7 +52,7 @@ class CarritoPageManager {
         </div>
       </div>
       <div class="item-subtotal">
-        <span class="subtotal-valor">€${(item.precio * item.cantidad).toFixed(2)}</span>
+        <span class="subtotal-valor">$${(item.precio * item.cantidad).toFixed(2)}</span>
       </div>
       <div class="item-eliminar">
         <button class="btn-eliminar" data-id="${item.id}" title="Eliminar del carrito">
@@ -96,7 +96,7 @@ class CarritoPageManager {
   }
 
   static actualizarCantidad(itemId, nuevaCantidad) {
-    CarritoManager.actualizarCantidad(itemId, nuevaCantidad);
+    LibreriaManager.actualizarCantidad(itemId, nuevaCantidad);
     this.cargarCarrito();
     this.actualizarResumen();
   }
@@ -106,7 +106,7 @@ class CarritoPageManager {
       'Eliminar Producto',
       '¿Estás seguro de que quieres eliminar este libro del carrito?',
       () => {
-        CarritoManager.eliminarProducto(itemId);
+        LibreriaManager.eliminarProducto(itemId);
         this.cargarCarrito();
         this.actualizarResumen();
         this.actualizarContadorCarrito();
@@ -116,18 +116,18 @@ class CarritoPageManager {
   }
 
   static actualizarResumen() {
-    const carrito = CarritoManager.obtenerCarrito();
-    const subtotal = CarritoManager.calcularTotal();
+    const carrito = LibreriaManager.obtenerCarrito();
+    const subtotal = LibreriaManager.calcularTotal();
     const envio = subtotal > 30 ? 0 : this.costoEnvio;
     const subtotalConDescuento = subtotal - this.descuento;
     const iva = (subtotalConDescuento + envio) * this.ivaRate;
     const total = subtotalConDescuento + envio + iva;
 
     // Actualizar valores en el DOM
-    document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
-    document.getElementById('envio').textContent = envio === 0 ? 'GRATIS' : `€${envio.toFixed(2)}`;
-    document.getElementById('iva').textContent = `€${iva.toFixed(2)}`;
-    document.getElementById('total').textContent = `€${total.toFixed(2)}`;
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('envio').textContent = envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`;
+    document.getElementById('iva').textContent = `$${iva.toFixed(2)}`;
+    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
 
     // Actualizar texto de envío
     const envioElement = document.getElementById('envio');
@@ -143,7 +143,7 @@ class CarritoPageManager {
   static actualizarContadorCarrito() {
     const carritoCount = document.getElementById('cartCount');
     if (carritoCount) {
-      const totalItems = CarritoManager.obtenerTotalItems();
+      const totalItems = LibreriaManager.obtenerTotalItems();
       carritoCount.textContent = totalItems;
     }
   }
@@ -165,10 +165,10 @@ class CarritoPageManager {
     };
 
     if (codigosValidos[codigo]) {
-      const subtotal = CarritoManager.calcularTotal();
+      const subtotal = LibreriaManager.calcularTotal();
       this.descuento = subtotal * codigosValidos[codigo];
 
-      UIManager.mostrarMensaje(`¡Código aplicado! Ahorraste €${this.descuento.toFixed(2)}`, 'success');
+      UIManager.mostrarMensaje(`¡Código aplicado! Ahorraste $${this.descuento.toFixed(2)}`, 'success');
       this.actualizarResumen();
 
       // Deshabilitar input y botón
@@ -180,7 +180,7 @@ class CarritoPageManager {
   }
 
   static procesarCompra() {
-    const carrito = CarritoManager.obtenerCarrito();
+    const carrito = LibreriaManager.obtenerCarrito();
 
     if (carrito.length === 0) {
       UIManager.mostrarMensaje('Tu carrito está vacío', 'warning');
@@ -297,33 +297,56 @@ class CarritoPageManager {
   }
 
   static finalizarCompra(datosCliente) {
+    // Generar número de seguimiento realista
+    const numeroSeguimiento = 'TRK' + Date.now().toString().slice(-8) + Math.floor(Math.random() * 100);
+    const numeroPedido = '#' + Date.now().toString().slice(-6);
+
     // Simular procesamiento del pago
     UIManager.mostrarMensaje('Procesando pago...', 'info');
 
     setTimeout(() => {
       // Vaciar carrito
-      CarritoManager.vaciarCarrito();
+      LibreriaManager.vaciarCarrito();
 
-      // Mostrar confirmación
+      // Mostrar confirmación mejorada
       Swal.fire({
         title: '¡Compra Exitosa!',
         html: `
-          <div class="success-message">
-            <div class="success-icon">✅</div>
-            <h3>Tu compra ha sido procesada exitosamente</h3>
-            <p>Hemos enviado un correo de confirmación a <strong>${datosCliente.email}</strong></p>
-            <p>Recibirás tu pedido en: <strong>${datosCliente.direccion}</strong></p>
-            <div class="order-number">
-              <strong>Número de pedido: #${Math.floor(Math.random() * 100000)}</strong>
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
+            <h3 style="color: #1f2937; margin-bottom: 1rem;">¡Pedido Confirmado!</h3>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">
+              Hemos enviado un correo de confirmación a<br>
+              <strong style="color: #4CAF50;">${datosCliente.email}</strong>
+            </p>
+            <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 0.5rem; margin: 1.5rem 0;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
+                <div>
+                  <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Número de Pedido</div>
+                  <div style="font-weight: 600; color: #1f2937; font-size: 1.1rem;">${numeroPedido}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Seguimiento</div>
+                  <div style="font-weight: 600; color: #4CAF50; font-size: 0.9rem;">${numeroSeguimiento}</div>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Dirección de Entrega</div>
+                <div style="color: #1f2937; font-weight: 500;">${datosCliente.direccion}</div>
+              </div>
             </div>
+            <p style="color: #6b7280; font-size: 0.9rem;">
+              Tiempo estimado de entrega: <strong>3-5 días hábiles</strong>
+            </p>
           </div>
         `,
-        icon: 'success',
+        icon: false,
         confirmButtonText: 'Ir a Libros',
-        confirmButtonColor: '#10b981',
+        confirmButtonColor: '#4CAF50',
         showCancelButton: true,
         cancelButtonText: 'Seguir Comprando',
-        cancelButtonColor: '#6b7280'
+        cancelButtonColor: '#FF9800',
+        width: '600px'
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = 'libros.html';
@@ -370,5 +393,12 @@ class CarritoPageManager {
 // EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', () => {
   CarritoPageManager.inicializar();
+  CarritoPageManager.actualizarContadorCarrito();
+});
+
+// Escuchar eventos de actualización del carrito desde otras páginas
+window.addEventListener('carritoActualizado', (event) => {
+  CarritoPageManager.cargarCarrito();
+  CarritoPageManager.actualizarResumen();
   CarritoPageManager.actualizarContadorCarrito();
 });

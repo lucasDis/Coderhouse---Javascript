@@ -473,7 +473,7 @@ body {
 .history-content {
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
-  padding: 2rem;
+  padding: 2rem 3.375rem; /* 2rem + 22px = 3.375rem */
   box-shadow: var(--shadow-light);
 }
 
@@ -546,12 +546,13 @@ body {
 .modal-content {
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
-  width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
+  width: 85vw;
+  max-width: 1200px;
+  max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-heavy);
   text-align: center;
+  margin: 2rem;
 }
 
 .modal-body {
@@ -600,6 +601,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  margin: 2rem;
 }
 
 .recipe-card {
@@ -747,6 +749,179 @@ body {
 .recipe-rating-modal .rating-stars {
   font-size: 1.5rem;
   margin-top: 0;
+}
+
+/* ==========================================
+   MODAL HORIZONTAL DE LIBROS
+   ========================================== */
+
+.modal-book-horizontal {
+  display: flex;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.modal-book-image-container {
+  flex-shrink: 0;
+  width: 250px;
+}
+
+.modal-book-image-container img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+}
+
+.modal-book-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-book-header h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.modal-author {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+.modal-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  background-color: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--border-radius-small);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.meta-value {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.modal-book-description h4 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.modal-book-description p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.modal-book-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.modal-book-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-original {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+.price-current {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-green);
+}
+
+.modal-book-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.modal-book-actions button {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+}
+
+.low-stock {
+  color: var(--primary-red);
+  font-weight: 600;
+  margin: 0;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+/* Responsive para modal horizontal */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95vw;
+    margin: 1rem;
+  }
+
+  .modal-book-horizontal {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-book-image-container {
+    align-self: center;
+  }
+
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-book-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .modal-book-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 98vw;
+    margin: 0.5rem;
+  }
 }
 
 /* ==========================================
@@ -943,9 +1118,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
   }
-  
+
   .stat-card {
     padding: 1rem;
+  }
+
+  .recipes-grid {
+    margin: 1.5rem;
+    gap: 1.25rem;
   }
   
   .stat-icon {
@@ -996,6 +1176,11 @@ body {
 @media (max-width: 480px) {
   .history-actions button {
     flex: 1 1 100%;
+  }
+
+  .recipes-grid {
+    margin: 1rem;
+    gap: 1rem;
   }
 }
 
@@ -1686,15 +1871,31 @@ body {
 
 .book-info {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .book-title {
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: var(--transition);
+  line-height: 1.3;
+  min-height: 2.6em; /* Espacio consistente para títulos de 2 líneas */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  flex-direction: column;
+  -webkit-line-clamp: 2;
+  -ms-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
 }
 
 .book-title:hover {
@@ -1705,6 +1906,56 @@ body {
   color: var(--text-secondary);
   font-size: 0.9rem;
   margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.book-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.book-category {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.book-pages {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.book-rating {
+  margin-bottom: 1rem;
+}
+
+.book-price-container {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.book-author {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.book-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.book-actions button {
+  flex: 1;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .book-meta {
@@ -2150,6 +2401,10 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .history-content {
+    padding: 2rem 1.5rem; /* Padding reducido para móviles */
+  }
+
   .carrito-item {
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto;
@@ -2182,5 +2437,27 @@ body {
   .item-eliminar {
     grid-column: 2;
     justify-self: end;
+  }
+
+  /* Estilos para botones de SweetAlert2 */
+  .swal2-confirm-button {
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px #4CAF50(0, 0, 0, 0.1) !important;
+    border: 2px solid #047857 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .swal2-cancel-button {
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #374151 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .swal2-deny-button {
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #4b5563 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   }
 }

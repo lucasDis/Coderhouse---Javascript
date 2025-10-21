@@ -183,3 +183,7 @@ class StorageManager {
 
     return false;
   }
+}
+
+// Exportar la clase para uso global
+window.StorageManager = StorageManager;

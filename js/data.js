@@ -23,10 +23,8 @@ async function cargarDatosIniciales() {
     const respRecetas = await fetch("../data/recetas-completas.json");
     recetasCompletas = await respRecetas.json();
 
-    console.log("✅ Datos cargados exitosamente");
     return true;
   } catch (error) {
-    console.error("❌ Error al cargar datos:", error);
     // Mostrar mensaje al usuario
     if (typeof UIManager !== "undefined") {
       UIManager.mostrarMensaje(

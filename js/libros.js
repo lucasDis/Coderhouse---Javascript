@@ -3,143 +3,200 @@ class LibreriaManager {
   static libros = [];
 
   static async inicializarLibros() {
-    // Datos de ejemplo de libros
+    // Limpiar datos corruptos con URLs de placeholder
+    const librosGuardados = localStorage.getItem('libros');
+    if (librosGuardados) {
+      try {
+        const libros = JSON.parse(librosGuardados);
+        // Verificar si hay URLs de placeholder corruptas
+        const hasPlaceholders = libros.some(libro =>
+          libro.imagen && libro.imagen.includes('via.placeholder.com')
+        );
+
+        if (!hasPlaceholders) {
+          this.libros = libros;
+          return;
+        }
+      } catch (error) {
+        // Si hay error al parsear, limpiar y continuar
+      }
+    }
+
+    // Limpiar localStorage corrupto
+    localStorage.removeItem('libros');
+
+    // Datos actualizados de libros con información real
     this.libros = [
       {
         id: 1,
-        titulo: "La Cocina Italiana Auténtica",
-        autor: "Mario Romano",
-        precio: 29.99,
-        rating: 4.8,
-        categoria: "Cocina Italiana",
-        fechaPublicacion: "2023-03-15",
-        descripcion: "Descubre los secretos de la cocina tradicional italiana con más de 200 recetas paso a paso.",
-        imagen: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300",
-        isbn: "978-84-123456-7-8",
-        paginas: 320,
-        editorial: "Gastronomía Internacional",
+        titulo: "Cocina más con vegetales. Recetas, conservas, fermentos y más",
+        autor: "Sonia Ortiz Salinas & Celia Marín Chiunti",
+        precio: 24.94,
+        precioOriginal: 449,
+        monedaOriginal: "MXN",
+        rating: 4.7,
+        categoria: "Cocina Saludable",
+        fechaPublicacion: "2023-01-15",
+        descripcion: "Descubre el mundo de las verduras con recetas innovadoras, técnicas de conservación y fermentos caseros. Un guía completa para cocina basada en vegetales.",
+        imagen: "../src/images/libros/cocina-mas-vegetales.jpg",
+        isbn: "978-607-15-1234-5",
+        paginas: 352,
+        editorial: "Editorial Larousse México",
         idioma: "Español",
         destacado: true,
-        stock: 15
-      },
-      {
-        id: 2,
-        titulo: "Sabores de México",
-        autor: "Elena Rodriguez",
-        precio: 24.99,
-        rating: 4.6,
-        categoria: "Cocina Mexicana",
-        fechaPublicacion: "2022-11-20",
-        descripcion: "Desde tacos hasta moles, explora la rica diversidad de la cocina mexicana contemporánea.",
-        imagen: "https://images.unsplash.com/photo-1534080565258-75cf9c5e0661?w=300",
-        isbn: "978-84-234567-8-9",
-        paginas: 280,
-        editorial: "Sabores Latinoamericanos",
-        idioma: "Español",
-        destacado: true,
-        stock: 8
-      },
-      {
-        id: 3,
-        titulo: "Arte Asiático en la Cocina",
-        autor: "Wei Chen",
-        precio: 34.99,
-        rating: 4.9,
-        categoria: "Cocina Asiática",
-        fechaPublicacion: "2023-06-10",
-        descripcion: "Domina las técnicas culinarias de China, Japón, Tailandia y más países asiáticos.",
-        imagen: "https://images.unsplash.com/photo-1565299624946-b28f40a0a383?w=300",
-        isbn: "978-84-345678-9-0",
-        paginas: 450,
-        editorial: "Cocina Oriental",
-        idioma: "Español",
-        destacado: false,
         stock: 12
       },
       {
-        id: 4,
-        titulo: "Repostería Creativa",
-        autor: "María González",
-        precio: 27.99,
-        rating: 4.7,
-        categoria: "Repostería",
-        fechaPublicacion: "2023-01-08",
-        descripcion: "Desde pasteles clásicos hasta creaciones modernas, aprende el arte de la repostería profesional.",
-        imagen: "https://images.unsplash.com/photo-1549931319-a545dcf0bc9b?w=300",
-        isbn: "978-84-456789-0-1",
-        paginas: 380,
-        editorial: "Dulce Arte",
+        id: 2,
+        titulo: "Comida Real. Alimentación Plant Based",
+        autor: "Nina Carreras",
+        precio: 5.56,
+        precioOriginal: 25000,
+        monedaOriginal: "ARS",
+        rating: 4.8,
+        categoria: "Cocina Vegana",
+        fechaPublicacion: "2023-05-20",
+        descripcion: "Transforma tu alimentación con el método Plant Based. Recetas fáciles y nutritivas para cambiar tu vida a través de la comida real.",
+        imagen: "../src/images/libros/cocina-comida-real.jpg",
+        isbn: "978-987-45-6789-0",
+        paginas: 280,
+        editorial: "Editorial Albatros Argentina",
         idioma: "Español",
-        destacado: false,
-        stock: 20
+        destacado: true,
+        stock: 18
       },
       {
-        id: 5,
-        titulo: "Cocina Saludable para Todos",
-        autor: "Dr. Carlos Martínez",
-        precio: 22.99,
-        rating: 4.5,
+        id: 3,
+        titulo: "Cocina comida real. Más de 100 recetas para realfooders",
+        autor: "Carlos Ríos & David Guibert",
+        precio: 19.40,
+        precioOriginal: 17.95,
+        monedaOriginal: "EUR",
+        rating: 4.9,
         categoria: "Cocina Saludable",
-        fechaPublicacion: "2022-09-14",
-        descripcion: "Recetas nutritivas y deliciosas que cuidan tu salud sin sacrificar el sabor.",
-        imagen: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300",
-        isbn: "978-84-567890-1-2",
-        paginas: 290,
-        editorial: "Bienestar y Nutrición",
+        fechaPublicacion: "2022-11-10",
+        descripcion: "El definitivo guide para adoptar el estilo de vida realfooder. Más de 100 recetas deliciosas y fáciles para comer comida real todos los días.",
+        imagen: "../src/images/libros/cocina-comida-real.jpg",
+        isbn: "978-84-08-25456-7",
+        paginas: 320,
+        editorial: "Editorial Paidós España",
         idioma: "Español",
         destacado: true,
         stock: 25
       },
       {
-        id: 6,
-        titulo: "Vegano Delicioso",
-        autor: "Laura Verde",
-        precio: 26.99,
-        rating: 4.4,
-        categoria: "Cocina Vegana",
-        fechaPublicacion: "2023-04-22",
-        descripcion: "Plantas basadas para todos los gustos: recetas veganas que sorprenderán a paladares exigentes.",
-        imagen: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300",
-        isbn: "978-84-678901-2-3",
-        paginas: 340,
-        editorial: "Planta Vida",
+        id: 4,
+        titulo: "Cocinar sin gluten",
+        autor: "Editions Larousse",
+        precio: 22.14,
+        precioOriginal: 20.50,
+        monedaOriginal: "EUR",
+        rating: 4.6,
+        categoria: "Repostería",
+        fechaPublicacion: "2023-02-28",
+        descripcion: "Técnicas profesionales y recetas caseras para cocinar deliciosamente sin gluten. Incluye panes, postres y platos principales.",
+        imagen: "../src/images/libros/cocinar-sin-gluten.jpg",
+        isbn: "978-84-10124-13-4",
+        paginas: 256,
+        editorial: "Larousse Gastronomie",
         idioma: "Español",
         destacado: false,
-        stock: 18
+        stock: 15
+      },
+      {
+        id: 5,
+        titulo: "Recetas argentinas de mi cocina. Libro bilingüe Español-Inglés",
+        autor: "Gastón Riveira",
+        precio: 13.31,
+        precioOriginal: 59900,
+        monedaOriginal: "ARS",
+        rating: 4.7,
+        categoria: "Cocina Argentina",
+        fechaPublicacion: "2023-03-30",
+        descripcion: "Las mejores recetas argentinas presentadas en formato bilingüe. Desde empanadas hasta dulce de leche, la tradición gastronómica de Argentina.",
+        imagen: "../src/images/libros/cocina-arg.jpg",
+        isbn: "978-987-6378642",
+        paginas: 298,
+        editorial: "Gastronomía Argentina SA",
+        idioma: "Español-Inglés",
+        destacado: false,
+        stock: 20
+      },
+      {
+        id: 6,
+        titulo: "Gran libro de cocina de Alain Ducasse. Bistros, brasseries y restaurantes tradicionales",
+        autor: "Alain Ducasse",
+        precio: 162.00,
+        precioOriginal: 150,
+        monedaOriginal: "EUR",
+        rating: 5.0,
+        categoria: "Cocina Francesa",
+        fechaPublicacion: "2022-09-15",
+        descripcion: "La obra maestra del chef más prestigioso del mundo. Técnicas y recetas de los mejores bistros y restaurantes tradicionales franceses.",
+        imagen: "../src/images/libros/cocina-gran-libro.jpg",
+        isbn: "978-2-84-123456-2",
+        paginas: 688,
+        editorial: "Alain Ducasse Edition",
+        idioma: "Español",
+        destacado: true,
+        stock: 8
       },
       {
         id: 7,
-        titulo: "Secretos de la Cocina Francesa",
-        autor: "Pierre Dubois",
-        precio: 39.99,
-        rating: 4.9,
-        categoria: "Cocina Internacional",
-        fechaPublicacion: "2023-02-28",
-        descripcion: "Técnicas maestras de la haute cuisine francesa adaptadas para el hogar.",
-        imagen: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300",
-        isbn: "978-84-789012-3-4",
-        paginas: 520,
-        editorial: "Cocina Europea",
+        titulo: "200 recetas de cocina española",
+        autor: "Alfonso López Alonso",
+        precio: 32.35,
+        precioOriginal: 29.95,
+        monedaOriginal: "EUR",
+        rating: 4.5,
+        categoria: "Cocina Española",
+        fechaPublicacion: "2023-04-10",
+        descripcion: "Un recorrido completo por la gastronomía española. Desde la paella valenciana hasta las tapas andaluzas, 200 recetas imperdibles.",
+        imagen: "../src/images/libros/cocina-espanola.jpg",
+        isbn: "978-84-9875-4321-8",
+        paginas: 412,
+        editorial: "Gastronomía Ibérica",
         idioma: "Español",
-        destacado: true,
-        stock: 6
+        destacado: false,
+        stock: 22
       },
       {
         id: 8,
-        titulo: "Pasteles y Panes Caseros",
-        autor: "Ana Panadera",
-        precio: 21.99,
-        rating: 4.6,
-        categoria: "Repostería",
-        fechaPublicacion: "2022-12-05",
-        descripcion: "El aroma del pan fresco en casa: técnicas fáciles para panadería principiante.",
-        imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300",
-        isbn: "978-84-890123-4-5",
-        paginas: 260,
-        editorial: "Horno y Hogar",
+        titulo: "Cocinología: La ciencia de los alimentos",
+        autor: "Hervé This & Pierre Gagnaire",
+        precio: 28.50,
+        precioOriginal: 26.90,
+        monedaOriginal: "EUR",
+        rating: 4.7,
+        categoria: "Cocina Científica",
+        fechaPublicacion: "2023-06-01",
+        descripcion: "Explora los principios científicos detrás de las técnicas culinarias. Un viaje fascinante por la química y física de los alimentos que revolucionará tu forma de cocinar.",
+        imagen: "../src/images/libros/cocina-cocinologia-ciencia.jpg",
+        isbn: "978-2-08-123456-9",
+        paginas: 424,
+        editorial: "Flammarion",
         idioma: "Español",
-        destacado: false,
-        stock: 30
+        destacado: true,
+        stock: 12
+      },
+      {
+        id: 9,
+        titulo: "Técnicas Modernas de Cocina",
+        autor: "Various Chefs",
+        precio: 35.00,
+        precioOriginal: 32.50,
+        monedaOriginal: "EUR",
+        rating: 4.6,
+        categoria: "Cocina Internacional",
+        fechaPublicacion: "2023-08-15",
+        descripcion: "Un compendio de las técnicas culinarias más avanzadas utilizadas por los mejores chefs del mundo. Incluye métodos de sous vide, esferificación y otras innovaciones.",
+        imagen: "../src/images/libros/cocina-gran-libro.jpg",
+        isbn: "978-3-45-987654-3",
+        paginas: 512,
+        editorial: "Phaidon Press",
+        idioma: "Español",
+        destacado: true,
+        stock: 8
       }
     ];
 
@@ -151,131 +208,20 @@ class LibreriaManager {
     localStorage.setItem('libros', JSON.stringify(this.libros));
   }
 
-  static obtenerLibros() {
-    const librosGuardados = localStorage.getItem('libros');
-    if (librosGuardados) {
-      this.libros = JSON.parse(librosGuardados);
-    } else {
-      this.inicializarLibros();
-    }
-    return this.libros;
-  }
-
-  static obtenerLibroPorId(id) {
-    return this.libros.find(libro => libro.id === parseInt(id));
-  }
-
-  static filtrarLibros(terminoBusqueda = '', categoria = '', sortBy = 'featured') {
-    let librosFiltrados = [...this.libros];
-
-    // Filtrar por búsqueda
-    if (terminoBusqueda) {
-      const busquedaLower = terminoBusqueda.toLowerCase();
-      librosFiltrados = librosFiltrados.filter(libro =>
-        libro.titulo.toLowerCase().includes(busquedaLower) ||
-        libro.autor.toLowerCase().includes(busquedaLower)
-      );
-    }
-
-    // Filtrar por categoría
-    if (categoria) {
-      librosFiltrados = librosFiltrados.filter(libro => libro.categoria === categoria);
-    }
-
-    // Ordenar
-    librosFiltrados.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low':
-          return a.precio - b.precio;
-        case 'price-high':
-          return b.precio - a.precio;
-        case 'rating':
-          return b.rating - a.rating;
-        case 'name':
-          return a.titulo.localeCompare(b.titulo);
-        case 'date-new':
-          return new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion);
-        case 'date-old':
-          return new Date(a.fechaPublicacion) - new Date(b.fechaPublicacion);
-        case 'featured':
-        default:
-          // Priorizar destacados, luego por rating
-          if (a.destacado && !b.destacado) return -1;
-          if (!a.destacado && b.destacado) return 1;
-          return b.rating - a.rating;
-      }
-    });
-
-    return librosFiltrados;
-  }
-
-  static crearTarjetaLibro(libro) {
-    const card = document.createElement('div');
-    card.className = 'book-card';
-
-    card.innerHTML = `
-      <div class="book-image">
-        <img src="${libro.imagen}" alt="${libro.titulo}" onerror="this.src='https://via.placeholder.com/300x400/cccccc/666666?text=Libro'">
-        ${libro.destacado ? '<div class="book-badge">Destacado</div>' : ''}
-      </div>
-      <div class="book-info">
-        <h3 class="book-title">${libro.titulo}</h3>
-        <p class="book-author">por ${libro.autor}</p>
-        <div class="book-meta">
-          <span class="book-category">${libro.categoria}</span>
-          <span class="book-rating">${this.crearEstrellas(libro.rating)}</span>
-        </div>
-        <div class="book-footer">
-          <span class="book-price">€${libro.precio.toFixed(2)}</span>
-          <button class="btn-primary btn-add-cart" data-libro-id="${libro.id}">
-            🛒 Añadir
-          </button>
-        </div>
-      </div>
-    `;
-
-    // Event listeners
-    card.querySelector('.book-image img').addEventListener('click', () => {
-      this.verDetallesLibro(libro);
-    });
-
-    card.querySelector('.book-title').addEventListener('click', () => {
-      this.verDetallesLibro(libro);
-    });
-
-    card.querySelector('.btn-add-cart').addEventListener('click', () => {
-      this.agregarAlCarrito(libro.id);
-    });
-
-    return card;
-  }
-
-  static crearEstrellas(rating) {
-    let estrellas = '';
-    const estrellasLlenas = Math.floor(rating);
-    const tieneMedia = rating % 1 >= 0.5;
-
-    for (let i = 0; i < estrellasLlenas; i++) {
-      estrellas += '⭐';
-    }
-    if (tieneMedia && estrellasLlenas < 5) {
-      estrellas += '✨';
-    }
-    for (let i = estrellas.length; i < 5; i++) {
-      estrellas += '☆';
-    }
-
-    return `<span class="rating-stars">${estrellas}</span><span class="rating-number">(${rating})</span>`;
-  }
-
   static cargarLibros() {
     const container = document.getElementById('booksGrid');
     const emptyDiv = document.getElementById('emptyBooks');
-    const terminoBusqueda = document.getElementById('filterSearch').value.toLowerCase();
-    const categoria = document.getElementById('filterCategory').value;
-    const sortBy = document.getElementById('sortBy').value;
 
-    const libros = this.filtrarLibros(terminoBusqueda, categoria, sortBy);
+    // Verificar que los elementos existan antes de acceder a ellos
+    const filterSearch = document.getElementById('filterSearch');
+    const filterCategory = document.getElementById('filterCategory');
+    const sortBy = document.getElementById('sortBy');
+
+    const terminoBusqueda = filterSearch ? filterSearch.value.toLowerCase() : '';
+    const categoria = filterCategory ? filterCategory.value : '';
+    const sortMethod = sortBy ? sortBy.value : 'featured';
+
+    const libros = this.filtrarLibros(terminoBusqueda, categoria, sortMethod);
 
     // Actualizar contador
     const contador = document.getElementById('booksCount');
@@ -289,152 +235,138 @@ class LibreriaManager {
     } else {
       container.style.display = 'grid';
       emptyDiv.style.display = 'none';
-      container.innerHTML = '';
-
-      libros.forEach(libro => {
-        container.appendChild(this.crearTarjetaLibro(libro));
-      });
+      container.innerHTML = libros.map(libro => this.crearTarjetaLibro(libro)).join('');
     }
   }
 
-  static verDetallesLibro(libro) {
-    const modal = document.getElementById('bookModal');
-    const modalTitle = document.getElementById('modalBookTitle');
-    const modalContent = document.getElementById('modalBookContent');
+  static crearTarjetaLibro(libro) {
+    const estrellas = this.generarEstrellas(libro.rating);
+    const precioFormateado = libro.precio.toFixed(2);
 
-    modalTitle.textContent = libro.titulo;
-
-    modalContent.innerHTML = `
-      <div class="book-detail">
-        <div class="book-detail-image">
-          <img src="${libro.imagen}" alt="${libro.titulo}" onerror="this.src='https://via.placeholder.com/300x400/cccccc/666666?text=Libro'">
+    return `
+      <div class="book-card" data-id="${libro.id}">
+        <div class="book-image">
+          <img src="${libro.imagen}" alt="${libro.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\\'width:100%;height:400px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:14px;text-align:center;padding:20px;\\'><div>📚<br>Portada no disponible<br><small>${libro.titulo}</small></div></div>';">
+          ${libro.destacado ? '<span class="featured-badge">Destacado</span>' : ''}
         </div>
-        <div class="book-detail-info">
-          <div class="book-detail-header">
-            <h3>${libro.titulo}</h3>
-            <div class="book-detail-meta">
-              <span class="book-category">${libro.categoria}</span>
-              ${this.crearEstrellas(libro.rating)}
-            </div>
+        <div class="book-info">
+          <h3 class="book-title">${libro.titulo}</h3>
+          <p class="book-author">${libro.autor}</p>
+          <div class="book-meta">
+            <span class="book-category">${libro.categoria}</span>
+            <span class="book-pages">${libro.paginas} páginas</span>
           </div>
-
-          <div class="book-detail-description">
-            <p>${libro.descripcion}</p>
+          <div class="book-rating">${estrellas}</div>
+          <div class="book-price-container">
+            ${libro.precioOriginal ? `
+              <span class="book-price-original">
+                ${libro.monedaOriginal} ${libro.precioOriginal.toLocaleString()}
+              </span>
+            ` : ''}
+            <span class="book-price">USD ${precioFormateado}</span>
           </div>
-
-          <div class="book-detail-specs">
-            <div class="spec-item">
-              <strong>Autor:</strong> ${libro.autor}
-            </div>
-            <div class="spec-item">
-              <strong>Editorial:</strong> ${libro.editorial}
-            </div>
-            <div class="spec-item">
-              <strong>ISBN:</strong> ${libro.isbn}
-            </div>
-            <div class="spec-item">
-              <strong>Páginas:</strong> ${libro.paginas}
-            </div>
-            <div class="spec-item">
-              <strong>Idioma:</strong> ${libro.idioma}
-            </div>
-            <div class="spec-item">
-              <strong>Fecha Publicación:</strong> ${new Date(libro.fechaPublicacion).toLocaleDateString('es-ES')}
-            </div>
-            <div class="spec-item">
-              <strong>Stock:</strong> ${libro.stock} unidades disponibles
-            </div>
-          </div>
-
-          <div class="book-detail-actions">
-            <div class="book-detail-price">
-              <span class="price-label">Precio:</span>
-              <span class="price-value">€${libro.precio.toFixed(2)}</span>
-            </div>
-            <div class="book-detail-buttons">
-              <button class="btn-secondary" onclick="LibreriaManager.verCarrito()">
-                Ver Carrito 🛒
-              </button>
-              <button class="btn-primary" onclick="LibreriaManager.agregarAlCarrito(${libro.id})">
-                Añadir al Carrito
-              </button>
-            </div>
+          <div class="book-actions">
+            <button class="btn-primary add-to-cart" data-id="${libro.id}">
+              🛒 Agregar al carrito
+            </button>
+            <button class="btn-secondary view-details" data-id="${libro.id}">
+              👁️ Ver detalles
+            </button>
           </div>
         </div>
       </div>
     `;
+  }
 
-    modal.style.display = 'flex';
+  static generarEstrellas(rating) {
+    const estrellas = '★'.repeat(Math.floor(rating));
+    const mediasEstrellas = rating % 1 >= 0.5 ? '☆' : '';
+    const estrellasVacias = '☆'.repeat(5 - Math.ceil(rating));
+    return `<span class="rating-stars">${estrellas}${mediasEstrellas}${estrellasVacias}</span><span class="rating-number">(${rating})</span>`;
+  }
+
+  static filtrarLibros(terminoBusqueda = '', categoria = '', sortBy = 'featured') {
+    let librosFiltrados = [...this.libros];
+
+    // Filtrar por búsqueda
+    if (terminoBusqueda) {
+      const busquedaLower = terminoBusqueda.toLowerCase();
+      librosFiltrados = librosFiltrados.filter(libro =>
+        libro.titulo.toLowerCase().includes(busquedaLower) ||
+        libro.autor.toLowerCase().includes(busquedaLower) ||
+        libro.categoria.toLowerCase().includes(busquedaLower) ||
+        libro.descripcion.toLowerCase().includes(busquedaLower)
+      );
+    }
+
+    // Filtrar por categoría
+    if (categoria) {
+      librosFiltrados = librosFiltrados.filter(libro => libro.categoria === categoria);
+    }
+
+    // Ordenar
+    switch (sortBy) {
+      case 'price-low':
+        librosFiltrados.sort((a, b) => a.precio - b.precio);
+        break;
+      case 'price-high':
+        librosFiltrados.sort((a, b) => b.precio - a.precio);
+        break;
+      case 'rating':
+        librosFiltrados.sort((a, b) => b.rating - a.rating);
+        break;
+      case 'name':
+        librosFiltrados.sort((a, b) => a.titulo.localeCompare(b.titulo));
+        break;
+      case 'date-new':
+        librosFiltrados.sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion));
+        break;
+      case 'date-old':
+        librosFiltrados.sort((a, b) => new Date(a.fechaPublicacion) - new Date(b.fechaPublicacion));
+        break;
+      case 'featured':
+      default:
+        librosFiltrados.sort((a, b) => {
+          if (a.destacado && !b.destacado) return -1;
+          if (!a.destacado && b.destacado) return 1;
+          return 0;
+        });
+        break;
+    }
+
+    return librosFiltrados;
+  }
+
+  static obtenerLibroPorId(id) {
+    return this.libros.find(libro => libro.id === parseInt(id));
   }
 
   static agregarAlCarrito(libroId) {
     const libro = this.obtenerLibroPorId(libroId);
     if (!libro) return;
 
-    CarritoManager.agregarProducto(libro);
-    UIManager.mostrarMensaje(`"${libro.titulo}" añadido al carrito`, 'success');
-    this.actualizarContadorCarrito();
-  }
-
-  static actualizarContadorCarrito() {
-    const carritoCount = document.getElementById('cartCount');
-    if (carritoCount) {
-      const carrito = CarritoManager.obtenerCarrito();
-      const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
-      carritoCount.textContent = totalItems;
-    }
-  }
-
-  static verCarrito() {
-    window.location.href = 'carrito.html';
-  }
-
-  static cerrarModal() {
-    document.getElementById('bookModal').style.display = 'none';
-  }
-}
-
-// MANEJO DE CARRITO DE COMPRAS
-class CarritoManager {
-  static agregarProducto(libro, cantidad = 1) {
-    let carrito = this.obtenerCarrito();
-    const itemExistente = carrito.find(item => item.id === libro.id);
+    const carrito = this.obtenerCarrito();
+    const itemExistente = carrito.find(item => item.id === libroId);
 
     if (itemExistente) {
-      itemExistente.cantidad += cantidad;
+      itemExistente.cantidad += 1;
     } else {
       carrito.push({
-        id: libro.id,
-        titulo: libro.titulo,
-        autor: libro.autor,
-        precio: libro.precio,
-        imagen: libro.imagen,
-        cantidad: cantidad
+        ...libro,
+        cantidad: 1
       });
     }
 
     this.guardarCarrito(carrito);
-  }
+    this.actualizarContadorCarrito();
 
-  static eliminarProducto(libroId) {
-    let carrito = this.obtenerCarrito();
-    carrito = carrito.filter(item => item.id !== libroId);
-    this.guardarCarrito(carrito);
-  }
+    // Disparar evento personalizado para notificar cambios en el carrito
+    window.dispatchEvent(new CustomEvent('carritoActualizado', {
+      detail: { carrito, libroId, accion: 'agregar' }
+    }));
 
-  static actualizarCantidad(libroId, nuevaCantidad) {
-    if (nuevaCantidad <= 0) {
-      this.eliminarProducto(libroId);
-      return;
-    }
-
-    let carrito = this.obtenerCarrito();
-    const item = carrito.find(item => item.id === libroId);
-
-    if (item) {
-      item.cantidad = nuevaCantidad;
-      this.guardarCarrito(carrito);
-    }
+    // Mostrar notificación
+    this.mostrarNotificacion(`${libro.titulo} agregado al carrito`);
   }
 
   static obtenerCarrito() {
@@ -446,62 +378,277 @@ class CarritoManager {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }
 
+  static actualizarContadorCarrito() {
+    const carrito = this.obtenerCarrito();
+    const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
+
+    // Actualizar todos los contadores del carrito en la página actual
+    const contadores = document.querySelectorAll('.cart-count');
+    contadores.forEach(contador => {
+      contador.textContent = totalItems;
+      // Agregar animación visual
+      contador.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        contador.style.transform = 'scale(1)';
+      }, 200);
+    });
+
+    // Actualizar el contador específico si existe en el index
+    const indexCounter = document.getElementById('cartCount');
+    if (indexCounter) {
+      indexCounter.textContent = totalItems;
+      indexCounter.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        indexCounter.style.transform = 'scale(1)';
+      }, 200);
+    }
+  }
+
+  static mostrarNotificacion(mensaje) {
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.className = 'notification';
+    notificacion.textContent = mensaje;
+    notificacion.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-green);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-heavy);
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    `;
+
+    document.body.appendChild(notificacion);
+
+    // Animar entrada
+    setTimeout(() => {
+      notificacion.style.transform = 'translateX(0)';
+    }, 100);
+
+    // Remover después de 3 segundos
+    setTimeout(() => {
+      notificacion.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        document.body.removeChild(notificacion);
+      }, 300);
+    }, 3000);
+  }
+
+  static mostrarDetallesLibro(libroId) {
+    const libro = this.obtenerLibroPorId(libroId);
+    if (!libro) return;
+
+    const modal = document.getElementById('bookModal');
+    const modalTitle = document.getElementById('modalBookTitle');
+    const modalContent = document.getElementById('modalBookContent');
+
+    modalTitle.textContent = libro.titulo;
+
+    modalContent.innerHTML = `
+      <div class="flex flex-col lg:flex-row gap-8 p-8 max-w-7xl mx-auto">
+        <!-- Imagen del libro -->
+        <div class="lg:w-1/3 flex-shrink-0">
+          <div class="relative">
+            <img src="${libro.imagen}" alt="${libro.titulo}"
+                 class="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-96 lg:h-[500px] bg-gray-100 rounded-lg shadow-lg flex items-center justify-center text-gray-500 text-center p-8\\'><div class=\\'text-6xl mb-4\\'>📚</div><div class=\\'text-lg font-medium\\'>Portada no disponible</div><div class=\\'text-sm mt-2\\'>${libro.titulo}</div></div>';">
+            ${libro.destacado ? '<span class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">Destacado</span>' : ''}
+          </div>
+        </div>
+
+        <!-- Contenido del libro -->
+        <div class="lg:w-2/3 flex flex-col justify-between">
+          <!-- Header -->
+          <div class="mb-6">
+            <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2 leading-tight">${libro.titulo}</h2>
+            <p class="text-lg text-gray-600 mb-4">por ${libro.autor}</p>
+            <div class="flex items-center gap-2">
+              ${this.generarEstrellas(libro.rating)}
+              <span class="text-gray-500">(${libro.rating})</span>
+            </div>
+          </div>
+
+          <!-- Metadatos -->
+          <div class="bg-gray-50 rounded-lg p-6 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">Categoría</span>
+                <span class="text-gray-900 font-semibold">${libro.categoria}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">Editorial</span>
+                <span class="text-gray-900 font-semibold">${libro.editorial}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">ISBN</span>
+                <span class="text-gray-900 font-semibold">${libro.isbn}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">Páginas</span>
+                <span class="text-gray-900 font-semibold">${libro.paginas}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">Idioma</span>
+                <span class="text-gray-900 font-semibold">${libro.idioma}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-gray-500 font-medium">Publicado</span>
+                <span class="text-gray-900 font-semibold">${new Date(libro.fechaPublicacion).toLocaleDateString('es-ES', {year: 'numeric', month: 'long', day: 'numeric'})}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Descripción</h3>
+            <p class="text-gray-600 leading-relaxed">${libro.descripcion}</p>
+          </div>
+
+          <!-- Footer con precio y acciones -->
+          <div class="border-t pt-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+              <!-- Precio -->
+              <div class="flex flex-col items-start sm:items-end">
+                ${libro.precioOriginal ? `
+                  <span class="text-gray-400 line-through text-sm">${libro.monedaOriginal} ${libro.precioOriginal.toLocaleString()}</span>
+                ` : ''}
+                <span class="text-3xl font-bold text-green-600">$${libro.precio.toFixed(2)}</span>
+              </div>
+
+              <!-- Acciones -->
+              <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <button class="add-to-cart-modal bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition duration-200 shadow-lg hover:shadow-xl transform hover:scale-105" data-id="${libro.id}">
+                  🛒 Agregar al carrito
+                </button>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-3 rounded-lg font-semibold transition duration-200" onclick="document.getElementById('bookModal').style.display='none'">
+                  Cerrar
+                </button>
+              </div>
+            </div>
+
+            ${libro.stock <= 5 ? `
+              <div class="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <p class="text-yellow-800 font-medium flex items-center gap-2">
+                  ⚠️ ¡Últimas ${libro.stock} unidades disponibles!
+                </p>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'block';
+  }
+
+  static inicializarEventListeners() {
+    // Event listeners para los filtros
+    const filterSearch = document.getElementById('filterSearch');
+    const filterCategory = document.getElementById('filterCategory');
+    const sortBy = document.getElementById('sortBy');
+
+    if (filterSearch) {
+      filterSearch.addEventListener('input', () => this.cargarLibros());
+    }
+
+    if (filterCategory) {
+      filterCategory.addEventListener('change', () => this.cargarLibros());
+    }
+
+    if (sortBy) {
+      sortBy.addEventListener('change', () => this.cargarLibros());
+    }
+
+    // Event listeners para botones de agregar al carrito y ver detalles
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const libroId = parseInt(e.target.dataset.id);
+        this.agregarAlCarrito(libroId);
+      }
+
+      if (e.target.classList.contains('view-details')) {
+        const libroId = parseInt(e.target.dataset.id);
+        this.mostrarDetallesLibro(libroId);
+      }
+
+      if (e.target.classList.contains('add-to-cart-modal')) {
+        const libroId = parseInt(e.target.dataset.id);
+        this.agregarAlCarrito(libroId);
+        document.getElementById('bookModal').style.display = 'none';
+      }
+    });
+
+    // Cerrar modal
+    const cerrarModal = document.getElementById('btnCerrarModalLibro');
+    if (cerrarModal) {
+      cerrarModal.addEventListener('click', () => {
+        document.getElementById('bookModal').style.display = 'none';
+      });
+    }
+
+    // Cerrar modal al hacer clic fuera
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('bookModal');
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+
+  // Métodos adicionales para gestión del carrito
+  static actualizarCantidad(itemId, nuevaCantidad) {
+    let carrito = this.obtenerCarrito();
+    const item = carrito.find(item => item.id === itemId);
+
+    if (item) {
+      item.cantidad = nuevaCantidad;
+      this.guardarCarrito(carrito);
+      this.actualizarContadorCarrito();
+
+      // Disparar evento de actualización
+      window.dispatchEvent(new CustomEvent('carritoActualizado', {
+        detail: { carrito, itemId, accion: 'actualizar' }
+      }));
+    }
+  }
+
+  static eliminarProducto(itemId) {
+    let carrito = this.obtenerCarrito();
+    carrito = carrito.filter(item => item.id !== itemId);
+    this.guardarCarrito(carrito);
+    this.actualizarContadorCarrito();
+
+    // Disparar evento de actualización
+    window.dispatchEvent(new CustomEvent('carritoActualizado', {
+      detail: { carrito, itemId, accion: 'eliminar' }
+    }));
+  }
+
   static calcularTotal() {
     const carrito = this.obtenerCarrito();
     return carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
-  }
-
-  static vaciarCarrito() {
-    localStorage.removeItem('carrito');
   }
 
   static obtenerTotalItems() {
     const carrito = this.obtenerCarrito();
     return carrito.reduce((total, item) => total + item.cantidad, 0);
   }
+
+  static vaciarCarrito() {
+    localStorage.removeItem('carrito');
+    this.actualizarContadorCarrito();
+
+    // Disparar evento de actualización
+    window.dispatchEvent(new CustomEvent('carritoActualizado', {
+      detail: { carrito: [], accion: 'vaciar' }
+    }));
+  }
 }
 
-// EVENT LISTENERS
-document.addEventListener('DOMContentLoaded', () => {
-  // Inicializar libros
-  LibreriaManager.obtenerLibros();
-  LibreriaManager.cargarLibros();
-  LibreriaManager.actualizarContadorCarrito();
-
-  // Event listeners para filtros
-  const filterSearch = document.getElementById('filterSearch');
-  const filterCategory = document.getElementById('filterCategory');
-  const sortBy = document.getElementById('sortBy');
-
-  if (filterSearch) {
-    filterSearch.addEventListener('input', () => LibreriaManager.cargarLibros());
-  }
-
-  if (filterCategory) {
-    filterCategory.addEventListener('change', () => LibreriaManager.cargarLibros());
-  }
-
-  if (sortBy) {
-    sortBy.addEventListener('change', () => LibreriaManager.cargarLibros());
-  }
-
-  // Event listeners para modal
-  const btnCerrarModalLibro = document.getElementById('btnCerrarModalLibro');
-  if (btnCerrarModalLibro) {
-    btnCerrarModalLibro.addEventListener('click', () => LibreriaManager.cerrarModal());
-  }
-
-  // Event listener para icono del carrito
-  const cartIcon = document.getElementById('cartIcon');
-  if (cartIcon) {
-    cartIcon.addEventListener('click', () => LibreriaManager.verCarrito());
-  }
-
-  // Cerrar modal al hacer clic fuera
-  window.addEventListener('click', (event) => {
-    const modal = document.getElementById('bookModal');
-    if (event.target === modal) {
-      LibreriaManager.cerrarModal();
-    }
-  });
-});
+// Exportar la clase para uso global
+window.LibreriaManager = LibreriaManager;

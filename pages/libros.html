@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Librería Cero - Libros de Cocina</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <link rel="stylesheet" href="../css/styles.css?v=2.1.1">
-  <script defer src="../js/data.js?v=2.1.1"></script>
-  <script defer src="../js/storage.js?v=2.1.1"></script>
-  <script defer src="../js/ui.js?v=2.1.1"></script>
-  <script defer src="../js/libros.js?v=2.1.1"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=2.1.4">
+  <script defer src="../js/data.js?v=2.1.4"></script>
+  <script defer src="../js/storage.js?v=2.1.4"></script>
+  <script defer src="../js/ui.js?v=2.1.4"></script>
+  <script defer src="../js/libros.js?v=2.1.4"></script>
 </head>
 
 <body>
@@ -105,8 +106,49 @@
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Sistema de versionamiento - PRIMERO -->
-  <script src="../js/version.js?v=2.1.1"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Limpieza forzada de caché corrupta
+      const librosGuardados = localStorage.getItem('libros');
+      if (librosGuardados) {
+        try {
+          const libros = JSON.parse(librosGuardados);
+          const hasPlaceholders = libros.some(libro =>
+            libro.imagen && (
+              libro.imagen.includes('via.placeholder.com') ||
+              libro.imagen.includes('FFFFFF?text=') ||
+              libro.imagen.includes('2C3E50?text=')
+            )
+          );
+
+          if (hasPlaceholders) {
+            console.log('Limpiando caché corrupta de libros...');
+            localStorage.removeItem('libros');
+          }
+        } catch (error) {
+          localStorage.removeItem('libros');
+        }
+      }
+
+      // Inicializar librería
+      if (typeof LibreriaManager !== 'undefined') {
+        LibreriaManager.inicializarLibros();
+        LibreriaManager.cargarLibros();
+        LibreriaManager.inicializarEventListeners();
+
+        // Actualizar contador del carrito
+        LibreriaManager.actualizarContadorCarrito();
+      }
+
+      // Event listener para icono del carrito
+      const cartIcon = document.getElementById('cartIcon');
+      if (cartIcon) {
+        cartIcon.addEventListener('click', () => {
+          window.location.href = 'carrito.html';
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>

@@ -51,22 +51,22 @@
 
               <div class="resumen-item">
                 <span>Subtotal:</span>
-                <span id="subtotal">€0.00</span>
+                <span id="subtotal">$0.00</span>
               </div>
 
               <div class="resumen-item">
                 <span>Envío:</span>
-                <span id="envio">€3.99</span>
+                <span id="envio">$3.99</span>
               </div>
 
               <div class="resumen-item">
                 <span>IVA (21%):</span>
-                <span id="iva">€0.00</span>
+                <span id="iva">$0.00</span>
               </div>
 
               <div class="resumen-total">
                 <span>Total:</span>
-                <span id="total">€0.00</span>
+                <span id="total">$0.00</span>
               </div>
 
               <div class="resumen-codigo">
@@ -104,8 +104,43 @@
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Sistema de versionamiento - PRIMERO -->
-  <script src="../js/version.js?v=2.1.0"></script>
-</body>
+  <script src="../js/data.js?v=2.1.4"></script>
+  <script src="../js/storage.js?v=2.1.4"></script>
+  <script src="../js/ui.js?v=2.1.4"></script>
+  <script src="../js/libros.js?v=2.1.4"></script>
+  <script src="../js/carrito.js?v=2.1.4"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Inicializar página del carrito
+      if (typeof CarritoPageManager !== 'undefined') {
+        CarritoPageManager.inicializar();
+      }
+
+      // Actualizar contador del carrito
+      if (typeof LibreriaManager !== 'undefined') {
+        LibreriaManager.actualizarContadorCarrito();
+      }
+
+      // Escuchar eventos de actualización del carrito
+      window.addEventListener('carritoActualizado', (event) => {
+        if (typeof CarritoPageManager !== 'undefined') {
+          CarritoPageManager.cargarCarrito();
+          CarritoPageManager.actualizarResumen();
+        }
+        if (typeof LibreriaManager !== 'undefined') {
+          LibreriaManager.actualizarContadorCarrito();
+        }
+      });
+
+      // Event listener para icono del carrito
+      const cartIcon = document.getElementById('cartIcon');
+      if (cartIcon) {
+        cartIcon.addEventListener('click', () => {
+          window.location.href = 'carrito.html';
+        });
+      }
+    });
+  </script>
+  </body>
 
 </html>
