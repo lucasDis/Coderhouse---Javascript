@@ -8,6 +8,8 @@ function cargarHistorial() {
 function actualizarEstadoBotones() {
   const btnExportar = document.getElementById("btnExportar");
   const btnLimpiarHistorial = document.getElementById("btnLimpiarHistorial");
+  const btnEstadisticas = document.getElementById("btnEstadisticas");
+
   if (!btnExportar || !btnLimpiarHistorial) return;
 
   const recetas = StorageManager.obtenerRecetas();
@@ -20,6 +22,13 @@ function actualizarEstadoBotones() {
     btnLimpiarHistorial.classList.add("btn-export-disabled");
     btnLimpiarHistorial.disabled = true;
     btnLimpiarHistorial.title = "No hay recetas para limpiar";
+
+    // También deshabilitar estadísticas
+    if (btnEstadisticas) {
+      btnEstadisticas.classList.add("btn-export-disabled");
+      btnEstadisticas.disabled = true;
+      btnEstadisticas.title = "No hay recetas para ver estadísticas";
+    }
   } else {
     // Habilitar botones cuando hay recetas
     btnExportar.classList.remove("btn-export-disabled");
@@ -29,53 +38,40 @@ function actualizarEstadoBotones() {
     btnLimpiarHistorial.classList.remove("btn-export-disabled");
     btnLimpiarHistorial.disabled = false;
     btnLimpiarHistorial.title = "";
+
+    // También habilitar estadísticas
+    if (btnEstadisticas) {
+      btnEstadisticas.classList.remove("btn-export-disabled");
+      btnEstadisticas.disabled = false;
+      btnEstadisticas.title = "";
+    }
   }
 }
 
 
 function limpiarHistorial() {
-  const modal = document.getElementById("recipeModal");
-  const modalTitle = document.getElementById("modalRecipeTitle");
-  const modalContent = document.getElementById("modalRecipeContent");
-
-  modalTitle.textContent = "Confirmar Eliminación";
-  modalContent.innerHTML = `
-    <p>¿Estás seguro de que quieres limpiar todo el historial de recetas?</p>
-    <p style="color: var(--primary-red); font-weight: 500;">Esta acción no se puede deshacer.</p>
-    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-      <button class="btn-primary" id="btnConfirmarLimpiar" style="background-color: var(--primary-red);">Sí, Eliminar</button>
-      <button class="btn-secondary" id="btnCancelarLimpiar">Cancelar</button>
-    </div>
-  `;
-
-  modal.style.display = "flex";
-
-  setTimeout(() => {
-    const btnConfirmarLimpiar = document.getElementById("btnConfirmarLimpiar");
-    const btnCancelarLimpiar = document.getElementById("btnCancelarLimpiar");
-
-    if (btnConfirmarLimpiar) {
-      btnConfirmarLimpiar.addEventListener("click", confirmarLimpiarHistorial);
+  Swal.fire({
+    title: 'Confirmar Eliminación',
+    html: `
+      <p>¿Estás seguro de que quieres limpiar todo el historial de recetas?</p>
+      <p style="color: var(--primary-red); font-weight: 500;">Esta acción no se puede deshacer.</p>
+    `,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, Eliminar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#F44336',
+    cancelButtonColor: '#6b7280',
+    customClass: {
+      popup: 'historial-confirm-popup'
     }
-
-    if (btnCancelarLimpiar) {
-      btnCancelarLimpiar.addEventListener("click", cerrarModal);
+  }).then((result) => {
+    if (result.isConfirmed) {
+      StorageManager.limpiarHistorial();
+      cargarHistorial();
+      UIManager.mostrarMensaje("Historial limpiado correctamente", "success");
     }
-  }, 100);
-}
-
-function confirmarLimpiarHistorial() {
-  StorageManager.limpiarHistorial();
-  UIManager.mostrarMensaje("Historial limpiado exitosamente", "success");
-  cerrarModal();
-
-  setTimeout(() => {
-    cargarHistorial();
-  }, 1000);
-}
-
-function cerrarModal() {
-  document.getElementById("recipeModal").style.display = "none";
+  });
 }
 
 // EVENT LISTENERS PARA HISTORIAL
@@ -107,11 +103,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (btnCerrarModal) {
-    btnCerrarModal.addEventListener("click", cerrarModal);
+    btnCerrarModal.addEventListener("click", () => {
+      const modal = document.getElementById("recipeModal");
+      if (modal) {
+        modal.style.display = "none";
+      }
+    });
   }
 
   if (btnCerrarModalFooter) {
-    btnCerrarModalFooter.addEventListener("click", cerrarModal);
+    btnCerrarModalFooter.addEventListener("click", () => {
+      const modal = document.getElementById("recipeModal");
+      if (modal) {
+        modal.style.display = "none";
+      }
+    });
   }
 
   if (sortBy) {

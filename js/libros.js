@@ -32,7 +32,6 @@ class LibreriaManager {
         titulo: "Cocina más con vegetales. Recetas, conservas, fermentos y más",
         autor: "Sonia Ortiz Salinas & Celia Marín Chiunti",
         precio: 24.94,
-        precioOriginal: 449,
         monedaOriginal: "MXN",
         rating: 4.7,
         categoria: "Cocina Saludable",
@@ -48,18 +47,18 @@ class LibreriaManager {
       },
       {
         id: 2,
-        titulo: "Comida Real. Alimentación Plant Based",
-        autor: "Nina Carreras",
-        precio: 5.56,
-        precioOriginal: 25000,
+        titulo: "Cocina Tradicional Argentina",
+        autor: "Dolores Irigoyen",
+        precio: 6.25,
+        precioOriginal: 28000,
         monedaOriginal: "ARS",
-        rating: 4.8,
-        categoria: "Cocina Vegana",
+        rating: 4.9,
+        categoria: "Cocina Argentina",
         fechaPublicacion: "2023-05-20",
-        descripcion: "Transforma tu alimentación con el método Plant Based. Recetas fáciles y nutritivas para cambiar tu vida a través de la comida real.",
-        imagen: "../src/images/libros/cocina-comida-real.jpg",
+        descripcion: "Descubre los secretos de la cocina tradicional argentina. Recetas auténticas de todas las regiones del país, desde asados criollos hasta dulces típicos.",
+        imagen: "../src/images/libros/cocina-tradicional.jpg",
         isbn: "978-987-45-6789-0",
-        paginas: 280,
+        paginas: 320,
         editorial: "Editorial Albatros Argentina",
         idioma: "Español",
         destacado: true,
@@ -181,19 +180,19 @@ class LibreriaManager {
       },
       {
         id: 9,
-        titulo: "Técnicas Modernas de Cocina",
-        autor: "Various Chefs",
-        precio: 35.00,
-        precioOriginal: 32.50,
-        monedaOriginal: "EUR",
-        rating: 4.6,
-        categoria: "Cocina Internacional",
+        titulo: "Pastelería Argentina Contemporánea",
+        autor: "Osvaldo Gross",
+        precio: 28.50,
+        precioOriginal: 26000,
+        monedaOriginal: "ARS",
+        rating: 4.7,
+        categoria: "Repostería",
         fechaPublicacion: "2023-08-15",
-        descripcion: "Un compendio de las técnicas culinarias más avanzadas utilizadas por los mejores chefs del mundo. Incluye métodos de sous vide, esferificación y otras innovaciones.",
-        imagen: "../src/images/libros/cocina-gran-libro.jpg",
-        isbn: "978-3-45-987654-3",
-        paginas: 512,
-        editorial: "Phaidon Press",
+        descripcion: "El arte de la pastelería argentina moderna. Técnicas tradicionales fusionadas con tendencias contemporáneas para crear postres únicos y deliciosos.",
+        imagen: "../src/images/libros/cocina-pasteleria-arg.jpg",
+        isbn: "978-987-87-1234-5",
+        paginas: 384,
+        editorial: "Editorial Grijalbo",
         idioma: "Español",
         destacado: true,
         stock: 8
@@ -239,9 +238,15 @@ class LibreriaManager {
     }
   }
 
+  static limitarTitulo(titulo, maxCaracteres = 40) {
+    if (titulo.length <= maxCaracteres) return titulo;
+    return titulo.substring(0, maxCaracteres - 3) + '...';
+  }
+
   static crearTarjetaLibro(libro) {
     const estrellas = this.generarEstrellas(libro.rating);
     const precioFormateado = libro.precio.toFixed(2);
+    const tituloLimitado = this.limitarTitulo(libro.titulo, 40);
 
     return `
       <div class="book-card" data-id="${libro.id}">
@@ -250,7 +255,7 @@ class LibreriaManager {
           ${libro.destacado ? '<span class="featured-badge">Destacado</span>' : ''}
         </div>
         <div class="book-info">
-          <h3 class="book-title">${libro.titulo}</h3>
+          <h3 class="book-title">${tituloLimitado}</h3>
           <p class="book-author">${libro.autor}</p>
           <div class="book-meta">
             <span class="book-category">${libro.categoria}</span>
@@ -258,19 +263,14 @@ class LibreriaManager {
           </div>
           <div class="book-rating">${estrellas}</div>
           <div class="book-price-container">
-            ${libro.precioOriginal ? `
-              <span class="book-price-original">
-                ${libro.monedaOriginal} ${libro.precioOriginal.toLocaleString()}
-              </span>
-            ` : ''}
             <span class="book-price">USD ${precioFormateado}</span>
           </div>
           <div class="book-actions">
             <button class="btn-primary add-to-cart" data-id="${libro.id}">
-              🛒 Agregar al carrito
+              Agregar al carrito
             </button>
             <button class="btn-secondary view-details" data-id="${libro.id}">
-              👁️ Ver detalles
+              Ver detalles
             </button>
           </div>
         </div>
@@ -444,10 +444,7 @@ class LibreriaManager {
     if (!libro) return;
 
     const modal = document.getElementById('bookModal');
-    const modalTitle = document.getElementById('modalBookTitle');
     const modalContent = document.getElementById('modalBookContent');
-
-    modalTitle.textContent = libro.titulo;
 
     modalContent.innerHTML = `
       <div class="flex flex-col lg:flex-row gap-8 p-8 max-w-7xl mx-auto">
@@ -523,7 +520,7 @@ class LibreriaManager {
               <!-- Acciones -->
               <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <button class="add-to-cart-modal bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition duration-200 shadow-lg hover:shadow-xl transform hover:scale-105" data-id="${libro.id}">
-                  🛒 Agregar al carrito
+                  Agregar al carrito
                 </button>
                 <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-3 rounded-lg font-semibold transition duration-200" onclick="document.getElementById('bookModal').style.display='none'">
                   Cerrar

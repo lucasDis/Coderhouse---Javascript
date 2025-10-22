@@ -518,6 +518,8 @@ class UIManager {
   }
 
   static cargarHistorial() {
+    console.log('UIManager: Iniciando carga de historial');
+
     const contenedor = document.getElementById("historyGrid");
     const vacio = document.getElementById("emptyHistory");
     const sortBy = document.getElementById("sortBy").value;
@@ -530,6 +532,7 @@ class UIManager {
       : false;
 
     let recetas = StorageManager.obtenerRecetas();
+    console.log('UIManager: Recetas obtenidas del storage:', recetas.length, recetas);
 
     // Filtrar por búsqueda
     if (filterSearch) {
@@ -576,10 +579,14 @@ class UIManager {
       } encontrada${recetas.length !== 1 ? "s" : ""}`;
     }
 
+    console.log('UIManager: Recetas después de filtros:', recetas.length);
+
     if (recetas.length === 0) {
+      console.log('UIManager: Mostrando contenedor vacío');
       contenedor.style.display = "none";
       vacio.style.display = "block";
     } else {
+      console.log('UIManager: Mostrando', recetas.length, 'recetas en el grid');
       contenedor.style.display = "grid";
       vacio.style.display = "none";
       contenedor.innerHTML = "";

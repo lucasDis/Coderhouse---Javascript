@@ -154,6 +154,10 @@ class SimuladorRecetas {
   // ==========================================
 
   static iniciarRecetaRapida() {
+    // Limpiar receta anterior y estado
+    this.limpiarRecetaAnterior();
+    this.reiniciar();
+
     estado.modoActual = "rapida";
     const receta = this.generarRecetaRapida();
     estado.recetaActual = receta;
@@ -161,6 +165,10 @@ class SimuladorRecetas {
   }
 
   static iniciarSeleccionMultiple() {
+    // Limpiar receta anterior y estado
+    this.limpiarRecetaAnterior();
+    this.reiniciar();
+
     estado.modoActual = "multiple";
     estado.seleccionados = [];
 
@@ -207,10 +215,21 @@ class SimuladorRecetas {
 
   static guardarRecetaActual() {
     if (estado.recetaActual) {
-      StorageManager.guardarReceta(estado.recetaActual);
+      // Asegurar que la receta tenga todos los campos necesarios
+      const recetaFormateada = {
+        ...estado.recetaActual,
+        // Asegurar campos básicos
+        nombre: estado.recetaActual.nombre || 'Receta sin nombre',
+        ingrediente: estado.recetaActual.ingrediente || 'Ingrediente desconocido',
+        sabor: estado.recetaActual.sabor || 'Sabor no especificado',
+        tipo: estado.recetaActual.tipo || 'Método no especificado'
+      };
+
+      StorageManager.guardarReceta(recetaFormateada);
 
       // Verificar que se guardó correctamente
       const recetas = StorageManager.obtenerRecetas();
+      console.log('Recetas guardadas:', recetas.length, recetas); // Debug
 
       this.mostrarModalExito(estado.recetaActual);
     } else {
@@ -485,6 +504,20 @@ class SimuladorRecetas {
     }
   }
 
+  static limpiarRecetaAnterior() {
+    // Limpiar visualmente la receta anterior si existe
+    const recipeResult = document.getElementById("recipeResult");
+    if (recipeResult) {
+      recipeResult.style.display = "none";
+    }
+
+    // Limpiar el panel de ingredientes si está visible
+    const ingredientsPanel = document.getElementById("ingredientsPanel");
+    if (ingredientsPanel) {
+      ingredientsPanel.style.display = "none";
+    }
+  }
+
   static reiniciar() {
     estado.seleccionados = [];
     estado.recetaActual = null;
@@ -588,11 +621,24 @@ document.addEventListener("DOMContentLoaded", async function () {
           }
         }, 100);
       } else if (estado.modoActual === "multiple") {
+        // Limpiar completamente y empezar de cero
+        this.limpiarRecetaAnterior();
+        this.reiniciar();
+
+        // Reiniciar modo de selección
+        estado.modoActual = "multiple";
         estado.seleccionados = [];
-        UIManager.renderizarIngredientes();
-        UIManager.actualizarListaSeleccionados();
-        document.getElementById("recipeResult").style.display = "none";
+
+        // Mostrar panel de ingredientes
         document.getElementById("ingredientsPanel").style.display = "block";
+
+        setTimeout(() => {
+          UIManager.renderizarIngredientes();
+          UIManager.actualizarListaSeleccionados();
+          UIManager.actualizarEstadoBotones();
+          this.inicializarBuscadorIngredientes();
+          this.actualizarContadorSeleccion();
+        }, 100);
         setTimeout(() => {
           const ingredientsPanel = document.getElementById("ingredientsPanel");
           if (ingredientsPanel) {

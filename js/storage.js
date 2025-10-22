@@ -1,11 +1,27 @@
 // MANEJO DE LOCALSTORAGE
 class StorageManager {
   static guardarReceta(receta) {
+    console.log('StorageManager: Intentando guardar receta:', receta);
+
     let recetas = this.obtenerRecetas();
+    console.log('StorageManager: Recetas existentes:', recetas.length, recetas);
+
     receta.id = Date.now();
     receta.fecha = new Date().toLocaleString();
     recetas.push(receta);
-    localStorage.setItem("recetas", JSON.stringify(recetas));
+
+    console.log('StorageManager: Guardando recetas totales:', recetas.length);
+
+    try {
+      localStorage.setItem("recetas", JSON.stringify(recetas));
+      console.log('StorageManager: Receta guardada exitosamente');
+
+      // Verificar que se guardó
+      const guardadas = this.obtenerRecetas();
+      console.log('StorageManager: Verificación - Recetas guardadas:', guardadas.length);
+    } catch (error) {
+      console.error('StorageManager: Error al guardar receta:', error);
+    }
   }
 
   static obtenerRecetas() {

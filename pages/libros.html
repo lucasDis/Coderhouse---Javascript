@@ -9,11 +9,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <link rel="stylesheet" href="../css/styles.css?v=2.1.4">
-  <script defer src="../js/data.js?v=2.1.4"></script>
-  <script defer src="../js/storage.js?v=2.1.4"></script>
-  <script defer src="../js/ui.js?v=2.1.4"></script>
-  <script defer src="../js/libros.js?v=2.1.4"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=2.2.0">
+  <script defer src="../js/data.js?v=2.2.0"></script>
+  <script defer src="../js/storage.js?v=2.2.0"></script>
+  <script defer src="../js/ui.js?v=2.2.0"></script>
+  <script defer src="../js/libros.js?v=2.2.0"></script>
 </head>
 
 <body>
@@ -50,12 +50,14 @@
               <label for="filterCategory">Categoría:</label>
               <select id="filterCategory">
                 <option value="">Todas</option>
-                <option value="Cocina Italiana">Cocina Italiana</option>
-                <option value="Cocina Mexicana">Cocina Mexicana</option>
-                <option value="Cocina Asiática">Cocina Asiática</option>
-                <option value="Repostería">Repostería</option>
                 <option value="Cocina Saludable">Cocina Saludable</option>
                 <option value="Cocina Vegana">Cocina Vegana</option>
+                <option value="Repostería">Repostería</option>
+                <option value="Cocina Argentina">Cocina Argentina</option>
+                <option value="Cocina Francesa">Cocina Francesa</option>
+                <option value="Cocina Española">Cocina Española</option>
+                <option value="Cocina Científica">Cocina Científica</option>
+                <option value="Cocina Internacional">Cocina Internacional</option>
               </select>
             </div>
 
@@ -93,13 +95,9 @@
   <!-- Modal de detalles del libro -->
   <div class="modal" id="bookModal" style="display: none;">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalBookTitle">Detalles del Libro</h3>
-        <span class="close" id="btnCerrarModalLibro">&times;</span>
-      </div>
+      <!-- Botón de cierre compacto -->
+      <span class="close" id="btnCerrarModalLibro" style="position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; color: #aaa; cursor: pointer; z-index: 1001;">&times;</span>
       <div class="modal-body" id="modalBookContent">
-      </div>
-      <div class="modal-footer">
       </div>
     </div>
   </div>

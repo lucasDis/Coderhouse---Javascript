@@ -36,13 +36,15 @@
   <main class="main">
     <section class="carrito-section">
       <div class="container">
-        <div class="carrito-header">
-          <h2>Mi Carrito</h2>
-          <p>Revisa los libros que has seleccionado</p>
-        </div>
-
+  
         <div class="carrito-content">
           <div class="carrito-items" id="carritoItems">
+            <div class="empty-cart" id="emptyCart" style="display: none;">
+              <div class="empty-icon">🛒</div>
+              <h3>Tu carrito está vacío</h3>
+              <p>Aún no has añadido libros a tu carrito</p>
+              <a href="libros.html" class="btn-primary">Explorar Libros</a>
+            </div>
           </div>
 
           <div class="carrito-resumen" id="carritoResumen">
@@ -56,7 +58,7 @@
 
               <div class="resumen-item">
                 <span>Envío:</span>
-                <span id="envio">$3.99</span>
+                <span id="envio">$0.00</span>
               </div>
 
               <div class="resumen-item">
@@ -90,13 +92,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="empty-cart" id="emptyCart" style="display: none;">
-          <div class="empty-icon">🛒</div>
-          <h3>Tu carrito está vacío</h3>
-          <p>Aún no has añadido libros a tu carrito</p>
-          <a href="libros.html" class="btn-primary">Explorar Libros</a>
         </div>
       </div>
     </section>

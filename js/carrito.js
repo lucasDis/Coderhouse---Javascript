@@ -13,16 +13,24 @@ class CarritoPageManager {
   static cargarCarrito() {
     const container = document.getElementById('carritoItems');
     const emptyCart = document.getElementById('emptyCart');
+    const carritoResumen = document.getElementById('carritoResumen');
     const carrito = LibreriaManager.obtenerCarrito();
 
     if (carrito.length === 0) {
-      container.style.display = 'none';
+      // Mostrar solo empty-cart en la columna izquierda
+      container.innerHTML = '';
+      container.appendChild(emptyCart);
       emptyCart.style.display = 'block';
+      carritoResumen.style.display = 'block';
       return;
     }
 
-    container.style.display = 'block';
+    // Ocultar empty-cart y mostrar items
     emptyCart.style.display = 'none';
+    carritoResumen.style.display = 'block';
+
+    // Limpiar contenedor excepto el empty-cart
+    const tempEmptyCart = emptyCart;
     container.innerHTML = '';
 
     carrito.forEach(item => {
@@ -97,8 +105,10 @@ class CarritoPageManager {
 
   static actualizarCantidad(itemId, nuevaCantidad) {
     LibreriaManager.actualizarCantidad(itemId, nuevaCantidad);
-    this.cargarCarrito();
-    this.actualizarResumen();
+    // Recargar la página para asegurar que todo se actualice correctamente
+    setTimeout(() => {
+      location.reload();
+    }, 100);
   }
 
   static eliminarItem(itemId) {
@@ -107,10 +117,11 @@ class CarritoPageManager {
       '¿Estás seguro de que quieres eliminar este libro del carrito?',
       () => {
         LibreriaManager.eliminarProducto(itemId);
-        this.cargarCarrito();
-        this.actualizarResumen();
-        this.actualizarContadorCarrito();
         UIManager.mostrarMensaje('Producto eliminado del carrito', 'success');
+        // Recargar la página para asegurar que todo se actualice correctamente
+        setTimeout(() => {
+          location.reload();
+        }, 100);
       }
     );
   }
@@ -118,26 +129,32 @@ class CarritoPageManager {
   static actualizarResumen() {
     const carrito = LibreriaManager.obtenerCarrito();
     const subtotal = LibreriaManager.calcularTotal();
-    const envio = subtotal > 30 ? 0 : this.costoEnvio;
+    // Si el carrito está vacío, no hay costo de envío
+    const envio = carrito.length === 0 ? 0 : (subtotal > 30 ? 0 : this.costoEnvio);
     const subtotalConDescuento = subtotal - this.descuento;
     const iva = (subtotalConDescuento + envio) * this.ivaRate;
     const total = subtotalConDescuento + envio + iva;
 
-    // Actualizar valores en el DOM
-    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.getElementById('envio').textContent = envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`;
-    document.getElementById('iva').textContent = `$${iva.toFixed(2)}`;
-    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
-
-    // Actualizar texto de envío
+    // Actualizar valores en el DOM con verificación
+    const subtotalElement = document.getElementById('subtotal');
     const envioElement = document.getElementById('envio');
-    if (envio === 0) {
-      envioElement.style.color = 'var(--primary-green)';
-      envioElement.style.fontWeight = 'bold';
-    } else {
-      envioElement.style.color = '';
-      envioElement.style.fontWeight = '';
+    const ivaElement = document.getElementById('iva');
+    const totalElement = document.getElementById('total');
+
+    if (subtotalElement) subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+    if (envioElement) {
+      envioElement.textContent = envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`;
+      // Actualizar texto de envío
+      if (envio === 0) {
+        envioElement.style.color = 'var(--primary-green)';
+        envioElement.style.fontWeight = 'bold';
+      } else {
+        envioElement.style.color = '';
+        envioElement.style.fontWeight = '';
+      }
     }
+    if (ivaElement) ivaElement.textContent = `$${iva.toFixed(2)}`;
+    if (totalElement) totalElement.textContent = `$${total.toFixed(2)}`;
   }
 
   static actualizarContadorCarrito() {
@@ -387,7 +404,7 @@ class CarritoPageManager {
         window.location.href = 'carrito.html';
       });
     }
-  }
+}
 }
 
 // EVENT LISTENERS
