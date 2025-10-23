@@ -1,11 +1,19 @@
-// MANEJO DE UI Y MENSAJES
+// ==========================================
+  // MANEJO DE INTERFAZ DE USUARIO Y MENSAJES
+  // ==========================================
 class UIManager {
+  // ==========================================
+  // CONTROL DE PANELES Y VISUALIZACIÓN
+  // ==========================================
+
   static mostrarPanel(panelId) {
+    // Muestra un panel específico y oculta los demás
     this.ocultarTodosLosPaneles();
     document.getElementById(panelId).style.display = "block";
   }
 
   static ocultarTodosLosPaneles() {
+    // Oculta todos los paneles excepto los de ingredientes y resultado
     const paneles = document.querySelectorAll(
       ".panel, .ingredients-panel, .recipe-result"
     );
@@ -188,7 +196,7 @@ class UIManager {
       this.actualizarListaSeleccionados();
       this.actualizarEstadoBotones();
 
-      // Actualizar contador si existe
+      // Actualiza el contador si existe
       if (typeof SimuladorRecetas !== 'undefined' && SimuladorRecetas.actualizarContadorSeleccion) {
         SimuladorRecetas.actualizarContadorSeleccion();
       }
@@ -253,6 +261,14 @@ class UIManager {
 
     document.getElementById("ingredientsPanel").style.display = "none";
     document.getElementById("recipeResult").style.display = "block";
+
+    // Scroll automático al inicio de la nueva receta
+    setTimeout(() => {
+      document.getElementById("recipeResult").scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
   }
 
   static crearTarjetaReceta(receta) {
@@ -518,7 +534,7 @@ class UIManager {
   }
 
   static cargarHistorial() {
-    console.log('UIManager: Iniciando carga de historial');
+    // Inicia la carga del historial de recetas
 
     const contenedor = document.getElementById("historyGrid");
     const vacio = document.getElementById("emptyHistory");
@@ -532,7 +548,7 @@ class UIManager {
       : false;
 
     let recetas = StorageManager.obtenerRecetas();
-    console.log('UIManager: Recetas obtenidas del storage:', recetas.length, recetas);
+    // Obtiene las recetas del almacenamiento local
 
     // Filtrar por búsqueda
     if (filterSearch) {
@@ -571,7 +587,7 @@ class UIManager {
       }
     });
 
-    // Actualizar contador
+    // Actualiza el contador
     const contador = document.getElementById("recipeCount");
     if (contador) {
       contador.textContent = `${recetas.length} receta${
@@ -579,14 +595,13 @@ class UIManager {
       } encontrada${recetas.length !== 1 ? "s" : ""}`;
     }
 
-    console.log('UIManager: Recetas después de filtros:', recetas.length);
-
+    // Verifica si hay recetas para mostrar
     if (recetas.length === 0) {
-      console.log('UIManager: Mostrando contenedor vacío');
+      // Muestra el contenedor vacío si no hay recetas
       contenedor.style.display = "none";
       vacio.style.display = "block";
     } else {
-      console.log('UIManager: Mostrando', recetas.length, 'recetas en el grid');
+      // Muestra las recetas en el grid si existen
       contenedor.style.display = "grid";
       vacio.style.display = "none";
       contenedor.innerHTML = "";

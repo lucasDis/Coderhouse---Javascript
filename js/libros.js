@@ -2,28 +2,42 @@
 class LibreriaManager {
   static libros = [];
 
+  // Genera un stock aleatorio para cada libro
+  static generarStockAleatorio(categoria) {
+    // Define rangos de stock según el tipo de libro
+    const rangosStock = {
+      'Cocina Saludable': [8, 25],
+      'Cocina Argentina': [10, 30],
+      'Cocina tradicional española': [12, 20],
+      'Repostería': [5, 15],
+      'Cocina Francesa': [3, 10],
+      'Cocina Española': [15, 35],
+      'Cocina Científica': [6, 18]
+    };
+
+    const [min, max] = rangosStock[categoria] || [5, 15];
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   static async inicializarLibros() {
-    // Limpiar datos corruptos con URLs de placeholder
+    // Verifica si ya existen libros con stock en localStorage
     const librosGuardados = localStorage.getItem('libros');
+
     if (librosGuardados) {
       try {
-        const libros = JSON.parse(librosGuardados);
-        // Verificar si hay URLs de placeholder corruptas
-        const hasPlaceholders = libros.some(libro =>
-          libro.imagen && libro.imagen.includes('via.placeholder.com')
-        );
-
-        if (!hasPlaceholders) {
-          this.libros = libros;
+        this.libros = JSON.parse(librosGuardados);
+        // Verifica que los libros tengan stock asignado
+        if (this.libros.length > 0 && this.libros[0].stock !== undefined) {
+          // Los libros ya tienen stock, no es necesario regenerar
           return;
         }
       } catch (error) {
-        // Si hay error al parsear, limpiar y continuar
+        // Si hay error al parsear, continúa con la inicialización normal
       }
     }
 
-    // Limpiar localStorage corrupto
-    localStorage.removeItem('libros');
+    // Si no hay libros guardados o no tienen stock, inicializa desde cero
+    this.libros = [];
 
     // Datos actualizados de libros con información real
     this.libros = [
@@ -43,7 +57,7 @@ class LibreriaManager {
         editorial: "Editorial Larousse México",
         idioma: "Español",
         destacado: true,
-        stock: 12
+        stock: this.generarStockAleatorio("Cocina Saludable")
       },
       {
         id: 2,
@@ -56,32 +70,32 @@ class LibreriaManager {
         categoria: "Cocina Argentina",
         fechaPublicacion: "2023-05-20",
         descripcion: "Descubre los secretos de la cocina tradicional argentina. Recetas auténticas de todas las regiones del país, desde asados criollos hasta dulces típicos.",
-        imagen: "../src/images/libros/cocina-tradicional.jpg",
+        imagen: "../src/images/libros/cocina-tradicional.jpeg",
         isbn: "978-987-45-6789-0",
         paginas: 320,
         editorial: "Editorial Albatros Argentina",
         idioma: "Español",
         destacado: true,
-        stock: 18
+        stock: this.generarStockAleatorio("Cocina Argentina")
       },
       {
         id: 3,
-        titulo: "Cocina comida real. Más de 100 recetas para realfooders",
-        autor: "Carlos Ríos & David Guibert",
-        precio: 19.40,
-        precioOriginal: 17.95,
-        monedaOriginal: "EUR",
-        rating: 4.9,
-        categoria: "Cocina Saludable",
-        fechaPublicacion: "2022-11-10",
-        descripcion: "El definitivo guide para adoptar el estilo de vida realfooder. Más de 100 recetas deliciosas y fáciles para comer comida real todos los días.",
-        imagen: "../src/images/libros/cocina-comida-real.jpg",
-        isbn: "978-84-08-25456-7",
-        paginas: 320,
-        editorial: "Editorial Paidós España",
+        titulo: "El gran libro de la cocina tradicional",
+        autor: "Sergio Fernández (RTVE)",
+        precio: 5.99,
+        precioOriginal: 5.99,
+        monedaOriginal: "USD",
+        rating: 4.8,
+        categoria: "Cocina tradicional española",
+        fechaPublicacion: "2016-01-01",
+        descripcion: "Recopila más de 500 recetas clásicas de la gastronomía española, explicadas paso a paso.",
+        imagen: "../src/images/libros/cocina-gran-libro.jpg",
+        isbn: "978-84-08-16234-5",
+        paginas: 560,
+        editorial: "Espasa / Planeta",
         idioma: "Español",
         destacado: true,
-        stock: 25
+        stock: this.generarStockAleatorio("Cocina tradicional española")
       },
       {
         id: 4,
@@ -100,11 +114,11 @@ class LibreriaManager {
         editorial: "Larousse Gastronomie",
         idioma: "Español",
         destacado: false,
-        stock: 15
+        stock: this.generarStockAleatorio("Repostería")
       },
       {
         id: 5,
-        titulo: "Recetas argentinas de mi cocina. Libro bilingüe Español-Inglés",
+        titulo: "Recetas argentinas de mi cocina. Libro bilingüe",
         autor: "Gastón Riveira",
         precio: 13.31,
         precioOriginal: 59900,
@@ -119,26 +133,26 @@ class LibreriaManager {
         editorial: "Gastronomía Argentina SA",
         idioma: "Español-Inglés",
         destacado: false,
-        stock: 20
+        stock: this.generarStockAleatorio("Cocina Argentina")
       },
       {
         id: 6,
-        titulo: "Gran libro de cocina de Alain Ducasse. Bistros, brasseries y restaurantes tradicionales",
-        autor: "Alain Ducasse",
-        precio: 162.00,
-        precioOriginal: 150,
+        titulo: "Cocinología: La ciencia de los alimentos",
+        autor: "Hervé This & Pierre Gagnaire",
+        precio: 28.50,
+        precioOriginal: 26.90,
         monedaOriginal: "EUR",
-        rating: 5.0,
-        categoria: "Cocina Francesa",
-        fechaPublicacion: "2022-09-15",
-        descripcion: "La obra maestra del chef más prestigioso del mundo. Técnicas y recetas de los mejores bistros y restaurantes tradicionales franceses.",
-        imagen: "../src/images/libros/cocina-gran-libro.jpg",
-        isbn: "978-2-84-123456-2",
-        paginas: 688,
-        editorial: "Alain Ducasse Edition",
+        rating: 4.7,
+        categoria: "Cocina Científica",
+        fechaPublicacion: "2023-06-01",
+        descripcion: "Explora los principios científicos detrás de las técnicas culinarias. Un viaje fascinante por la química y física de los alimentos que revolucionará tu forma de cocinar.",
+        imagen: "../src/images/libros/cocina-cocinologia-ciencia.jpg",
+        isbn: "978-2-08-123456-9",
+        paginas: 424,
+        editorial: "Flammarion",
         idioma: "Español",
         destacado: true,
-        stock: 8
+        stock: this.generarStockAleatorio("Cocina Científica")
       },
       {
         id: 7,
@@ -157,26 +171,26 @@ class LibreriaManager {
         editorial: "Gastronomía Ibérica",
         idioma: "Español",
         destacado: false,
-        stock: 22
+        stock: this.generarStockAleatorio("Cocina Española")
       },
       {
         id: 8,
-        titulo: "Cocinología: La ciencia de los alimentos",
-        autor: "Hervé This & Pierre Gagnaire",
-        precio: 28.50,
-        precioOriginal: 26.90,
-        monedaOriginal: "EUR",
-        rating: 4.7,
-        categoria: "Cocina Científica",
-        fechaPublicacion: "2023-06-01",
-        descripcion: "Explora los principios científicos detrás de las técnicas culinarias. Un viaje fascinante por la química y física de los alimentos que revolucionará tu forma de cocinar.",
-        imagen: "../src/images/libros/cocina-cocinologia-ciencia.jpg",
-        isbn: "978-2-08-123456-9",
-        paginas: 424,
-        editorial: "Flammarion",
+        titulo: "Pastelería Argentina",
+        autor: "Gustavo Nari",
+        precio: 32.50,
+        precioOriginal: 56800,
+        monedaOriginal: "ARS",
+        rating: 4.6,
+        categoria: "Repostería",
+        fechaPublicacion: "2020-05-15",
+        descripcion: "60 recetas típicas argentinas explicadas de forma sencilla, con técnicas de un pastelero profesional.",
+        imagen: "../src/images/libros/cocina-pasteleria-arg.jpg",
+        isbn: "978-9500213257",
+        paginas: 240,
+        editorial: "Vergara / Planeta Argentina",
         idioma: "Español",
         destacado: true,
-        stock: 12
+        stock: this.generarStockAleatorio("Cocina Argentina")
       },
       {
         id: 9,
@@ -189,13 +203,13 @@ class LibreriaManager {
         categoria: "Repostería",
         fechaPublicacion: "2023-08-15",
         descripcion: "El arte de la pastelería argentina moderna. Técnicas tradicionales fusionadas con tendencias contemporáneas para crear postres únicos y deliciosos.",
-        imagen: "../src/images/libros/cocina-pasteleria-arg.jpg",
+        imagen: "../src/images/libros/cocina-comida-real.jpg",
         isbn: "978-987-87-1234-5",
         paginas: 384,
         editorial: "Editorial Grijalbo",
         idioma: "Español",
         destacado: true,
-        stock: 8
+        stock: this.generarStockAleatorio("Repostería")
       }
     ];
 
@@ -236,6 +250,9 @@ class LibreriaManager {
       emptyDiv.style.display = 'none';
       container.innerHTML = libros.map(libro => this.crearTarjetaLibro(libro)).join('');
     }
+
+    // Actualiza la disponibilidad de libros después de cargarlos
+    setTimeout(() => this.actualizarDisponibilidadLibros(), 100);
   }
 
   static limitarTitulo(titulo, maxCaracteres = 40) {
@@ -248,10 +265,21 @@ class LibreriaManager {
     const precioFormateado = libro.precio.toFixed(2);
     const tituloLimitado = this.limitarTitulo(libro.titulo, 40);
 
+    // Calcula el stock disponible considerando el carrito actual
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const cantidadEnCarrito = carrito
+      .filter(item => item.id == libro.id)
+      .reduce((total, item) => total + item.cantidad, 0);
+    const stockDisponible = libro.stock - cantidadEnCarrito;
+    const botonDeshabilitado = stockDisponible <= 0;
+
     return `
-      <div class="book-card" data-id="${libro.id}">
+      <div class="book-card" data-libro-id="${libro.id}">
         <div class="book-image">
-          <img src="${libro.imagen}" alt="${libro.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\\'width:100%;height:400px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:14px;text-align:center;padding:20px;\\'><div>📚<br>Portada no disponible<br><small>${libro.titulo}</small></div></div>';">
+          <img src="${libro.imagen}" alt="${libro.titulo}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="book-image-error" style="display:none; width:100%;height:400px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:14px;text-align:center;padding:20px;">
+            <div>📚<br>Portada no disponible<br><small>${libro.titulo}</small></div>
+          </div>
           ${libro.destacado ? '<span class="featured-badge">Destacado</span>' : ''}
         </div>
         <div class="book-info">
@@ -264,12 +292,18 @@ class LibreriaManager {
           <div class="book-rating">${estrellas}</div>
           <div class="book-price-container">
             <span class="book-price">USD ${precioFormateado}</span>
+            <span class="stock-info" style="color: ${stockDisponible <= 2 ? '#e74c3c' : '#2ecc71'}; font-size: 12px; font-weight: bold;">
+              Stock: ${stockDisponible} unidades
+            </span>
           </div>
           <div class="book-actions">
-            <button class="btn-primary add-to-cart" data-id="${libro.id}">
-              Agregar al carrito
+            <button class="btn-primary add-to-cart-btn"
+                    data-id="${libro.id}"
+                    ${botonDeshabilitado ? 'disabled' : ''}
+                    style="${botonDeshabilitado ? 'opacity: 0.5; cursor: not-allowed;' : ''}">
+              ${botonDeshabilitado ? 'Sin stock' : 'Agregar al carrito'}
             </button>
-            <button class="btn-secondary view-details" data-id="${libro.id}">
+            <button class="btn-secondary view-details-btn" data-id="${libro.id}">
               Ver detalles
             </button>
           </div>
@@ -345,8 +379,24 @@ class LibreriaManager {
     const libro = this.obtenerLibroPorId(libroId);
     if (!libro) return;
 
+    // Valida que haya stock disponible
+    if (libro.stock <= 0) {
+      this.mostrarNotificacion('Libro sin stock disponible', 'error');
+      return;
+    }
+
     const carrito = this.obtenerCarrito();
     const itemExistente = carrito.find(item => item.id === libroId);
+
+    // Calcula la cantidad total en el carrito
+    const cantidadEnCarrito = itemExistente ? itemExistente.cantidad : 0;
+    const cantidadTotal = cantidadEnCarrito + 1;
+
+    // Valida que no se exceda el stock disponible
+    if (cantidadTotal > libro.stock) {
+      this.mostrarNotificacion(`Solo quedan ${libro.stock} unidades disponibles`, 'warning');
+      return;
+    }
 
     if (itemExistente) {
       itemExistente.cantidad += 1;
@@ -359,6 +409,9 @@ class LibreriaManager {
 
     this.guardarCarrito(carrito);
     this.actualizarContadorCarrito();
+
+    // Actualiza la disponibilidad de libros en la interfaz
+    this.actualizarDisponibilidadLibros();
 
     // Disparar evento personalizado para notificar cambios en el carrito
     window.dispatchEvent(new CustomEvent('carritoActualizado', {
@@ -404,16 +457,24 @@ class LibreriaManager {
     }
   }
 
-  static mostrarNotificacion(mensaje) {
+  static mostrarNotificacion(mensaje, tipo = 'success') {
     // Crear elemento de notificación
     const notificacion = document.createElement('div');
     notificacion.className = 'notification';
     notificacion.textContent = mensaje;
+
+    // Define colores según el tipo
+    const colores = {
+      success: 'var(--primary-green)',
+      error: 'var(--primary-red)',
+      warning: 'var(--primary-orange)'
+    };
+
     notificacion.style.cssText = `
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: var(--primary-green);
+      background: ${colores[tipo] || colores.success};
       color: white;
       padding: 1rem 1.5rem;
       border-radius: var(--border-radius);
@@ -434,9 +495,50 @@ class LibreriaManager {
     setTimeout(() => {
       notificacion.style.transform = 'translateX(100%)';
       setTimeout(() => {
-        document.body.removeChild(notificacion);
+        if (document.body.contains(notificacion)) {
+          document.body.removeChild(notificacion);
+        }
       }, 300);
     }, 3000);
+  }
+
+  static actualizarDisponibilidadLibros() {
+    // Itera sobre cada libro en la interfaz
+    document.querySelectorAll('.book-card').forEach(card => {
+      const libroId = card.dataset.libroId;
+      const libro = this.libros.find(l => l.id == libroId);
+
+      if (libro) {
+        const botonAgregar = card.querySelector('.add-to-cart-btn');
+        const stockInfo = card.querySelector('.stock-info');
+
+        // Obtiene la cantidad actual en el carrito para este libro
+        const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+        const cantidadEnCarrito = carrito
+          .filter(item => item.id == libroId)
+          .reduce((total, item) => total + item.cantidad, 0);
+
+        const stockDisponible = libro.stock - cantidadEnCarrito;
+
+        if (stockDisponible <= 0) {
+          // Deshabilita el botón si no hay stock disponible
+          botonAgregar.disabled = true;
+          botonAgregar.textContent = 'Sin stock';
+          botonAgregar.classList.add('disabled');
+        } else {
+          // Habilita el botón si hay stock disponible
+          botonAgregar.disabled = false;
+          botonAgregar.textContent = 'Agregar al carrito';
+          botonAgregar.classList.remove('disabled');
+        }
+
+        // Actualiza la información de stock
+        if (stockInfo) {
+          stockInfo.textContent = `Stock: ${stockDisponible} unidades`;
+          stockInfo.style.color = stockDisponible <= 2 ? '#e74c3c' : '#2ecc71';
+        }
+      }
+    });
   }
 
   static mostrarDetallesLibro(libroId) {
@@ -453,7 +555,12 @@ class LibreriaManager {
           <div class="relative">
             <img src="${libro.imagen}" alt="${libro.titulo}"
                  class="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
-                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-96 lg:h-[500px] bg-gray-100 rounded-lg shadow-lg flex items-center justify-center text-gray-500 text-center p-8\\'><div class=\\'text-6xl mb-4\\'>📚</div><div class=\\'text-lg font-medium\\'>Portada no disponible</div><div class=\\'text-sm mt-2\\'>${libro.titulo}</div></div>';">
+                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="modal-image-error" style="display:none; width:100%; height:96 lg:h-[500px]; bg-gray-100 rounded-lg shadow-lg flex items-center justify-center text-gray-500 text-center p-8;">
+              <div class="text-6xl mb-4">📚</div>
+              <div class="text-lg font-medium">Portada no disponible</div>
+              <div class="text-sm mt-2">${libro.titulo}</div>
+            </div>
             ${libro.destacado ? '<span class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">Destacado</span>' : ''}
           </div>
         </div>
@@ -511,10 +618,7 @@ class LibreriaManager {
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
               <!-- Precio -->
               <div class="flex flex-col items-start sm:items-end">
-                ${libro.precioOriginal ? `
-                  <span class="text-gray-400 line-through text-sm">${libro.monedaOriginal} ${libro.precioOriginal.toLocaleString()}</span>
-                ` : ''}
-                <span class="text-3xl font-bold text-green-600">$${libro.precio.toFixed(2)}</span>
+                <span class="text-3xl font-bold text-green-600">$${libro.precio.toFixed(2)} USD</span>
               </div>
 
               <!-- Acciones -->
@@ -563,12 +667,12 @@ class LibreriaManager {
 
     // Event listeners para botones de agregar al carrito y ver detalles
     document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('add-to-cart')) {
+      if (e.target.classList.contains('add-to-cart-btn')) {
         const libroId = parseInt(e.target.dataset.id);
         this.agregarAlCarrito(libroId);
       }
 
-      if (e.target.classList.contains('view-details')) {
+      if (e.target.classList.contains('view-details-btn')) {
         const libroId = parseInt(e.target.dataset.id);
         this.mostrarDetallesLibro(libroId);
       }
@@ -595,6 +699,11 @@ class LibreriaManager {
         modal.style.display = 'none';
       }
     });
+
+    // Inicializar banner de descuentos (solo si estamos en la página de libros)
+    if (document.getElementById('discountBanner')) {
+      DiscountBannerManager.inicializarBanner();
+    }
   }
 
   // Métodos adicionales para gestión del carrito
@@ -647,5 +756,124 @@ class LibreriaManager {
   }
 }
 
-// Exportar la clase para uso global
+// Clase para manejar el banner de códigos de descuento
+class DiscountBannerManager {
+  // Códigos sincronizados con los que funcionan en el carrito
+  static codigosDescuento = [
+    { codigo: 'LEER10', descuento: 10, descripcion: '10% de descuento' },
+    { codigo: 'LIBROS20', descuento: 20, descripcion: '20% de descuento en libros' },
+    { codigo: 'VERANO15', descuento: 15, descripcion: '15% de descuento de verano' },
+    { codigo: 'COCINA10', descuento: 10, descripcion: '10% de descuento en cocina' },
+    { codigo: 'CHEF15', descuento: 15, descripcion: '15% de descuento para chefs' },
+    { codigo: 'GOURMET20', descuento: 20, descripcion: '20% de descuento gourmet' },
+    { codigo: 'SABOR12', descuento: 12, descripcion: '12% de descuento especial' },
+    { codigo: 'RECETA18', descuento: 18, descripcion: '18% de descuento en recetas' },
+    { codigo: 'PLATANO8', descuento: 8, descripcion: '8% de descuento divertido' },
+    { codigo: 'ESPECIAS5', descuento: 5, descripcion: '5% de descuento en especias' }
+  ];
+
+  static codigoActual = null;
+
+  static inicializarBanner() {
+    this.generarNuevoCodigo();
+    this.agregarEventListeners();
+
+    // Generar nuevo código cada 30 segundos
+    setInterval(() => {
+      this.generarNuevoCodigo();
+    }, 30000);
+  }
+
+  static generarNuevoCodigo() {
+    const indiceAleatorio = Math.floor(Math.random() * this.codigosDescuento.length);
+    this.codigoActual = this.codigosDescuento[indiceAleatorio];
+
+    const codigoElement = document.getElementById('discountCode');
+    if (codigoElement) {
+      // Animación de cambio
+      codigoElement.style.opacity = '0';
+      setTimeout(() => {
+        codigoElement.textContent = this.codigoActual.codigo;
+        codigoElement.style.opacity = '1';
+      }, 300);
+    }
+  }
+
+  static copiarCodigo() {
+    if (!this.codigoActual) return;
+
+    // Copiar al portapapeles
+    navigator.clipboard.writeText(this.codigoActual.codigo).then(() => {
+      // Mostrar notificación de éxito
+      this.mostrarNotificacion(`¡Código ${this.codigoActual.codigo} copiado!`);
+
+      // Animación del botón
+      const btn = document.getElementById('copyDiscountBtn');
+      if (btn) {
+        btn.textContent = '✅';
+        setTimeout(() => {
+          btn.textContent = '📋';
+        }, 2000);
+      }
+    }).catch(err => {
+      console.error('Error al copiar el código:', err);
+      this.mostrarNotificacion('Error al copiar el código', 'error');
+    });
+  }
+
+  static mostrarNotificacion(mensaje, tipo = 'success') {
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.className = 'discount-notification';
+    notificacion.textContent = mensaje;
+    notificacion.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: ${tipo === 'success' ? '#10b981' : '#ef4444'};
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-heavy);
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      font-weight: 500;
+    `;
+
+    document.body.appendChild(notificacion);
+
+    // Animar entrada
+    setTimeout(() => {
+      notificacion.style.transform = 'translateX(0)';
+    }, 100);
+
+    // Remover después de 3 segundos
+    setTimeout(() => {
+      notificacion.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (document.body.contains(notificacion)) {
+          document.body.removeChild(notificacion);
+        }
+      }, 300);
+    }, 3000);
+  }
+
+  static agregarEventListeners() {
+    const copyBtn = document.getElementById('copyDiscountBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => this.copiarCodigo());
+    }
+
+    // También permitir hacer clic en el código para copiarlo
+    const codigoElement = document.getElementById('discountCode');
+    if (codigoElement) {
+      codigoElement.style.cursor = 'pointer';
+      codigoElement.addEventListener('click', () => this.copiarCodigo());
+    }
+  }
+}
+
+// Exportar las clases para uso global
 window.LibreriaManager = LibreriaManager;
+window.DiscountBannerManager = DiscountBannerManager;

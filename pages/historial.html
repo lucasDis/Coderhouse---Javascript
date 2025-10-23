@@ -126,26 +126,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
+  <script defer src="../js/historial-init.js?v=2.1.4"></script>
 
-      // Actualizar contador del carrito
-      const carritoCount = document.getElementById('cartCount');
-      if (carritoCount) {
-        const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-        const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
-        carritoCount.textContent = totalItems;
-      }
-
-      // Event listener para icono del carrito
-      const cartIcon = document.getElementById('cartIcon');
-      if (cartIcon) {
-        cartIcon.addEventListener('click', () => {
-          window.location.href = 'carrito.html';
-        });
-      }
-    });
-  </script>
+  <!-- Footer -->
+  <footer class="footer">
+    Desarrollado por: Lucas G. Ruiz Diaz
+  </footer>
 </body>
 
 </html>

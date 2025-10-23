@@ -104,38 +104,12 @@
   <script src="../js/ui.js?v=2.1.4"></script>
   <script src="../js/libros.js?v=2.1.4"></script>
   <script src="../js/carrito.js?v=2.1.4"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Inicializar página del carrito
-      if (typeof CarritoPageManager !== 'undefined') {
-        CarritoPageManager.inicializar();
-      }
+  <script defer src="../js/carrito-init.js?v=2.1.4"></script>
 
-      // Actualizar contador del carrito
-      if (typeof LibreriaManager !== 'undefined') {
-        LibreriaManager.actualizarContadorCarrito();
-      }
-
-      // Escuchar eventos de actualización del carrito
-      window.addEventListener('carritoActualizado', (event) => {
-        if (typeof CarritoPageManager !== 'undefined') {
-          CarritoPageManager.cargarCarrito();
-          CarritoPageManager.actualizarResumen();
-        }
-        if (typeof LibreriaManager !== 'undefined') {
-          LibreriaManager.actualizarContadorCarrito();
-        }
-      });
-
-      // Event listener para icono del carrito
-      const cartIcon = document.getElementById('cartIcon');
-      if (cartIcon) {
-        cartIcon.addEventListener('click', () => {
-          window.location.href = 'carrito.html';
-        });
-      }
-    });
-  </script>
+  <!-- Footer -->
+  <footer class="footer">
+    Desarrollado por: Lucas G. Ruiz Diaz
+  </footer>
   </body>
 
 </html>

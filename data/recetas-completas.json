@@ -136,5 +136,74 @@
         "Cocina sin remover durante unos 18 minutos. A los 10 minutos, coloca las gambas limpias sobre el arroz. Cuando falten 2 minutos, aumenta el fuego al máximo durante 1 minuto para crear el 'socarrat' (la capa crujiente de arroz en el fondo), luego reduce al mínimo durante el último minuto. Retira del fuego y deja reposar 5 minutos antes de servir."
       ]
     }
+  ],
+  "Tomate": [
+    {
+      "nombre": "Tomates Rellenos de Atún",
+      "tipo": "Rellenos",
+      "sabor": "Mediterráneo",
+      "utensilios": ["Horno", "Cuchillo", "Cuchara", "Bandeja para horno", "Tabla de cortar"],
+      "ingredientes": ["6 tomates grandes", "2 latas de atún", "1 cebolla", "2 huevos duros", "Mayonesa", "Perejil", "Sal", "Pimienta"],
+      "pasos": [
+        "Precalienta el horno a 180°C. Lava bien los tomates y córtales la parte superior como si fueran tapas. Con una cuchara pequeña, vacía el interior de los tomates teniendo cuidado de no romper las paredes. Reserva la pulpa que sacaste.",
+        "Pica finamente la cebolla y sofríela en una sartén con un poco de aceite hasta que esté transparente. Escurre bien el atún y desmenúzalo con un tenedor. Añade el atún a la cebolla y cocina por 2 minutos.",
+        "Pica los huevos duros en cubitos pequeños y pica el perejil fresco. En un bol, mezcla el atún con la cebolla, los huevos picados, el perejil, dos cucharadas de mayonesa, sal y pimienta al gusto.",
+        "Rellena los tomates con esta mezcla, presionando suavemente para que no queden espacios vacíos. Coloca las 'tapas' de los tomates que cortaste al principio.",
+        "Coloca los tomates rellenos en una bandeja para horno ligeramente engrasada. Hornea durante 15-20 minutos o hasta que los tomates estén tiernos pero mantengan su forma.",
+        "Saca del horno y deja reposar 5 minutos antes de servir. Puedes acompañar con una ensalada verde o como plato principal."
+      ]
+    }
+  ],
+  "Champiñones": [
+    {
+      "nombre": "Champiñones Salteados con Ajo",
+      "tipo": "Salteado",
+      "sabor": "Casero",
+      "utensilios": ["Sartén", "Cuchillo", "Tabla de cortar", "Espátula", "Recipiente"],
+      "ingredientes": ["500g de champiñones", "4 dientes de ajo", "Perejil fresco", "Aceite de oliva", "Sal", "Pimienta", "Jugo de limón"],
+      "pasos": [
+        "Limpia los champiñones con un paño húmedo o cepillo suave. Evita lavarlos bajo el agua corriente ya que absorberían demasiada humedad. Córtalos en láminas de aproximadamente medio centímetro de grosor.",
+        "Pica finamente los dientes de ajo y el perejil fresco. Reserva el perejil aparte para añadirlo al final. En una sartén grande, calienta 3 cucharadas de aceite de oliva a fuego medio-alto.",
+        "Cuando el aceite esté caliente, añade los champiñones en una sola capa. No sobrecargues la sartén, es mejor cocinarlos en dos lotes si es necesario. Cocina durante 5-7 minutos sin moverlos demasiado para que se doren bien.",
+        "Cuando los champiñones estén dorados, añade el ajo picado y cocina por 1-2 minutos más, moviendo constantemente para que el ajo no se queme. El ajo debe quedar dorado y fragante.",
+        "Añade sal y pimienta al gusto. Saca los champiñones del fuego y espolvorea con el perejil fresco picado. Exprime unas gotas de limón por encima para realzar los sabores.",
+        "Sirve inmediatamente mientras están calientes. Puedes acompañarlos con carne, pescado, o como guarnición para platos de pasta."
+      ]
+    }
+  ],
+  "Camarones": [
+    {
+      "nombre": "Camarones al Ajillo",
+      "tipo": "Salteado",
+      "sabor": "Español",
+      "utensilios": ["Sartén", "Cuchillo", "Tabla de cortar", "Espátula", "Recipiente"],
+      "ingredientes": ["500g de camarones", "6 dientes de ajo", "Guindilla", "Aceite de oliva", "Perejil", "Sal", "Pan crujiente"],
+      "pasos": [
+        "Limpia bien los camarones quitándoles la cabeza y la vena intestinal, pero dejando la cola. Sécalos muy bien con papel de cocina. Es importante que estén completamente secos para que salten bien en el aceite.",
+        "Pica los ajos muy finos, casi laminados. Pica también la guindilla si te gusta el picante. Pica el perejil fresco y reserva aparte para el final.",
+        "En una sartén grande, calienta abundante aceite de oliva a fuego medio-bajo. El aceite debe cubrir bien el fondo de la sartén pero no demasiado para que los camarones no queden fritos.",
+        "Cuando el aceite esté caliente, añade los ajos laminados y la guindilla. Cocina muy lentamente hasta que los ajos estén dorados pero no quemados, esto tomará unos 2-3 minutos. El aceite se infusionará con el sabor del ajo.",
+        "Sube el fuego a medio-alto y añade los camarones limpios y secos. Cocina durante 2-3 minutos, moviendo constantemente. Los camarones estarán listos cuando cambien de color y se pongan rosados y opacos.",
+        "Añade sal al gusto, espolvorea con perejil fresco picado y sirve inmediatamente. Acompaña con pan crujiente para mojar en el aceite infusionado con ajo."
+      ]
+    }
+  ],
+  "Huevos": [
+    {
+      "nombre": "Tortilla Española",
+      "tipo": "Cocido",
+      "sabor": "Casero",
+      "utensilios": ["Sartén antiadherente", "Plato grande", "Cuchillo", "Tabla de cortar", "Espátula"],
+      "ingredientes": ["6 huevos", "1kg de patatas", "1 cebolla", "Aceite de oliva", "Sal"],
+      "pasos": [
+        "Pela las patatas y córtalas en rodajas finas y uniformes, de aproximadamente 2-3 mm de grosor. Pica la cebolla en juliana fina. Seca bien las patatas con papel de cocina para eliminar el exceso de almidón.",
+        "En una sartén grande y antiadherente, calienta abundante aceite de oliva (debe cubrir las patatas). Cuando el aceite esté caliente pero no humeando, añade las patatas y la cebolla. Cocina a fuego medio-bajo durante 20-25 minutos.",
+        "Las patatas deben cocinarse lentamente hasta que estén tiernas pero sin que se rompan. Remueve suavemente de vez en cuando para que se cocinen uniformemente. Escurre bien el aceite y sazona con sal generosa.",
+        "Bate los huevos en un bol grande con una pizca de sal. No bates demasiado, solo lo suficiente para integrar las yemas con las claras. Añade las patatas y cebollas cocidas a los huevos batidos y mezcla suavemente.",
+        "Deja reposar la mezcla durante 10 minutos para que las patatas absorban el huevo. Mientras, limpia la sartén y añade un poco de aceite fresco. Calienta a fuego medio-alto.",
+        "Cuando el aceite esté muy caliente, vierte la mezcla en la sartén. Cocina durante 3-4 minutos por cada lado. Para darle la vuelta, cúbre la sartén con un plato grande y voltea la tortilla. Desliza nuevamente en la sartén para cocinar el otro lado.",
+        "La tortilla estará lista cuando esté dorada por fuera pero jugosa por dentro. Saca de la sartén y deja reposar 5 minutos antes de cortar. Sirve a temperatura ambiente o caliente."
+      ]
+    }
   ]
 }

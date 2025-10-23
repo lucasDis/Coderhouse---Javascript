@@ -5,7 +5,12 @@ let datosListos = false;
 // MÉTODOS PRINCIPALES DE GENERACIÓN DE RECETAS
 // ==========================================
 class SimuladorRecetas {
+  // ==========================================
+  // GENERACIÓN DE RECETAS RÁPIDAS
+  // ==========================================
+
   static generarRecetaRapida() {
+    // Genera una receta aleatoria combinando ingredientes, métodos y sabores
     const ingrediente =
       ingredientes[Math.floor(Math.random() * ingredientes.length)];
     const metodo = metodos[Math.floor(Math.random() * metodos.length)];
@@ -48,7 +53,12 @@ class SimuladorRecetas {
     };
   }
 
+  // ==========================================
+  // GENERACIÓN DE RECETAS MÚLTIPLES (CON INGREDIENTES SELECCIONADOS)
+  // ==========================================
+
   static generarRecetaMultiple() {
+    // Genera una receta basada en los ingredientes seleccionados por el usuario
     if (estado.seleccionados.length === 0) {
       UIManager.mostrarMensaje(
         "Debes seleccionar al menos un ingrediente para crear una receta",
@@ -130,8 +140,58 @@ class SimuladorRecetas {
   // ==========================================
 
   static buscarRecetaCompleta(ingrediente, metodo, sabor) {
+    // Busca recetas por coincidencia exacta de ingrediente
     if (recetasCompletas[ingrediente]) {
       const recetasPosibles = recetasCompletas[ingrediente];
+
+      // Busca coincidencia exacta en tipo y sabor
+      let recetaExacta = recetasPosibles.find(
+        (r) =>
+          r.tipo.toLowerCase().includes(metodo.toLowerCase()) &&
+          r.sabor.toLowerCase().includes(sabor.toLowerCase())
+      );
+
+      // Si no encuentra coincidencia exacta, busca por tipo
+      if (!recetaExacta) {
+        recetaExacta = recetasPosibles.find(
+          (r) => r.tipo.toLowerCase().includes(metodo.toLowerCase())
+        );
+      }
+
+      // Si aún no encuentra, busca por sabor
+      if (!recetaExacta) {
+        recetaExacta = recetasPosibles.find(
+          (r) => r.sabor.toLowerCase().includes(sabor.toLowerCase())
+        );
+      }
+
+      // Si no encuentra ninguna coincidencia, usa la primera receta disponible
+      if (!recetaExacta) {
+        recetaExacta = recetasPosibles[0];
+      }
+
+      return recetaExacta;
+    }
+
+    // Búsqueda alternativa: buscar por categoría de ingrediente
+    const categoriasAlternativas = {
+      'Cerdo': 'Carne de Res',
+      'Cordero': 'Carne de Res',
+      'Pavo': 'Pollo',
+      'Conejo': 'Carne de Res',
+      'Duck': 'Pollo',
+      'Salmón': 'Pescado',
+      'Atún': 'Pescado',
+      'Camarones': 'Pescado',
+      'Langostinos': 'Pescado',
+      'Mejillones': 'Pescado',
+      'Almejas': 'Pescado',
+      'Calamares': 'Pescado',
+      'Pulpo': 'Pescado'
+    };
+
+    if (categoriasAlternativas[ingrediente] && recetasCompletas[categoriasAlternativas[ingrediente]]) {
+      const recetasPosibles = recetasCompletas[categoriasAlternativas[ingrediente]];
 
       let recetaExacta = recetasPosibles.find(
         (r) =>
@@ -139,11 +199,9 @@ class SimuladorRecetas {
           r.sabor.toLowerCase().includes(sabor.toLowerCase())
       );
 
-      if (!recetaExacta) {
-        recetaExacta = recetasPosibles[0];
+      if (recetaExacta) {
+        return recetaExacta;
       }
-
-      return recetaExacta;
     }
 
     return null;
@@ -227,9 +285,8 @@ class SimuladorRecetas {
 
       StorageManager.guardarReceta(recetaFormateada);
 
-      // Verificar que se guardó correctamente
+      // Verifica que se guardó correctamente
       const recetas = StorageManager.obtenerRecetas();
-      console.log('Recetas guardadas:', recetas.length, recetas); // Debug
 
       this.mostrarModalExito(estado.recetaActual);
     } else {

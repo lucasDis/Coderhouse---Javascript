@@ -1,39 +1,40 @@
 // MANEJO DE LOCALSTORAGE
 class StorageManager {
   static guardarReceta(receta) {
-    console.log('StorageManager: Intentando guardar receta:', receta);
-
+    // Guarda una nueva receta en el almacenamiento local
     let recetas = this.obtenerRecetas();
-    console.log('StorageManager: Recetas existentes:', recetas.length, recetas);
 
+    // Asigna ID y fecha a la receta
     receta.id = Date.now();
     receta.fecha = new Date().toLocaleString();
     recetas.push(receta);
 
-    console.log('StorageManager: Guardando recetas totales:', recetas.length);
-
     try {
+      // Guarda las recetas en localStorage
       localStorage.setItem("recetas", JSON.stringify(recetas));
-      console.log('StorageManager: Receta guardada exitosamente');
-
-      // Verificar que se guardó
-      const guardadas = this.obtenerRecetas();
-      console.log('StorageManager: Verificación - Recetas guardadas:', guardadas.length);
     } catch (error) {
-      console.error('StorageManager: Error al guardar receta:', error);
+      // Maneja errores al guardar la receta
+      console.error('Error al guardar receta:', error);
     }
   }
 
+  // ==========================================
+  // OBTENCIÓN Y LIMPIEZA DE RECETAS
+  // ==========================================
+
   static obtenerRecetas() {
+    // Obtiene todas las recetas del almacenamiento local
     let recetas = localStorage.getItem("recetas");
     return recetas ? JSON.parse(recetas) : [];
   }
 
   static limpiarHistorial() {
+    // Elimina todas las recetas del almacenamiento local
     localStorage.removeItem("recetas");
   }
 
   static obtenerRecetasRecientes(limite = 6) {
+    // Obtiene las recetas más recientes (últimas N recetas)
     const recetas = this.obtenerRecetas();
     return recetas.slice(-limite).reverse();
   }
@@ -42,12 +43,15 @@ class StorageManager {
   // SISTEMA DE FAVORITOS
   // ==========================================
   static toggleFavorito(recetaId) {
+    // Alterna una receta entre favorita y no favorita
     let favoritos = this.obtenerFavoritos();
     const index = favoritos.indexOf(recetaId);
 
     if (index > -1) {
+      // Quita de favoritos si ya existe
       favoritos.splice(index, 1);
     } else {
+      // Agrega a favoritos si no existe
       favoritos.push(recetaId);
     }
 
@@ -56,11 +60,13 @@ class StorageManager {
   }
 
   static obtenerFavoritos() {
+    // Obtiene la lista de IDs de recetas favoritas
     let favoritos = localStorage.getItem("favoritos");
     return favoritos ? JSON.parse(favoritos) : [];
   }
 
   static esFavorito(recetaId) {
+    // Verifica si una receta está marcada como favorita
     return this.obtenerFavoritos().includes(recetaId);
   }
 
@@ -156,19 +162,44 @@ class StorageManager {
     const recetas = this.obtenerRecetas();
     const favoritos = this.obtenerFavoritos();
 
-    const data = {
-      recetas,
-      favoritos,
-      exportDate: new Date().toISOString(),
-    };
+    // Crear contenido en formato TXT
+    let txtContent = "HISTORIAL DE RECETAS\n";
+    txtContent += "==================\n\n";
+    txtContent += `Fecha de exportación: ${new Date().toLocaleString('es-ES')}\n\n`;
 
-    const dataStr = JSON.stringify(data, null, 2);
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    txtContent += `Total de recetas: ${recetas.length}\n`;
+    txtContent += `Recetas favoritas: ${favoritos.length}\n\n`;
+    txtContent += "----------------------------------------\n\n";
+
+    if (recetas.length > 0) {
+      txtContent += "RECETAS GUARDADAS:\n\n";
+
+      recetas.forEach((receta, index) => {
+        txtContent += `${index + 1}. ${receta.titulo}\n`;
+        txtContent += `   Estilo: ${receta.estilo}\n`;
+        txtContent += `   Fecha: ${new Date(receta.fecha).toLocaleString('es-ES')}\n`;
+        txtContent += `   Ingredientes: ${receta.ingredientes}\n`;
+        txtContent += `   Preparación: ${receta.preparacion}\n`;
+
+        // Verificar si es favorita
+        const esFavorita = favoritos.some(fav => fav.id === receta.id);
+        if (esFavorita) {
+          txtContent += "   ⭐ FAVORITA\n";
+        }
+
+        txtContent += "\n";
+        txtContent += "----------------------------------------\n\n";
+      });
+    } else {
+      txtContent += "No hay recetas guardadas en el historial.\n\n";
+    }
+
+    const dataBlob = new Blob([txtContent], { type: "text/plain;charset=utf-8" });
 
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `recetas-backup-${Date.now()}.json`;
+    link.download = `recetas-historial-${Date.now()}.txt`;
     link.click();
 
     URL.revokeObjectURL(url);

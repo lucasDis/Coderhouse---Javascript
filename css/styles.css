@@ -1,39 +1,88 @@
+/* ======================
+  📚 ÍNDICE DE SECCIONES
+   ======================
+   Este archivo contiene todos los estilos del sitio web.
+   Organizado por secciones para fácil mantenimiento:
+
+   🎨 Variables CSS Personalizadas
+   🏗️ Estilos Base y Reseteo
+   📄 Estructura Principal y Layout
+   🏠 Sección Hero - Página Principal
+   🔘 Botones y Elementos Interactivos
+   ⭐ Sección de Características
+   🎲 Generador de Recetas
+   🥬 Panel de Ingredientes
+   📝 Resultados de Recetas
+   📚 Historial de Recetas
+   🖼️ Modales Generales
+   📖 Sistema de Librería y Catálogo
+   🛒 Sistema de Carrito de Compras
+   📱 Diseño Responsivo General
+   🛠️ Clases de Utilidad
+   🔍 Explorador de API
+   📖 Modal Detallado de Libros
+   📄 Footer Minimalista
+   🎭 Modales Responsivos (Checkout y Éxito)
+   ========================================== */
+
 :root {
-  /* Colores inspirados en Cookpad */
+  /* Define la paleta de colores principal inspirada en Cookpad */
   --primary-green: #4CAF50;
   --primary-orange: #FF9800;
   --primary-red: #F44336;
+
+  /* Define los colores de texto */
   --text-primary: #212121;
   --text-secondary: #757575;
   --text-light: #9E9E9E;
+
+  /* Define los colores de fondo */
   --bg-primary: #FFFFFF;
   --bg-secondary: #FAFAFA;
   --bg-tertiary: #F5F5F5;
+
+  /* Define los colores de bordes */
   --border-color: #E0E0E0;
   --border-light: #EEEEEE;
+
+  /* Define las sombras para diferentes profundidades */
   --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12);
   --shadow-medium: 0 2px 6px rgba(0, 0, 0, 0.15);
   --shadow-heavy: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  /* Define los bordes redondeados */
   --border-radius: 8px;
   --border-radius-small: 4px;
+
+  /* Define la transición base */
   --transition: all 0.2s ease;
 }
 
+/* ==========================================
+  🏗️ ESTILOS BASE Y RESETEO
+   ==========================================*/
+
 * {
+  /* Aplica box-sizing a todos los elementos */
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
+  /* Configura el estilo base del cuerpo */
   font-family: "Roboto", sans-serif;
   background-color: var(--bg-secondary);
   color: var(--text-primary);
   line-height: 1.6;
 }
 
-/* Header */
+/* ==========================================
+  CABECERA (HEADER)
+  ========================================== */
+
 .header {
+  /* Establece el estilo principal de la cabecera */
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-light);
@@ -90,6 +139,10 @@ body {
   background-color: var(--primary-green);
 }
 
+/* =================================
+  📄 ESTRUCTURA PRINCIPAL Y LAYOUT
+   ================================= */
+
 /* Main */
 .main {
   min-height: calc(100vh - 73px);
@@ -100,6 +153,11 @@ body {
   margin: 0 auto;
   padding: 2rem;
 }
+
+/* ===================================
+  🏠 SECCIÓN HERO - PÁGINA PRINCIPAL
+   =================================== */
+
 
 /* Hero Section */
 .hero {
@@ -123,6 +181,10 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ====================================
+  🔘 BOTONES Y ELEMENTOS INTERACTIVOS
+   ==================================== */
 
 /* Buttons */
 .btn-primary {
@@ -166,6 +228,10 @@ body {
   box-shadow: var(--shadow-light);
 }
 
+/* ==============================
+  ⭐ SECCIÓN DE CARACTERÍSTICAS 
+   ============================== */
+
 /* Features Section */
 .features {
   padding: 4rem 0;
@@ -202,6 +268,10 @@ body {
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
+
+/* ========================
+  🎲 GENERADOR DE RECETAS
+   ======================== */
 
 /* Generator Section */
 .generator-section {
@@ -263,6 +333,10 @@ body {
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
+
+/* =========================
+  🥬 PANEL DE INGREDIENTES
+   ========================= */
 
 /* Ingredients Panel */
 .ingredients-panel {
@@ -362,6 +436,10 @@ body {
   justify-content: center;
 }
 
+/* =========================
+  📝 RESULTADOS DE RECETAS
+   ========================= */
+
 /* Recipe Result */
 .recipe-result {
   background-color: var(--bg-primary);
@@ -439,6 +517,10 @@ body {
   border-top: 1px solid var(--border-light);
   margin-bottom: 2rem;
 }
+
+/* ========================
+  📚 HISTORIAL DE RECETAS
+   ======================== */
 
 /* History Section */
 .history-section {
@@ -529,6 +611,10 @@ body {
   margin-bottom: 2rem;
 }
 
+/* =====================
+  🖼️ MODALES GENERALES
+   ===================== */
+
 /* Modal */
 .modal {
   position: fixed;
@@ -607,8 +693,12 @@ body {
   text-align: right;
 }
 
-/* Recipes Grid */
+/* ===========================
+  GRID DE RECETAS (HISTORIAL)
+  ============================ */
+
 .recipes-grid {
+  /* Configura el grid de recetas responsive */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
@@ -616,6 +706,7 @@ body {
 }
 
 .recipe-card {
+  /* Establece el estilo base de las tarjetas de receta */
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -664,9 +755,9 @@ body {
   gap: 0.3rem;
 }
 
-/* ==========================================
+/* ====================================
    SISTEMA DE FAVORITOS Y CALIFICACIÓN
-   ========================================== */
+   ==================================== */
 
 .btn-favorito {
   background: none;
@@ -762,9 +853,9 @@ body {
   margin-top: 0;
 }
 
-/* ==========================================
+/* ============================
    MODAL HORIZONTAL DE LIBROS
-   ========================================== */
+   ============================ */
 
 .modal-book-horizontal {
   display: flex;
@@ -1105,9 +1196,9 @@ body {
   75% { transform: translateX(5px); }
 }
 
-/* ==========================================
+/* ==========================
    MODO OFFLINE - INDICADOR
-   ========================================== */
+   ========================== */
 
 .offline-indicator {
   position: fixed;
@@ -1139,9 +1230,9 @@ body {
   }
 }
 
-/* ==========================================
+/* ==================================
    RESPONSIVE PARA NUEVOS ELEMENTOS
-   ========================================== */
+   ================================== */
 
 @media (max-width: 768px) {
   .stats-container {
@@ -1214,6 +1305,10 @@ body {
   }
 }
 
+/* ============================
+  📱 DISEÑO RESPONSIVO GENERAL
+   ============================ */
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-container {
@@ -1259,6 +1354,10 @@ body {
     margin: 1rem;
   }
 }
+
+/* ======================
+  🛠️ CLASES DE UTILIDAD
+   ====================== */
 
 /* Utility Classes */
 .text-center {
@@ -1315,9 +1414,9 @@ body {
   pointer-events: none;
 }
 
-/* ==========================================
-   API EXPLORER STYLES
-   ========================================== */
+/* =====================
+  🔍 EXPLORADOR DE API
+   =====================*/
 
 .api-explorer-section {
   background-color: var(--bg-primary);
@@ -1582,9 +1681,9 @@ body {
   box-shadow: none !important;
 }
 
-/* ==========================================
+/* =====================================
    ESTILOS PARA BOTONES DE ELIMINACIÓN
-   ========================================== */
+   ===================================== */
 
 .recipe-actions {
   display: flex;
@@ -1644,9 +1743,9 @@ body {
   word-wrap: break-word;
 }
 
-/* ==========================================
+/* ==========================
    INGREDIENT SEARCH STYLES
-   ========================================== */
+   ========================== */
 
 .ingredients-search-container {
   display: flex;
@@ -1767,9 +1866,9 @@ body {
 }
 
 
-/* ==========================================
+/* ===============================================
    ESTILOS PARA BOTONES DE ELIMINAR INGREDIENTES
-   ========================================== */
+   =============================================== */
 
 .selected-item-actions {
   display: flex;
@@ -1801,20 +1900,23 @@ body {
   transform: scale(0.95);
 }
 
-/* ==========================================
-   ESTILOS LIBRERÍA
-   ========================================== */
+/* ==================================
+  📖 SISTEMA DE LIBRERÍA Y CATÁLOGO
+   ================================== */
 
 .libreria-section {
+  /* Define el contenedor principal de la sección de librería */
   padding: 2rem 0;
 }
 
 .libreria-header {
+  /* Configura el encabezado de la sección de librería */
   text-align: center;
   margin-bottom: 3rem;
 }
 
 .libreria-header h2 {
+  /* Establece el estilo del título principal */
   font-size: 2rem;
   font-weight: 400;
   color: var(--text-primary);
@@ -1850,12 +1952,14 @@ body {
 }
 
 .books-grid {
+  /* Configura el grid responsive de libros */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
 .book-card {
+  /* Establece el estilo base de las tarjetas de libros */
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -2057,6 +2161,10 @@ body {
   text-align: center;
 }
 
+/* =============================
+  📖 MODAL DETALLADO DE LIBROS
+   ============================= */
+
 /* Modal de detalles del libro */
 .book-detail {
   display: grid;
@@ -2133,9 +2241,9 @@ body {
   gap: 1rem;
 }
 
-/* ==========================================
-   ESTILOS CARRITO
-   ========================================== */
+/* ==================================
+  🛒 SISTEMA DE CARRITO DE COMPRAS
+   ================================== */
 
 .carrito-section {
   padding: 2rem 0;
@@ -2153,13 +2261,19 @@ body {
   margin-bottom: 1rem;
 }
 
+/* ==================
+  PÁGINA DE CARRITO
+  =================== */
+
 .carrito-content {
+  /* Configura el layout principal del carrito */
   display: grid;
   grid-template-columns: 1fr 350px;
   gap: 2rem;
 }
 
 .carrito-items {
+  /* Establece el contenedor de items del carrito */
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
   padding: 1.5rem;
@@ -2167,6 +2281,7 @@ body {
 }
 
 .carrito-item {
+  /* Define el layout de cada item individual del carrito */
   display: grid;
   grid-template-columns: 100px 1fr auto auto auto;
   gap: 1rem;
@@ -2228,12 +2343,14 @@ body {
 }
 
 .cantidad-input {
-  width: 3rem;
+  width: 4rem;
   height: 2rem;
   text-align: center;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-small);
   font-size: 0.9rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
 }
 
 .subtotal-valor {
@@ -2475,6 +2592,48 @@ body {
     border: 2px solid #4b5563 !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   }
+
+  /* Responsive para formulario de pago */
+  .payment-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-group {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .swal2-input {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .total-display {
+    font-size: 1rem;
+    padding: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  /* Ajustes específicos para SweetAlert2 en móvil */
+  .swal2-popup {
+    width: 95% !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+
+  .swal2-html-container {
+    padding: 0 1rem !important;
+  }
 }
 
 /* Estilos adicionales para SweetAlert2 - Colores correctos por defecto */
@@ -2561,5 +2720,445 @@ body {
 
   .modal-book-image-container img {
     height: 280px;
+  }
+}
+
+/* Banner de Códigos de Descuento */
+.discount-banner {
+  background: linear-gradient(135deg, var(--primary-green) 0%, #388E3C 100%);
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  max-height: 80px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  animation: slideIn 0.5s ease-out;
+}
+
+.discount-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.discount-icon {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+.discount-text {
+  flex: 1;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.discount-code {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-left: 0.5rem;
+  animation: pulse 2s infinite;
+}
+
+.copy-discount-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-discount-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.copy-discount-btn:active {
+  transform: scale(0.95);
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* Responsive para banner de descuentos */
+@media (max-width: 768px) {
+  .discount-banner {
+    margin: 1rem 0;
+    padding: 0.5rem 0.75rem;
+    max-height: 70px;
+  }
+
+  .discount-content {
+    gap: 0.5rem;
+  }
+
+  .discount-icon {
+    font-size: 1.2rem;
+  }
+
+  .discount-text {
+    font-size: 0.8rem;
+  }
+
+  .discount-code {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    margin-left: 0.25rem;
+  }
+
+  .copy-discount-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========
+  📄 FOOTER
+   ========== */
+
+/* Footer Minimalista */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.5px;
+}
+
+.footer:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive para footer */
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.7rem;
+    padding: 0.75rem;
+  }
+}
+
+/* ==========================================
+  🎭 MODALES RESPONSIVOS - CHECKOUT Y ÉXITO
+   ========================================== */
+
+/* Estilos adicionales para el modal de pago mejorado */
+.payment-modal-popup {
+  max-width: 500px !important;
+}
+
+.payment-modal-container {
+  padding: 0 !important;
+}
+
+.swal2-html-container {
+  overflow: visible !important;
+}
+
+/* Estilos para el nuevo modal de checkout */
+.checkout-modal-popup {
+  max-width: 600px !important;
+}
+
+.checkout-modal-container {
+  padding: 0 !important;
+}
+
+.checkout-modal-content {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.swal2-styled {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.swal2-styled:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.swal2-input:focus,
+.swal2-textarea:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* Responsive para modal de checkout mejorado */
+@media (max-width: 768px) {
+  .checkout-modal-popup {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+
+  .checkout-modal-form {
+    padding: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-modal-popup {
+    width: 98vw !important;
+  }
+
+  .checkout-modal-form {
+    padding: 0.25rem !important;
+  }
+
+  .checkout-modal-form > div > div {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Responsive específico para modal de pago */
+@media (max-width: 768px) {
+  .payment-modal-popup {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+
+  .payment-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-modal-popup {
+    width: 98vw !important;
+  }
+
+  .payment-form {
+    padding: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Estilos para el formulario de pago */
+.payment-form {
+  padding: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.total-display {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+/* Estilos para el modal de éxito */
+.success-modal {
+  text-align: center;
+  padding: 1rem;
+}
+
+.success-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.success-title {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.success-email {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.email-highlight {
+  color: var(--primary-green);
+}
+
+.order-details {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0;
+}
+
+.order-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.order-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.order-value.tracking {
+  color: var(--primary-green);
+  font-size: 0.9rem;
+}
+
+.shipping-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.order-value.address {
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.delivery-time {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+/* Responsive para modales */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .order-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .success-icon {
+    font-size: 2.5rem;
+  }
+
+  .success-title {
+    font-size: 1.2rem;
+  }
+
+  .order-details {
+    padding: 1rem;
+  }
+
+  .payment-form {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .success-modal {
+    padding: 0.75rem;
+  }
+
+  .success-icon {
+    font-size: 2rem;
+  }
+
+  .success-title {
+    font-size: 1.1rem;
+  }
+
+  .success-email {
+    font-size: 0.85rem;
+  }
+
+  .order-details {
+    padding: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .delivery-time {
+    font-size: 0.8rem;
   }
 }

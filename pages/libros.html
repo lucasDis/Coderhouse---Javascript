@@ -76,6 +76,20 @@
           </div>
         </div>
 
+        <!-- Banner de Códigos de Descuento -->
+        <div class="discount-banner" id="discountBanner">
+          <div class="discount-content">
+            <div class="discount-icon">🎫</div>
+            <div class="discount-text">
+              <strong>Código de Descuento:</strong>
+              <span id="discountCode" class="discount-code">CARGANDO...</span>
+            </div>
+            <button class="copy-discount-btn" id="copyDiscountBtn" title="Copiar código">
+              📋
+            </button>
+          </div>
+        </div>
+
         <div class="books-count-container">
           <p id="booksCount" class="books-count">0 libros encontrados</p>
         </div>
@@ -95,7 +109,6 @@
   <!-- Modal de detalles del libro -->
   <div class="modal" id="bookModal" style="display: none;">
     <div class="modal-content">
-      <!-- Botón de cierre compacto -->
       <span class="close" id="btnCerrarModalLibro" style="position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; color: #aaa; cursor: pointer; z-index: 1001;">&times;</span>
       <div class="modal-body" id="modalBookContent">
       </div>
@@ -104,49 +117,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Limpieza forzada de caché corrupta
-      const librosGuardados = localStorage.getItem('libros');
-      if (librosGuardados) {
-        try {
-          const libros = JSON.parse(librosGuardados);
-          const hasPlaceholders = libros.some(libro =>
-            libro.imagen && (
-              libro.imagen.includes('via.placeholder.com') ||
-              libro.imagen.includes('FFFFFF?text=') ||
-              libro.imagen.includes('2C3E50?text=')
-            )
-          );
+  <script defer src="../js/libros-init.js?v=2.1.4"></script>
 
-          if (hasPlaceholders) {
-            console.log('Limpiando caché corrupta de libros...');
-            localStorage.removeItem('libros');
-          }
-        } catch (error) {
-          localStorage.removeItem('libros');
-        }
-      }
-
-      // Inicializar librería
-      if (typeof LibreriaManager !== 'undefined') {
-        LibreriaManager.inicializarLibros();
-        LibreriaManager.cargarLibros();
-        LibreriaManager.inicializarEventListeners();
-
-        // Actualizar contador del carrito
-        LibreriaManager.actualizarContadorCarrito();
-      }
-
-      // Event listener para icono del carrito
-      const cartIcon = document.getElementById('cartIcon');
-      if (cartIcon) {
-        cartIcon.addEventListener('click', () => {
-          window.location.href = 'carrito.html';
-        });
-      }
-    });
-  </script>
+  <!-- Footer -->
+  <footer class="footer">
+    Desarrollado por: Lucas G. Ruiz Diaz
+  </footer>
 </body>
 
 </html>

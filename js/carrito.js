@@ -1,23 +1,36 @@
-// MANEJO ESPECÍFICO DE LA PÁGINA DE CARRITO
+  // ==========================================
+  // MANEJO ESPECÍFICO DE LA PÁGINA DE CARRITO
+  // ==========================================
 class CarritoPageManager {
-  static descuento = 0;
-  static costoEnvio = 3.99;
-  static ivaRate = 0.21;
+  // Configura los precios y descuentos del sistema
+  static descuento = 0;        // Descuento aplicado al carrito
+  static costoEnvio = 3.99;    // Costo base de envío
+  static ivaRate = 0.21;       // Tasa de IVA (21%)
+
+  // ==========================================
+  // INICIALIZACIÓN Y CONFIGURACIÓN
+  // ==========================================
 
   static inicializar() {
+    // Inicializa la página del carrito cargando datos y configurando eventos
     this.cargarCarrito();
     this.actualizarResumen();
     this.configurarEventListeners();
   }
 
+  // ==========================================
+  // CARGA Y VISUALIZACIÓN DEL CARRITO
+  // ==========================================
+
   static cargarCarrito() {
+    // Carga y muestra los items del carrito o el estado vacío
     const container = document.getElementById('carritoItems');
     const emptyCart = document.getElementById('emptyCart');
     const carritoResumen = document.getElementById('carritoResumen');
     const carrito = LibreriaManager.obtenerCarrito();
 
     if (carrito.length === 0) {
-      // Mostrar solo empty-cart en la columna izquierda
+      // Muestra el carrito vacío si no hay items
       container.innerHTML = '';
       container.appendChild(emptyCart);
       emptyCart.style.display = 'block';
@@ -25,11 +38,11 @@ class CarritoPageManager {
       return;
     }
 
-    // Ocultar empty-cart y mostrar items
+    // Oculta el carrito vacío y muestra los items existentes
     emptyCart.style.display = 'none';
     carritoResumen.style.display = 'block';
 
-    // Limpiar contenedor excepto el empty-cart
+    // Limpia el contenedor excepto el elemento empty-cart
     const tempEmptyCart = emptyCart;
     container.innerHTML = '';
 
@@ -55,7 +68,7 @@ class CarritoPageManager {
       <div class="item-cantidad">
         <div class="cantidad-controls">
           <button class="btn-cantidad btn-minus" data-id="${item.id}">−</button>
-          <input type="number" class="cantidad-input" value="${item.cantidad}" min="1" max="10" data-id="${item.id}">
+          <input type="number" class="cantidad-input" value="${item.cantidad}" min="1" max="${item.stock || 99}" data-id="${item.id}">
           <button class="btn-cantidad btn-plus" data-id="${item.id}">+</button>
         </div>
       </div>
@@ -70,10 +83,10 @@ class CarritoPageManager {
     `;
 
     // Event listeners para este item
-    const btnMinus = itemDiv.querySelector('.btn-minus');
-    const btnPlus = itemDiv.querySelector('.btn-plus');
-    const cantidadInput = itemDiv.querySelector('.cantidad-input');
-    const btnEliminar = itemDiv.querySelector('.btn-eliminar');
+    const btnMinus = itemDiv.querySelector('.btn-minus');           //Aumentar item
+    const btnPlus = itemDiv.querySelector('.btn-plus');             //Disminuir item
+    const cantidadInput = itemDiv.querySelector('.cantidad-input'); //Numero de items
+    const btnEliminar = itemDiv.querySelector('.btn-eliminar');     //Eliminar item
 
     btnMinus.addEventListener('click', () => {
       const nuevaCantidad = parseInt(cantidadInput.value) - 1;
@@ -83,16 +96,18 @@ class CarritoPageManager {
     });
 
     btnPlus.addEventListener('click', () => {
+      const stockDisponible = item.stock || 99;
       const nuevaCantidad = parseInt(cantidadInput.value) + 1;
-      if (nuevaCantidad <= 10) {
+      if (nuevaCantidad <= stockDisponible) {
         this.actualizarCantidad(item.id, nuevaCantidad);
       }
     });
 
     cantidadInput.addEventListener('change', () => {
+      const stockDisponible = item.stock || 99;
       let nuevaCantidad = parseInt(cantidadInput.value);
       if (isNaN(nuevaCantidad) || nuevaCantidad < 1) nuevaCantidad = 1;
-      if (nuevaCantidad > 10) nuevaCantidad = 10;
+      if (nuevaCantidad > stockDisponible) nuevaCantidad = stockDisponible;
       this.actualizarCantidad(item.id, nuevaCantidad);
     });
 
@@ -105,10 +120,26 @@ class CarritoPageManager {
 
   static actualizarCantidad(itemId, nuevaCantidad) {
     LibreriaManager.actualizarCantidad(itemId, nuevaCantidad);
-    // Recargar la página para asegurar que todo se actualice correctamente
-    setTimeout(() => {
-      location.reload();
-    }, 100);
+
+    // Actualizar directamente el input del DOM para respuesta inmediata
+    const cantidadInput = document.querySelector(`.cantidad-input[data-id="${itemId}"]`);
+    if (cantidadInput) {
+      cantidadInput.value = nuevaCantidad;
+    }
+
+    // Actualizar el subtotal del item
+    const carrito = LibreriaManager.obtenerCarrito();
+    const item = carrito.find(item => item.id === itemId);
+    if (item) {
+      const subtotalElement = document.querySelector(`.carrito-item[data-id="${itemId}"] .subtotal-valor`);
+      if (subtotalElement) {
+        subtotalElement.textContent = `$${(item.precio * item.cantidad).toFixed(2)}`;
+      }
+    }
+
+    // Actualizar el resumen y contador
+    this.actualizarResumen();
+    this.actualizarContadorCarrito();
   }
 
   static eliminarItem(itemId) {
@@ -118,7 +149,7 @@ class CarritoPageManager {
       () => {
         LibreriaManager.eliminarProducto(itemId);
         UIManager.mostrarMensaje('Producto eliminado del carrito', 'success');
-        // Recargar la página para asegurar que todo se actualice correctamente
+        // Recargar la página
         setTimeout(() => {
           location.reload();
         }, 100);
@@ -130,12 +161,12 @@ class CarritoPageManager {
     const carrito = LibreriaManager.obtenerCarrito();
     const subtotal = LibreriaManager.calcularTotal();
     // Si el carrito está vacío, no hay costo de envío
-    const envio = carrito.length === 0 ? 0 : (subtotal > 30 ? 0 : this.costoEnvio);
+    const envio = carrito.length === 0 ? 0 : (subtotal >= 100 ? 0 : this.costoEnvio);
     const subtotalConDescuento = subtotal - this.descuento;
     const iva = (subtotalConDescuento + envio) * this.ivaRate;
     const total = subtotalConDescuento + envio + iva;
 
-    // Actualizar valores en el DOM con verificación
+    // Actualiza los valores en el DOM con verificación
     const subtotalElement = document.getElementById('subtotal');
     const envioElement = document.getElementById('envio');
     const ivaElement = document.getElementById('iva');
@@ -174,11 +205,18 @@ class CarritoPageManager {
       return;
     }
 
-    // Códigos de descuento válidos (ejemplo)
+    // Códigos de descuento válidos (sincronizados con el banner)
     const codigosValidos = {
-      'LEER10': 0.10,    // 10% de descuento
-      'LIBROS20': 0.20,  // 20% de descuento
-      'VERANO15': 0.15   // 15% de descuento
+      'LEER10': 0.10,      // 10% de descuento
+      'LIBROS20': 0.20,    // 20% de descuento en libros
+      'VERANO15': 0.15,    // 15% de descuento de verano
+      'COCINA10': 0.10,    // 10% de descuento en cocina
+      'CHEF15': 0.15,      // 15% de descuento para chefs
+      'GOURMET20': 0.20,   // 20% de descuento gourmet
+      'SABOR12': 0.12,     // 12% de descuento especial
+      'RECETA18': 0.18,    // 18% de descuento en recetas
+      'PLATANO8': 0.08,    // 8% de descuento divertido
+      'ESPECIAS5': 0.05    // 5% de descuento en especias
     };
 
     if (codigosValidos[codigo]) {
@@ -229,51 +267,183 @@ class CarritoPageManager {
     const total = document.getElementById('total').textContent;
 
     Swal.fire({
-      title: 'Finalizar Compra',
+      title: '<div style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">💳 Finalizar Compra</div>',
       html: `
-        <div class="payment-form">
-          <div class="form-group">
-            <label>Nombre completo:</label>
-            <input type="text" id="nombreCompleto" class="swal2-input" placeholder="Juan Pérez">
-          </div>
+        <div class="checkout-modal-form" style="font-family: system-ui, -apple-system, sans-serif; padding: 0;">
+          <!-- Desktop/Tablet Layout: 2 columnas -->
+          <div class="checkout-grid-desktop" style="display: none; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Columna Izquierda: Datos Personales -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">👤 Nombre Completo</label>
+                <input type="text" id="nombreCompleto" class="swal2-input" placeholder="Juan Pérez"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+              </div>
 
-          <div class="form-group">
-            <label>Email:</label>
-            <input type="email" id="email" class="swal2-input" placeholder="correo@ejemplo.com">
-          </div>
+              <div>
+                <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">📧 Email</label>
+                <input type="email" id="email" class="swal2-input" placeholder="correo@ejemplo.com"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+              </div>
 
-          <div class="form-group">
-            <label>Tarjeta de crédito:</label>
-            <input type="text" id="tarjeta" class="swal2-input" placeholder="1234 5678 9012 3456" maxlength="19">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>MM/AA:</label>
-              <input type="text" id="fecha" class="swal2-input" placeholder="12/25" maxlength="5">
+              <div>
+                <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">🏠 Dirección de Envío</label>
+                <textarea id="direccion" class="swal2-textarea" placeholder="Calle Principal 123, Ciudad, País" rows="3"
+                         style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease; resize: vertical; font-family: system-ui, -apple-system, sans-serif; min-height: 5rem;"
+                         onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                         onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'"></textarea>
+              </div>
             </div>
-            <div class="form-group">
-              <label>CVV:</label>
-              <input type="text" id="cvv" class="swal2-input" placeholder="123" maxlength="3">
+
+            <!-- Columna Derecha: Información de Tarjeta -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <!-- Total Section -->
+              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.85rem; margin-bottom: 0.5rem;">Total a Pagar</div>
+                <div style="color: white; font-size: 1.8rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">${total}</div>
+              </div>
+
+              <!-- Tarjeta -->
+              <div>
+                <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">💳 Tarjeta de Crédito</label>
+                <input type="text" id="tarjeta" class="swal2-input" placeholder="1234 5678 9012 3456" maxlength="19"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+              </div>
+
+              <!-- Vencimiento y CVV -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                  <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">📅 Vencimiento</label>
+                  <input type="text" id="fecha" class="swal2-input" placeholder="MM/AA" maxlength="5"
+                         style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                         onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                         onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; color: #374151; font-size: 0.95rem;">🔒 CVV</label>
+                  <input type="text" id="cvv" class="swal2-input" placeholder="123" maxlength="3"
+                         style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                         onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                         onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                </div>
+              </div>
+
+              <!-- Security Badge -->
+              <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%); border-radius: 8px; border: 1px solid #3b82f6; margin-top: 1rem;">
+                <span style="color: #1e40af; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.9rem;">
+                  🔒 <span>Pago Seguro con Encriptación SSL</span>
+                </span>
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Dirección de envío:</label>
-            <input type="text" id="direccion" class="swal2-input" placeholder="Calle Principal 123, Ciudad">
-          </div>
+          <!-- Mobile Layout: Single Column con gradiente -->
+          <div class="checkout-grid-mobile" style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <!-- Fondo con gradiente para móviles -->
+            <div class="mobile-gradient-bg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 12px; text-align: center;">
+              <div style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; margin-bottom: 0.5rem;">Total a Pagar</div>
+              <div style="color: white; font-size: 2rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">${total}</div>
+            </div>
 
-          <div class="total-display">
-            <strong>Total a pagar: ${total}</strong>
+            <!-- Nombre -->
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">👤 Nombre Completo</label>
+              <input type="text" id="nombreCompleto" class="swal2-input" placeholder="Juan Pérez"
+                     style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                     onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                     onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">📧 Email</label>
+              <input type="email" id="email" class="swal2-input" placeholder="correo@ejemplo.com"
+                     style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                     onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                     onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+            </div>
+
+            <!-- Dirección -->
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">🏠 Dirección de Envío</label>
+              <textarea id="direccion" class="swal2-textarea" placeholder="Calle Principal 123, Ciudad, País" rows="3"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease; resize: vertical; font-family: system-ui, -apple-system, sans-serif; min-height: 5rem;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'"></textarea>
+            </div>
+
+            <!-- Tarjeta -->
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">💳 Tarjeta de Crédito</label>
+              <input type="text" id="tarjeta" class="swal2-input" placeholder="1234 5678 9012 3456" maxlength="19"
+                     style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                     onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                     onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+            </div>
+
+            <!-- Vencimiento y CVV (mobile) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+              <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">📅 Vencimiento</label>
+                <input type="text" id="fecha" class="swal2-input" placeholder="MM/AA" maxlength="5"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+              </div>
+              <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">🔒 CVV</label>
+                <input type="text" id="cvv" class="swal2-input" placeholder="123" maxlength="3"
+                       style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease;"
+                       onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 0 0 3px rgba(102, 126, 234, 0.1)'"
+                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+              </div>
+            </div>
+
+            <!-- Security Badge (mobile) -->
+            <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%); border-radius: 8px; border: 1px solid #3b82f6; margin-top: 1.2rem;">
+              <span style="color: #1e40af; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.9rem;">
+                🔒 <span>Pago Seguro con Encriptación SSL</span>
+              </span>
+            </div>
           </div>
         </div>
       `,
-      icon: 'info',
+      icon: false,
       showCancelButton: true,
-      confirmButtonText: 'Pagar Ahora',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: '✨ Confirmar Pago',
+      cancelButtonText: '❌ Cancelar',
       confirmButtonColor: '#10b981',
       cancelButtonColor: '#6b7280',
+      buttonsStyling: true,
+      confirmButtonClass: 'swal2-confirm swal2-styled',
+      cancelButtonClass: 'swal2-cancel swal2-styled',
+      customClass: {
+        popup: 'checkout-modal-popup',
+        container: 'checkout-modal-container',
+        content: 'checkout-modal-content'
+      },
+      width: '95%',
+      maxWidth: '600px',
+      onOpen: () => {
+        // Detectar tamaño de pantalla y mostrar layout apropiado
+        const isMobile = window.innerWidth <= 768;
+        const desktopGrid = document.querySelector('.checkout-grid-desktop');
+        const mobileGrid = document.querySelector('.checkout-grid-mobile');
+
+        if (isMobile) {
+          desktopGrid.style.display = 'none';
+          mobileGrid.style.display = 'flex';
+        } else {
+          desktopGrid.style.display = 'grid';
+          mobileGrid.style.display = 'none';
+        }
+      },
       preConfirm: () => {
         const nombre = document.getElementById('nombreCompleto').value;
         const email = document.getElementById('email').value;
@@ -282,7 +452,7 @@ class CarritoPageManager {
         const cvv = document.getElementById('cvv').value;
         const direccion = document.getElementById('direccion').value;
 
-        // Validación básica
+        // Valida los datos de entrada básicos
         if (!nombre || !email || !tarjeta || !fecha || !cvv || !direccion) {
           Swal.showValidationMessage('Por favor, completa todos los campos');
           return false;
@@ -325,34 +495,37 @@ class CarritoPageManager {
       // Vaciar carrito
       LibreriaManager.vaciarCarrito();
 
-      // Mostrar confirmación mejorada
+      // Actualizar contador del carrito después de vaciar
+      this.actualizarContadorCarrito();
+
+      // Muestra una confirmación mejorada y responsive
       Swal.fire({
         title: '¡Compra Exitosa!',
         html: `
-          <div style="text-align: center; padding: 20px;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
-            <h3 style="color: #1f2937; margin-bottom: 1rem;">¡Pedido Confirmado!</h3>
-            <p style="color: #6b7280; margin-bottom: 1.5rem;">
+          <div class="success-modal">
+            <div class="success-icon">📦</div>
+            <h3 class="success-title">¡Pedido Confirmado!</h3>
+            <p class="success-email">
               Hemos enviado un correo de confirmación a<br>
-              <strong style="color: #4CAF50;">${datosCliente.email}</strong>
+              <strong class="email-highlight">${datosCliente.email}</strong>
             </p>
-            <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 0.5rem; margin: 1.5rem 0;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
-                <div>
-                  <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Número de Pedido</div>
-                  <div style="font-weight: 600; color: #1f2937; font-size: 1.1rem;">${numeroPedido}</div>
+            <div class="order-details">
+              <div class="order-row">
+                <div class="order-item">
+                  <div class="order-label">Número de Pedido</div>
+                  <div class="order-value">${numeroPedido}</div>
                 </div>
-                <div>
-                  <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Seguimiento</div>
-                  <div style="font-weight: 600; color: #4CAF50; font-size: 0.9rem;">${numeroSeguimiento}</div>
+                <div class="order-item">
+                  <div class="order-label">Seguimiento</div>
+                  <div class="order-value tracking">${numeroSeguimiento}</div>
                 </div>
               </div>
-              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
-                <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">Dirección de Entrega</div>
-                <div style="color: #1f2937; font-weight: 500;">${datosCliente.direccion}</div>
+              <div class="shipping-info">
+                <div class="order-label">Dirección de Entrega</div>
+                <div class="order-value address">${datosCliente.direccion}</div>
               </div>
             </div>
-            <p style="color: #6b7280; font-size: 0.9rem;">
+            <p class="delivery-time">
               Tiempo estimado de entrega: <strong>3-5 días hábiles</strong>
             </p>
           </div>
@@ -363,7 +536,11 @@ class CarritoPageManager {
         showCancelButton: true,
         cancelButtonText: 'Seguir Comprando',
         cancelButtonColor: '#FF9800',
-        width: '600px'
+        width: '90%',
+        maxWidth: '500px',
+        customClass: {
+          container: 'success-modal-container'
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = 'libros.html';
@@ -413,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
   CarritoPageManager.actualizarContadorCarrito();
 });
 
-// Escuchar eventos de actualización del carrito desde otras páginas
+// Escucha los eventos de actualización del carrito desde otras páginas
 window.addEventListener('carritoActualizado', (event) => {
   CarritoPageManager.cargarCarrito();
   CarritoPageManager.actualizarResumen();
