@@ -50,8 +50,8 @@ Aplicación web interactiva para generar recetas personalizadas basadas en ingre
 
 ### Capturas de pantalla
 
-![Captura de pantalla principal](./src/images/CP-principal.jpg)
-![Captura de pantalla generador](./src/images/CP-generador.jpg)
+![Captura de pantalla principal](./assets/images/CP-principal.jpg)
+![Captura de pantalla generador](./assets/images/CP-generador.jpg)
 
 ## 📂 Estructura del Proyecto
 ```

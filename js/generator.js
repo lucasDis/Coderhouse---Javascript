@@ -1,9 +1,6 @@
 // Esperar a que los datos estén cargados
 let datosListos = false;
 
-// ==========================================
-// MÉTODOS PRINCIPALES DE GENERACIÓN DE RECETAS
-// ==========================================
 class SimuladorRecetas {
   // ==========================================
   // GENERACIÓN DE RECETAS RÁPIDAS
@@ -53,9 +50,9 @@ class SimuladorRecetas {
     };
   }
 
-  // ==========================================
+  // ================================================================
   // GENERACIÓN DE RECETAS MÚLTIPLES (CON INGREDIENTES SELECCIONADOS)
-  // ==========================================
+  // ================================================================
 
   static generarRecetaMultiple() {
     // Genera una receta basada en los ingredientes seleccionados por el usuario
@@ -272,26 +269,72 @@ class SimuladorRecetas {
   }
 
   static guardarRecetaActual() {
-    if (estado.recetaActual) {
-      // Asegurar que la receta tenga todos los campos necesarios
-      const recetaFormateada = {
-        ...estado.recetaActual,
-        // Asegurar campos básicos
-        nombre: estado.recetaActual.nombre || 'Receta sin nombre',
-        ingrediente: estado.recetaActual.ingrediente || 'Ingrediente desconocido',
-        sabor: estado.recetaActual.sabor || 'Sabor no especificado',
-        tipo: estado.recetaActual.tipo || 'Método no especificado'
-      };
-
-      StorageManager.guardarReceta(recetaFormateada);
-
-      // Verifica que se guardó correctamente
-      const recetas = StorageManager.obtenerRecetas();
-
-      this.mostrarModalExito(estado.recetaActual);
-    } else {
+    if (!estado.recetaActual) {
       UIManager.mostrarMensaje('No hay receta para guardar', 'error');
+      return;
     }
+
+    // Verificar si la receta ya existe
+    const recetasExistentes = StorageManager.obtenerRecetas();
+    const recetaDuplicada = recetasExistentes.some(receta =>
+      receta.nombre === estado.recetaActual.nombre &&
+      receta.ingrediente === estado.recetaActual.ingrediente &&
+      receta.tipo === estado.recetaActual.tipo &&
+      receta.sabor === estado.recetaActual.sabor
+    );
+
+    if (recetaDuplicada) {
+      // Mostrar popup de confirmación
+      Swal.fire({
+        title: '⚠️ Receta Duplicada',
+        html: `
+          <div style="text-align: left; padding: 1rem;">
+            <p><strong>Esta receta ya está guardada en tu historial:</strong></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+              <p><strong>${estado.recetaActual.nombre}</strong></p>
+              <p>Ingrediente: ${estado.recetaActual.ingrediente}</p>
+              <p>Método: ${estado.recetaActual.tipo}</p>
+              <p>Sabor: ${estado.recetaActual.sabor}</p>
+            </div>
+            <p>¿Deseas guardar una copia adicional de todos modos?</p>
+          </div>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--primary-medium)',
+        cancelButtonColor: 'var(--primary-red)',
+        confirmButtonText: 'Sí, guardar copia',
+        cancelButtonText: 'No, cancelar',
+        customClass: {
+          popup: 'duplicate-recipe-popup'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.procederGuardado();
+        }
+      });
+    } else {
+      this.procederGuardado();
+    }
+  }
+
+  static procederGuardado() {
+    // Asegurar que la receta tenga todos los campos necesarios
+    const recetaFormateada = {
+      ...estado.recetaActual,
+      // Asegurar campos básicos
+      nombre: estado.recetaActual.nombre || 'Receta sin nombre',
+      ingrediente: estado.recetaActual.ingrediente || 'Ingrediente desconocido',
+      sabor: estado.recetaActual.sabor || 'Sabor no especificado',
+      tipo: estado.recetaActual.tipo || 'Método no especificado'
+    };
+
+    StorageManager.guardarReceta(recetaFormateada);
+
+    // Verifica que se guardó correctamente
+    const recetas = StorageManager.obtenerRecetas();
+
+    this.mostrarModalExito(estado.recetaActual);
   }
 
   // ==========================================
@@ -619,7 +662,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const finishSelection = document.getElementById("finishSelection");
   const btnGuardarReceta = document.getElementById("btnGuardarReceta");
   const btnGenerarOtra = document.getElementById("btnGenerarOtra");
-  const btnVolverInicio = document.getElementById("btnVolverInicio");
 
   if (btnGenerarRapida) {
     btnGenerarRapida.addEventListener("click", () => {
@@ -659,66 +701,64 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
   }
 
-  if (btnGenerarOtra) {
-    btnGenerarOtra.addEventListener("click", () => {
-      if (estado.modoActual === "rapida") {
-        SimuladorRecetas.iniciarRecetaRapida();
-        setTimeout(() => {
-          const recipeResult = document.getElementById("recipeResult");
-          if (recipeResult) {
-            const headerHeight = document.querySelector(".header").offsetHeight;
-            const elementPosition = recipeResult.getBoundingClientRect().top;
-            const offsetPosition =
-              elementPosition + window.pageYOffset - headerHeight - 20;
+  // Configurar el botón "Generar Otra" con el contexto correcto
+if (btnGenerarOtra) {
+  btnGenerarOtra.addEventListener("click", () => {
+    // Limpiar cualquier receta anterior
+    SimuladorRecetas.limpiarRecetaAnterior();
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
-          }
-        }, 100);
-      } else if (estado.modoActual === "multiple") {
-        // Limpiar completamente y empezar de cero
-        this.limpiarRecetaAnterior();
-        this.reiniciar();
+    // Determinar el modo actual basado en elementos visibles
+    const ingredientsPanel = document.getElementById("ingredientsPanel");
+    let modoActual = estado.modoActual;
 
-        // Reiniciar modo de selección
-        estado.modoActual = "multiple";
-        estado.seleccionados = [];
-
-        // Mostrar panel de ingredientes
-        document.getElementById("ingredientsPanel").style.display = "block";
-
-        setTimeout(() => {
-          UIManager.renderizarIngredientes();
-          UIManager.actualizarListaSeleccionados();
-          UIManager.actualizarEstadoBotones();
-          this.inicializarBuscadorIngredientes();
-          this.actualizarContadorSeleccion();
-        }, 100);
-        setTimeout(() => {
-          const ingredientsPanel = document.getElementById("ingredientsPanel");
-          if (ingredientsPanel) {
-            const headerHeight = document.querySelector(".header").offsetHeight;
-            const elementPosition =
-              ingredientsPanel.getBoundingClientRect().top;
-            const offsetPosition =
-              elementPosition + window.pageYOffset - headerHeight - 20;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
-          }
-        }, 100);
+    // Si no hay modo definido, inferirlo por lo que está visible
+    if (!modoActual) {
+      if (ingredientsPanel && ingredientsPanel.style.display !== "none") {
+        modoActual = "multiple";
+      } else {
+        modoActual = "rapida";
       }
-    });
-  }
+    }
 
-  if (btnVolverInicio) {
-    btnVolverInicio.addEventListener("click", () => {
+    if (modoActual === "rapida") {
+      // Generar nueva receta rápida
+      SimuladorRecetas.iniciarRecetaRapida();
+
+      // Hacer scroll a la nueva receta
+      setTimeout(() => {
+        const recipeResult = document.getElementById("recipeResult");
+        if (recipeResult) {
+          const headerHeight = document.querySelector(".header")?.offsetHeight || 80;
+          const elementPosition = recipeResult.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+
+    } else if (modoActual === "multiple") {
+      // Reiniciar selección de ingredientes
       SimuladorRecetas.reiniciar();
-      window.location.href = "../index.html";
-    });
-  }
+      estado.modoActual = "multiple";
+      estado.seleccionados = [];
+
+      // Mostrar panel de ingredientes
+      if (ingredientsPanel) {
+        ingredientsPanel.style.display = "block";
+      }
+
+      setTimeout(() => {
+        UIManager.renderizarIngredientes();
+        UIManager.actualizarListaSeleccionados();
+        UIManager.actualizarEstadoBotones();
+        SimuladorRecetas.inicializarBuscadorIngredientes();
+        SimuladorRecetas.actualizarContadorSeleccion();
+      }, 100);
+    }
+  });
+}
+
 });
