@@ -28,13 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializa la librería si está disponible
   if (typeof LibreriaManager !== 'undefined') {
-    console.log('🔍 DEPURACIÓN - Inicializando LibreriaManager...');
     LibreriaManager.inicializarLibros();
     LibreriaManager.cargarLibros();
 
     // Actualiza el contador del carrito
     LibreriaManager.actualizarContadorCarrito();
-    console.log('🔍 DEPURACIÓN - LibreriaManager inicializado completamente');
   }
 
   // Inicializa el sistema de descuentos si está disponible

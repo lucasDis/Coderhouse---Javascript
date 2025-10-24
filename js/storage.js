@@ -14,8 +14,7 @@ class StorageManager {
       localStorage.setItem("recetas", JSON.stringify(recetas));
     } catch (error) {
       // Maneja errores al guardar la receta
-      console.error('Error al guardar receta:', error);
-    }
+          }
   }
 
   // ==========================================

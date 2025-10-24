@@ -1,7 +1,6 @@
 // MANEJO DE LIBRERÍA Y CARRITO
 class LibreriaManager {
   static libros = [];
-
   // Genera un stock aleatorio para cada libro
   static generarStockAleatorio(categoria) {
     // Define rangos de stock según el tipo de libro
@@ -14,63 +13,48 @@ class LibreriaManager {
       'Cocina Española': [15, 35],
       'Cocina Científica': [6, 18]
     };
-
     const [min, max] = rangosStock[categoria] || [5, 15];
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
   static async inicializarLibros() {
     // Verifica si ya existen libros con stock en localStorage
     const librosGuardados = localStorage.getItem('libros');
-
     if (librosGuardados) {
       try {
         let libros = JSON.parse(librosGuardados);
-
         // Verifica que los libros tengan stock asignado
         if (libros.length > 0 && libros[0].stock !== undefined) {
           // CORRECCIÓN AUTOMÁTICA: Verificar y corregir rutas viejas
           let necesitaCorreccion = libros.some(libro =>
             libro.imagen && libro.imagen.includes('../src/images/')
           );
-
           if (necesitaCorreccion) {
-            console.log('🔧 Corrigiendo rutas de imágenes automáticamente...');
-            let rutasCorregidas = 0;
-
+                        let rutasCorregidas = 0;
             libros.forEach((libro) => {
               if (libro.imagen && libro.imagen.includes('../src/images/')) {
                 libro.imagen = libro.imagen.replace('../src/images/', '../assets/images/');
                 rutasCorregidas++;
               }
             });
-
             if (rutasCorregidas > 0) {
               // Guardar libros con rutas corregidas
               localStorage.setItem('libros', JSON.stringify(libros));
-              console.log(`✅ Se corrigieron ${rutasCorregidas} rutas de imágenes`);
-            }
+                          }
           }
-
           // Asignar libros corregidos a la variable de clase
           this.libros = libros;
         }
       } catch (error) {
-        console.error('Error cargando libros:', error);
-        // Si hay error al parsear, continúa con la inicialización normal
+                // Si hay error al parsear, continúa con la inicialización normal
       }
     }
-
     // Si no hay libros guardados o no tienen stock, cargar desde JSON
     await this.cargarLibrosDesdeJSON();
-
     // Configurar el icono del carrito
     this.configurarIconoCarrito();
-
     // Actualizar contador del carrito
     this.actualizarContadorCarrito();
   }
-
   static configurarIconoCarrito() {
     // Configura el event listener para el icono del carrito
     const cartIcon = document.getElementById('cartIcon');
@@ -80,7 +64,6 @@ class LibreriaManager {
       });
     }
   }
-
   static async cargarLibrosDesdeJSON() {
     try {
       // Cargar libros desde el archivo JSON
@@ -88,47 +71,35 @@ class LibreriaManager {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
       let libros = await response.json();
-
       // Asignar stock aleatorio a cada libro
       libros = libros.map(libro => ({
         ...libro,
         stock: this.generarStockAleatorio(libro.categoria)
       }));
-
       this.libros = libros;
-
       // Guardar en localStorage
       this.guardarLibros();
-
     } catch (error) {
-      console.error('Error cargando libros desde JSON:', error);
-      // En caso de error, inicializar con array vacío
+            // En caso de error, inicializar con array vacío
       this.libros = [];
     }
   }
-
   static guardarLibros() {
     localStorage.setItem('libros', JSON.stringify(this.libros));
   }
-
   static cargarLibros() {
     const container = document.getElementById('booksGrid');
     const emptyDiv = document.getElementById('emptyBooks');
-
     // Verificar que los elementos existan antes de acceder a ellos
     const filterSearch = document.getElementById('filterSearch');
     const filterCategory = document.getElementById('filterCategory');
     const sortBy = document.getElementById('sortBy');
-
     const terminoBusqueda = filterSearch ? filterSearch.value.toLowerCase() : '';
     const categoria = filterCategory ? filterCategory.value : '';
     const sortMethod = sortBy ? sortBy.value : 'featured';
-
     // Filtrar y ordenar libros
     let librosFiltrados = [...this.libros];
-
     // Aplicar filtros
     if (terminoBusqueda) {
       librosFiltrados = librosFiltrados.filter(libro =>
@@ -137,11 +108,9 @@ class LibreriaManager {
         libro.descripcion.toLowerCase().includes(terminoBusqueda)
       );
     }
-
     if (categoria) {
       librosFiltrados = librosFiltrados.filter(libro => libro.categoria === categoria);
     }
-
     // Ordenar libros
     switch (sortMethod) {
       case 'price-low':
@@ -165,7 +134,6 @@ class LibreriaManager {
           return 0;
         });
     }
-
     if (librosFiltrados.length === 0) {
       container.innerHTML = '';
       if (emptyDiv) {
@@ -173,19 +141,15 @@ class LibreriaManager {
       }
       return;
     }
-
     if (emptyDiv) {
       emptyDiv.style.display = 'none';
     }
-
     container.innerHTML = librosFiltrados.map(libro => this.crearTarjetaLibro(libro)).join('');
   }
-
   static crearTarjetaLibro(libro) {
     const estrellas = this.generarEstrellas(libro.rating);
     const precioFormateado = libro.precio.toFixed(2);
     const tituloLimitado = this.limitarTitulo(libro.titulo, 40);
-
     // Calcula el stock disponible considerando el carrito actual
     const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     const cantidadEnCarrito = carrito
@@ -193,7 +157,6 @@ class LibreriaManager {
       .reduce((total, item) => total + item.cantidad, 0);
     const stockDisponible = libro.stock - cantidadEnCarrito;
     const botonDeshabilitado = stockDisponible <= 0;
-
     return `
       <div class="book-card" data-libro-id="${libro.id}">
         <div class="book-image">
@@ -230,11 +193,9 @@ class LibreriaManager {
       </div>
     `;
   }
-
   static generarEstrellas(rating) {
     const estrellas = [];
     const ratingCompleto = Math.round(rating);
-
     for (let i = 0; i < 5; i++) {
       if (i < ratingCompleto) {
         estrellas.push('<span class="star">★</span>');
@@ -242,7 +203,6 @@ class LibreriaManager {
         estrellas.push('<span class="star empty">☆</span>');
       }
     }
-
     return `
       <div class="book-rating">
         ${estrellas.join('')}
@@ -250,35 +210,28 @@ class LibreriaManager {
       </div>
     `;
   }
-
   static limitarTitulo(titulo, maxCaracteres = 40) {
     return titulo.length > maxCaracteres
       ? titulo.substring(0, maxCaracteres) + '...'
       : titulo;
   }
-
   static agregarAlCarrito(libroId) {
     const libro = this.libros.find(l => l.id === libroId);
     if (!libro) {
       this.mostrarNotificacion('Libro no encontrado', 'error');
       return;
     }
-
     // Obtener carrito actual
     let carrito = this.obtenerCarrito();
-
     // Verificar stock disponible
     const cantidadActualEnCarrito = this.obtenerCantidadEnCarrito(libroId);
     const cantidadTotal = cantidadActualEnCarrito + 1;
-
     if (cantidadTotal > libro.stock) {
       this.mostrarNotificacion('Libro sin stock disponible', 'error');
       return;
     }
-
     // Verificar si el libro ya está en el carrito
     const itemExistente = carrito.find(item => item.id === libroId);
-
     if (itemExistente) {
       // Si existe, incrementar cantidad
       itemExistente.cantidad += 1;
@@ -289,31 +242,24 @@ class LibreriaManager {
         cantidad: 1
       });
     }
-
     // Guardar carrito actualizado
     this.guardarCarrito(carrito);
     this.actualizarContadorCarrito();
-
     // Actualizar la disponibilidad de libros en la interfaz
     this.actualizarDisponibilidadLibros();
-
     // Mostrar notificación
     UIManager.mostrarMensaje(`${libro.titulo} agregado al carrito`, 'success');
-
     // Disparar evento de actualización del carrito
     window.dispatchEvent(new CustomEvent('carritoActualizado', {
       detail: { carrito, libroId, accion: 'agregar' }
     }));
   }
-
   static actualizarDisponibilidadLibros() {
     const carrito = this.obtenerCarrito();
     const librosCards = document.querySelectorAll('.book-card');
-
     librosCards.forEach(card => {
       const libroId = parseInt(card.dataset.libroId);
       const libro = this.libros.find(l => l.id === libroId);
-
       if (libro) {
         const cantidadEnCarrito = carrito
           .filter(item => item.id === libroId)
@@ -321,7 +267,6 @@ class LibreriaManager {
         const stockDisponible = libro.stock - cantidadEnCarrito;
         const botonAddCart = card.querySelector('.btn-add-cart');
         const stockInfo = card.querySelector('.stock-info');
-
         if (botonAddCart) {
           if (stockDisponible <= 0) {
             botonAddCart.classList.add('disabled');
@@ -333,7 +278,6 @@ class LibreriaManager {
             botonAddCart.textContent = 'Añadir';
           }
         }
-
         if (stockInfo) {
           stockInfo.textContent = `Stock: ${stockDisponible} unidades`;
           stockInfo.style.color = stockDisponible <= 2 ? '#e74c3c' : '#2ecc71';
@@ -341,49 +285,37 @@ class LibreriaManager {
       }
     });
   }
-
   static obtenerCarrito() {
     const carritoGuardado = localStorage.getItem('carrito');
     return carritoGuardado ? JSON.parse(carritoGuardado) : [];
   }
-
   static guardarCarrito(carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }
-
   static actualizarCantidad(itemId, nuevaCantidad) {
-    console.log('🔍 DEPURACIÓN - LibreriaManager.actualizarCantidad() - itemId:', itemId, 'nuevaCantidad:', nuevaCantidad);
-
     let carrito = this.obtenerCarrito();
     const item = carrito.find(item => item.id === itemId);
-
     if (item) {
       item.cantidad = nuevaCantidad;
       this.guardarCarrito(carrito);
       this.actualizarContadorCarrito();
-      console.log('🔍 DEPURACIÓN - Cantidad actualizada en LibreriaManager');
-    } else {
-      console.error('🔍 DEPURACIÓN - Item no encontrado en carrito:', itemId);
-    }
+          } else {
+          }
   }
-
   static obtenerCantidadEnCarrito(libroId) {
     const carrito = this.obtenerCarrito();
     return carrito
       .filter(item => item.id === libroId)
       .reduce((total, item) => total + item.cantidad, 0);
   }
-
   static actualizarContadorCarrito() {
     const carrito = this.obtenerCarrito();
     const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
-
     // Actualizar todos los contadores del carrito en la página actual
     const contadores = document.querySelectorAll('.cart-count');
     contadores.forEach(contador => {
       contador.textContent = totalItems;
     });
-
     // Actualizar el badge del carrito si existe
     const cartBadge = document.querySelector('.cart-badge');
     if (cartBadge) {
@@ -395,14 +327,11 @@ class LibreriaManager {
       }
     }
   }
-
   static mostrarDetallesLibro(libroId) {
     const libro = this.libros.find(l => l.id === libroId);
     if (!libro) return;
-
     const modal = document.getElementById('bookDetailModal');
     if (!modal) return;
-
     const modalContent = modal.querySelector('.modal-book-details');
     modalContent.innerHTML = `
       <div class="modal-book-info">
@@ -412,22 +341,18 @@ class LibreriaManager {
         <div class="modal-book-content">
           <h2 class="modal-book-title">${libro.titulo}</h2>
           <p class="modal-book-author">Por ${libro.autor}</p>
-
           <div class="modal-book-meta">
             <span class="modal-book-category">${libro.categoria}</span>
             <span class="modal-book-pages">${libro.paginas} páginas</span>
             <span class="modal-book-language">${libro.idioma}</span>
           </div>
-
           <div class="modal-book-rating">
             ${this.generarEstrellas(libro.rating)}
           </div>
-
           <div class="modal-book-description">
             <h3>Descripción</h3>
             <p>${libro.descripcion}</p>
           </div>
-
           <div class="modal-book-details">
             <h3>Detalles</h3>
             <ul>
@@ -437,7 +362,6 @@ class LibreriaManager {
               <li><strong>Stock disponible:</strong> ${libro.stock} unidades</li>
             </ul>
           </div>
-
           <div class="modal-book-actions">
             <button class="btn-add-cart-modal" onclick="LibreriaManager.agregarAlCarrito(${libro.id}); LibreriaManager.cerrarModalLibro();">
               Añadir al carrito
@@ -447,10 +371,8 @@ class LibreriaManager {
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-
     // Agregar event listener para cerrar modal haciendo click fuera
     const modalOverlay = modal.querySelector('.modal-content');
     modal.addEventListener('click', (e) => {
@@ -458,13 +380,11 @@ class LibreriaManager {
         this.cerrarModalLibro();
       }
     });
-
     // Prevenir que el click dentro del contenido cierre el modal
     modalOverlay.addEventListener('click', (e) => {
       e.stopPropagation();
     });
   }
-
   static cerrarModalLibro() {
     const modal = document.getElementById('bookDetailModal');
     if (modal) {
@@ -472,36 +392,29 @@ class LibreriaManager {
       document.body.style.overflow = 'auto';
     }
   }
-
-  
   static eliminarDelCarrito(itemId) {
     let carrito = this.obtenerCarrito();
     carrito = carrito.filter(item => item.id !== itemId);
     this.guardarCarrito(carrito);
     this.actualizarContadorCarrito();
-
     // Disparar evento de actualización
     window.dispatchEvent(new CustomEvent('carritoActualizado', {
       detail: { carrito, itemId, accion: 'eliminar' }
     }));
   }
-
   static calcularTotal() {
     const carrito = this.obtenerCarrito();
     return carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
   }
-
   static obtenerTotalItems() {
     const carrito = this.obtenerCarrito();
     return carrito.reduce((total, item) => total + item.cantidad, 0);
   }
-
   static vaciarCarrito() {
     localStorage.removeItem('carrito');
     this.actualizarContadorCarrito();
   }
 }
-
 // DESCUENTOS Y PROMOCIONES
 class DiscountBannerManager {
   static codigosDescuento = [
@@ -511,9 +424,7 @@ class DiscountBannerManager {
     { codigo: "ESTUDIANTE", descuento: 25, usos: 1 },
     { codigo: "NAVIDAD", descuento: 30, usos: 0 }
   ];
-
   static codigoActual = null;
-
   static mostrarBannerDescuento() {
     if (this.codigoActual && this.codigoActual.usos > 0) {
       const banner = document.getElementById('discountBanner');
@@ -532,7 +443,6 @@ class DiscountBannerManager {
           </div>
         `;
         banner.style.display = 'block';
-
         // Configurar evento para copiar código
         const codigoElement = document.getElementById('discountCode');
         if (codigoElement) {
@@ -542,7 +452,6 @@ class DiscountBannerManager {
       }
     }
   }
-
   static copiarCodigo() {
     if (this.codigoActual) {
       navigator.clipboard.writeText(this.codigoActual.codigo).then(() => {
@@ -552,20 +461,17 @@ class DiscountBannerManager {
       });
     }
   }
-
   static mostrarNotificacion(mensaje, tipo = 'success') {
     // Crear elemento de notificación
     const notificacion = document.createElement('div');
     notificacion.className = 'notification';
     notificacion.textContent = mensaje;
-
     // Define colores oscuros para mejor visibilidad
     const colores = {
       success: 'var(--color-primario)',
       error: 'var(--color-danger)',
       warning: 'var(--color-naranja)'
     };
-
     notificacion.style.cssText = `
       position: fixed;
       top: 20px;
@@ -582,14 +488,11 @@ class DiscountBannerManager {
       min-width: 250px;
       text-align: center;
     `;
-
     document.body.appendChild(notificacion);
-
     // Animar entrada
     setTimeout(() => {
       notificacion.style.transform = 'translateX(0)';
     }, 100);
-
     // Remover después de 3 segundos
     setTimeout(() => {
       notificacion.style.transform = 'translateX(100%)';
@@ -600,67 +503,25 @@ class DiscountBannerManager {
       }, 300);
     }, 3000);
   }
-
   static inicializarDescuentos() {
-    console.log('🔍 DEPURACIÓN - Inicializando sistema de descuentos...');
-    console.log('🔍 DEPURACIÓN - Total códigos disponibles:', this.codigosDescuento.length);
-    console.log('🔍 DEPURACIÓN - Lista de códigos:', this.codigosDescuento);
-
     // Filtrar solo códigos con usos disponibles
     const codigosDisponibles = this.codigosDescuento.filter(codigo => codigo.usos > 0);
-    console.log('🔍 DEPURACIÓN - Códigos con usos disponibles:', codigosDisponibles.length);
-    console.log('🔍 DEPURACIÓN - Lista de códigos disponibles:', codigosDisponibles);
-
     if (codigosDisponibles.length === 0) {
-      console.log('🔍 DEPURACIÓN - No hay códigos con usos disponibles');
-      this.codigoActual = null;
+            this.codigoActual = null;
       this.mostrarBannerDescuento();
       return;
     }
-
     // Seleccionar un código aleatorio solo de los disponibles
     const indiceAleatorio = Math.floor(Math.random() * codigosDisponibles.length);
     this.codigoActual = codigosDisponibles[indiceAleatorio];
-
-    console.log('🔍 DEPURACIÓN - Índice aleatorio generado:', indiceAleatorio);
-    console.log('🔍 DEPURACIÓN - Código seleccionado:', this.codigoActual);
-    console.log('🔍 DEPURACIÓN - Math.random() usado:', Math.random());
-
     this.mostrarBannerDescuento();
   }
-
   static mostrarBannerDescuento() {
-    console.log('🔍 DEPURACIÓN - Mostrando banner de descuentos...');
-    console.log('🔍 DEPURACIÓN - Código actual:', this.codigoActual);
-    console.log('🔍 DEPURACIÓN - Usos disponibles:', this.codigoActual?.usos);
-    console.log('🔍 DEPURACIÓN - Condiciones para mostrar:', !!this.codigoActual, this.codigoActual?.usos > 0);
-
     if (this.codigoActual && this.codigoActual.usos > 0) {
-      console.log('🔍 DEPURACIÓN - Condiciones cumplidas, buscando banner en DOM...');
       const banner = document.getElementById('discountBanner');
-      console.log('🔍 DEPURACIÓN - Banner encontrado:', !!banner);
-      console.log('🔍 DEPURACIÓN - Document ready state:', document.readyState);
-
       // Listar todos los elementos con ID que contengan "discount"
       const discountElements = document.querySelectorAll('[id*="discount"]');
-      console.log('🔍 DEPURACIÓN - Elementos con "discount" en ID:', discountElements.length, Array.from(discountElements).map(el => el.id));
-
       if (banner) {
-        console.log('🔍 DEPURACIÓN - Banner encontrado, actualizando contenido...');
-        console.log('🔍 DEPURACIÓN - HTML a insertar:', `
-          <div class="discount-content">
-            <span class="discount-icon">🎁</span>
-            <div class="discount-text">
-              <strong>¡Oferta especial!</strong> Usa el código
-              <code class="discount-code" id="discountCode">${this.codigoActual.codigo}</code>
-              para obtener ${this.codigoActual.descuento}% de descuento.
-            </div>
-            <span class="discount-remaining">
-              ${this.codigoActual.usos} usos disponibles
-            </span>
-          </div>
-        `);
-
         banner.innerHTML = `
           <div class="discount-content">
             <span class="discount-icon">🎁</span>
@@ -675,37 +536,21 @@ class DiscountBannerManager {
           </div>
         `;
         banner.style.display = 'block';
-        console.log('🔍 DEPURACIÓN - Banner actualizado, display establecido a "block"');
-        console.log('🔍 DEPURACIÓN - Banner style display final:', banner.style.display);
-        console.log('🔍 DEPURACIÓN - Banner innerHTML final:', banner.innerHTML);
-
         // Configurar evento para copiar código
         const codigoElement = document.getElementById('discountCode');
         if (codigoElement) {
           codigoElement.style.cursor = 'pointer';
           codigoElement.addEventListener('click', () => this.copiarCodigo());
-          console.log('🔍 DEPURACIÓN - Event listener para copiar código configurado');
-        } else {
-          console.error('🔍 DEPURACIÓN - ERROR: No se encontró el elemento discountCode después de insertar HTML');
         }
-      } else {
-        console.error('🔍 DEPURACIÓN - ERROR: No se encontró el elemento discountBanner');
-        console.log('🔍 DEPURACIÓN - Elementos en body:', document.body.children.length);
-        console.log('🔍 DEPURACIÓN - Buscando discountBanner con querySelector:', document.querySelector('#discountBanner'));
       }
     } else {
-      console.log('🔍 DEPURACIÓN - No hay código disponible o sin usos, ocultando banner');
       const banner = document.getElementById('discountBanner');
       if (banner) {
         banner.style.display = 'none';
-        console.log('🔍 DEPURACIÓN - Banner ocultado');
-      } else {
-        console.log('🔍 DEPURACIÓN - No se encontró banner para ocultar');
       }
     }
   }
 }
-
 // Exportar las clases para uso global
 window.LibreriaManager = LibreriaManager;
 window.DiscountBannerManager = DiscountBannerManager;

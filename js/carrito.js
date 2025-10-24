@@ -14,7 +14,6 @@ class CarritoPageManager {
   static inicializar() {
     // Verificar que las dependencias estén disponibles
     if (typeof LibreriaManager === 'undefined') {
-      console.error('❌ ERROR: LibreriaManager no está definido. Inicialización cancelada.');
       return;
     }
 
@@ -38,7 +37,6 @@ class CarritoPageManager {
 
     // Verificar que LibreriaManager esté disponible
     if (typeof LibreriaManager === 'undefined') {
-      console.error('❌ ERROR: LibreriaManager no está definido. Verificar orden de carga de scripts.');
       return;
     }
 
